@@ -550,49 +550,139 @@ const DATA = {
     { id:"both", flag:"🌍",  name:"Mix",     sub:"German & English" },
   ],
 
-  persons: [
-    { id:"partner",    icon:"💑", label:"My Partner",       sub:"Husband, wife, boyfriend, girlfriend, fiancé" },
-    { id:"parents",    icon:"👨‍👩‍👧", label:"My Parents",       sub:"Mother, father, stepparents, or a parent figure" },
-    { id:"child",      icon:"🌱", label:"My Child",         sub:"Newborn, toddler, daughter, or son" },
-    { id:"friend",     icon:"🤝", label:"Best Friends",     sub:"Best friend, the girls, the boys, best man" },
-    { id:"grandparent",icon:"👴", label:"Grandparents",     sub:"Grandma, grandpa — together or individually" },
-    { id:"sibling",    icon:"🫂", label:"My Sibling",       sub:"Brother, sister, or twin" },
-    { id:"pet",        icon:"🐾", label:"My Pet",           sub:"Dog, cat, horse, or any beloved animal" },
-    { id:"other",      icon:"🎁", label:"Someone Else",     sub:"Colleague, boss, mentor, or anyone else" },
-  ],
+ persons: [
+  { id:"partner",     icon:"💑", label:"My Partner",          sub:"Husband, wife, boyfriend, girlfriend, fiancé" },
+  { id:"parents",     icon:"👨‍👩‍👧", label:"My Parents",          sub:"Mother, father, stepparents, or a parent figure" },
+  { id:"mum",         icon:"👩", label:"My Mum",               sub:"Mum, mom, stepmum, or a mother figure" },
+  { id:"dad",         icon:"👨", label:"My Dad",               sub:"Dad, pop, stepdad, or a father figure" },
+  { id:"child",       icon:"🌱", label:"My Child",             sub:"Newborn, toddler, daughter, or son" },
+  { id:"friend",      icon:"🤝", label:"Best Friend(s)",       sub:"Best friend, the girls, the boys, squad" },
+  { id:"grandparent", icon:"👴", label:"Grandparents",         sub:"Grandma, grandpa — together or individually" },
+  { id:"sibling",     icon:"🫂", label:"My Sibling",           sub:"Brother, sister, or twin" },
+  { id:"pet",         icon:"🐾", label:"My Pet",               sub:"Dog, cat, horse, or any beloved animal" },
+  { id:"colleague",   icon:"💼", label:"A Colleague / Boss",   sub:"Work friend, mentor, or the whole team" },
+  { id:"ex",          icon:"💔", label:"My Ex",                sub:"Closure, nostalgia, or one last thing to say" },
+  { id:"self",        icon:"🪞", label:"Myself",               sub:"A personal anthem, self-love, or a milestone" },
+  { id:"other",       icon:"🎁", label:"Someone Else",         sub:"Anyone else who deserves a song" },
+],
 
-  occasions: [
-    { id:"birthday",    icon:"🎂", label:"Birthday",               sub:"Especially milestone birthdays",        for:["partner","parents","child","friend","grandparent","sibling","pet","other"] },
-    { id:"anniversary", icon:"❤️", label:"Anniversary / Valentine's", sub:"Celebrating love & time together",  for:["partner"] },
-    { id:"wedding",     icon:"💍", label:"Wedding",                sub:"First dance, vows, or gift",            for:["partner","friend","sibling","other"] },
-    { id:"thankyou",    icon:"🙏", label:"Thank You",              sub:"Mother's Day, Father's Day, gratitude", for:["parents","grandparent","friend","other"] },
-    { id:"newbaby",     icon:"🍼", label:"New Baby / Christening", sub:"Celebrating a new arrival",             for:["parents","partner","friend","sibling","other"] },
-    { id:"graduation",  icon:"🎓", label:"Graduation",             sub:"A major milestone achieved",            for:["child","sibling","friend","partner","other"] },
-    { id:"retirement",  icon:"🌅", label:"Retirement / Farewell",  sub:"A new chapter begins",                  for:["parents","grandparent","other","friend"] },
-    { id:"other",       icon:"🎊", label:"Other occasion",         sub:"Something else — you'll tell us below", for:["partner","parents","child","friend","grandparent","sibling","pet","other"] },
-  ],
+occasions: [
+  { id:"birthday",        icon:"🎂", label:"Birthday",                    sub:"Milestone or everyday — every birthday counts",          for:["partner","parents","mum","dad","child","friend","grandparent","sibling","pet","colleague","self","other"] },
+  { id:"anniversary",     icon:"❤️", label:"Anniversary / Valentine's",   sub:"Celebrating love and time together",                     for:["partner"] },
+  { id:"wedding",         icon:"💍", label:"Wedding",                     sub:"First dance, vows, speech, or gift",                     for:["partner","friend","sibling","other"] },
+  { id:"engagement",      icon:"💎", label:"Engagement",                  sub:"The moment it all changed",                              for:["partner","friend","sibling","other"] },
+  { id:"newbaby",         icon:"🍼", label:"New Baby / Christening",      sub:"Celebrating a new arrival into the world",               for:["parents","mum","dad","partner","friend","sibling","other"] },
+  { id:"graduation",      icon:"🎓", label:"Graduation",                  sub:"Years of hard work — finally paid off",                  for:["child","sibling","friend","partner","self","other"] },
+  { id:"retirement",      icon:"🌅", label:"Retirement / Farewell",       sub:"A new chapter — no more Mondays",                       for:["parents","mum","dad","grandparent","colleague","other","friend"] },
+  { id:"thankyou",        icon:"🙏", label:"Thank You",                   sub:"Mother's Day, Father's Day, or heartfelt gratitude",     for:["parents","mum","dad","grandparent","friend","colleague","other"] },
+  { id:"mothersday",      icon:"🌸", label:"Mother's Day",                sub:"A dedicated tribute to the woman who raised you",        for:["mum","parents","other"] },
+  { id:"fathersday",      icon:"🪵", label:"Father's Day",                sub:"A proper thank-you for the man who showed up",           for:["dad","parents","other"] },
+  { id:"justbecause",     icon:"💛", label:"No occasion — just because",  sub:"Sometimes love doesn't need a reason",                  for:["partner","parents","mum","dad","child","friend","grandparent","sibling","pet","self","other"] },
+  { id:"newchapter",      icon:"🚪", label:"New Chapter",                 sub:"Moving, new job, emigrating, or a big life change",      for:["partner","friend","sibling","colleague","self","other"] },
+  { id:"recovery",        icon:"💪", label:"Recovery / Overcoming",       sub:"Beating illness, addiction, or something tough",         for:["partner","parents","mum","dad","child","friend","sibling","self","other"] },
+  { id:"longdistance",    icon:"✈️", label:"Long Distance / Missing You", sub:"Miles apart but always close",                          for:["partner","friend","sibling","child","other"] },
+  { id:"roast",           icon:"🔥", label:"Roast / Joke Song",           sub:"Funny, affectionate, and absolutely surgical",           for:["friend","sibling","partner","colleague","other"] },
+  { id:"apology",         icon:"🙈", label:"Apology Song",                sub:"You messed up. A song fixes everything. Probably.",      for:["partner","friend","sibling","parents","mum","dad","other"] },
+  { id:"proposal",        icon:"💍", label:"Marriage Proposal",           sub:"The song playing when you pop the question",             for:["partner"] },
+  { id:"leavingwork",     icon:"🏃", label:"Leaving Work Party",          sub:"For the colleague who finally escaped",                  for:["colleague","friend","other"] },
+  { id:"divorce",         icon:"✌️", label:"Divorce / Moving On",         sub:"A new era. No bitterness — just freedom. Okay, maybe a little.", for:["self","partner","friend","other"] },
+  { id:"other",           icon:"🎊", label:"Other occasion",              sub:"Something unique — you'll tell us below",                for:["partner","parents","mum","dad","child","friend","grandparent","sibling","pet","colleague","self","ex","other"] },
+],
 
-  /* Mood texts — stripped of "It should" prefix (change 10) */
-  moods: {
-    "partner|anniversary":  ["Feel like a love letter 💌","Make us both cry happy tears 😭","Capture exactly who we are 🥂","Be light, fun, and romantic 💃"],
-    "partner|wedding":      ["Feel like our first dance 💃","Make everyone in the room feel it ❤️","Be intimate — just for us 🤫","Be joyful and celebratory 🎉"],
-    "partner|justbecause":  ["Feel like a warm hug 🤗","Say what I can't say out loud 🌹","Be playful and fun between us 😄","Be deep and meaningful 💛"],
-    "partner|birthday":     ["Feel romantic and personal 💌","Be tender and heartfelt 💛","Be fun and celebratory 🎉","Capture our whole love story 🥂"],
-    "parents|birthday":     ["Make them cry (happy tears) 😭","Be warm and grateful 🙏","Be funny and nostalgic 😄","Celebrate everything they've built 🌟"],
-    "parents|thankyou":     ["Say thank you from the heart 💛","Feel like a hug they can hear 🤗","Acknowledge their sacrifice 🌹","Make them incredibly proud 🌟"],
-    "child|birthday":       ["Be joyful and uplifting 🎈","Feel like a proud parent moment 🥲","Be fun and just for them 🎊","Capture who they are right now 💛"],
-    "child|newbaby":        ["Be gentle and dreamy 🌙","Be a promise from us to them 🌹","Celebrate this new arrival 🎉","Be something they'll treasure forever 🎁"],
-    "friend|birthday":      ["Roast them (lovingly) 😂","Be heartfelt and sincere 💛","Be a pure celebration banger 🚀","Capture our friendship perfectly 🤝"],
-    "friend|wedding":       ["Make them cry at the altar 😭","Roast the couple kindly 😂","Get the whole room dancing 🎉","Say what words alone can't 💛"],
-    "friend|justbecause":   ["Feel like a warm shoutout 🤝","Be funny and full of inside jokes 😂","Be genuinely touching 💛","Capture what makes us us 🌟"],
-    "grandparent|birthday": ["Bring the whole family to tears 😭","Celebrate a life well lived 🌟","Be warm and nostalgic 🤗","Be a gift from all the grandchildren 💛"],
-    "grandparent|thankyou": ["Say thank you for a lifetime of love 💛","Feel warm and full of memories 🤗","Celebrate their wisdom 🌟","Be something the whole family can share 🎁"],
-    "sibling|birthday":     ["Roast them (they'll love it) 😂","Be genuinely heartfelt 💛","Feel like only a sibling could write it 🫂","Be a hype song for their big day 🚀"],
-    "pet|justbecause":      ["Be from the pet's perspective 🐾","Be silly and fun 😄","Be a love letter to our pet 💛","Tell the story of our life together 🌍"],
-    "other|retirement":     ["Celebrate what they built 🌟","Be warm and heartfelt from the team 🤝","Be funny and full of shared memories 😄","Wish them well on this next chapter 🌅"],
-    "default":              ["Feel warm and heartfelt 💛","Make them feel truly seen 🥲","Be uplifting and celebratory 🎉","Be something they'll never forget 🌟"],
-  },
+moods: {
+  // ── Partner ──────────────────────────────────────────────
+  "partner|anniversary":     ["Feel like a love letter 💌","Make us both cry happy tears 😭","Capture exactly who we are 🥂","Be light, fun, and romantic 💃"],
+  "partner|wedding":         ["Feel like our first dance 💃","Make everyone in the room feel it ❤️","Be intimate — just for us 🤫","Be joyful and celebratory 🎉"],
+  "partner|engagement":      ["Capture the exact moment we said yes 💎","Be over-the-moon joyful 🎉","Feel tender and full of disbelief 🥲","Be the song we play forever 💌"],
+  "partner|birthday":        ["Feel romantic and personal 💌","Be tender and heartfelt 💛","Be fun and celebratory 🎉","Capture our whole love story 🥂"],
+  "partner|justbecause":     ["Feel like a warm hug 🤗","Say what I can't say out loud 🌹","Be playful and fun between us 😄","Be deep and meaningful 💛"],
+  "partner|longdistance":    ["Ache with how much I miss them 💔","Be hopeful — we'll close the distance 🌍","Feel like I'm right there beside them 🤗","Be bittersweet and real 🥲"],
+  "partner|proposal":        ["Build slowly and explode with joy 💍","Make everyone watching cry 😭","Be romantic but unmistakably us 🥂","Be the best story we ever tell 🌟"],
+  "partner|apology":         ["Be genuinely, sincerely sorry 🙈","Be honest — no excuses, just love 💛","Look forward without dwelling 🌱","Be a little grovelling, actually 😅"],
 
+  // ── Parents ──────────────────────────────────────────────
+  "parents|birthday":        ["Make them cry (happy tears) 😭","Be warm and grateful 🙏","Be funny and nostalgic 😄","Celebrate everything they've built 🌟"],
+  "parents|thankyou":        ["Say thank you from the heart 💛","Feel like a hug they can hear 🤗","Acknowledge their sacrifice 🌹","Make them incredibly proud 🌟"],
+  "parents|justbecause":     ["Say all the things I should say more often 💛","Be warm and deeply loving 🤗","Be funny and full of family memories 😄","Remind them they're my whole world 🌟"],
+  
+
+  // ── Mum ──────────────────────────────────────────────────
+  "mum|birthday":            ["Celebrate her and how far we've come 🌸","Make her ugly-cry at the table 😭","Be funny — she can take it 😄","Say what I never quite find the words for 💛"],
+  "mum|mothersday":          ["Say thank you for everything, always 🌸","Remind her she's my hero 🌟","Be warm and full of specific memories 🤗","Acknowledge that parenting us wasn't easy 😅"],
+  "mum|thankyou":            ["Say the thank you that's long overdue 💛","Be full of specific, personal memories 🌸","Acknowledge how much she shaped me 🌱","Make her feel completely, unconditionally loved 🤗"],
+  "mum|justbecause":         ["Just say I love her, simply 💛","Be full of the everyday moments we share 🌸","Be funny and full of our shared chaos 😄","Be a tribute to everything she does quietly 🌟"],
+  "mum|memorial":            ["Be a gentle, loving farewell 🕊️","Celebrate the woman she was 🌸","Carry her warmth forward in every note 💛","Say all the things I wish I'd said 🌹"],
+
+  // ── Dad ──────────────────────────────────────────────────
+  "dad|birthday":            ["Be a proper tribute from a proud kid 🌟","Be funny — full Dad joke energy 😄","Be heartfelt and full of memories 💛","Say what we don't usually say out loud 🙏"],
+  "dad|fathersday":          ["Say thank you for showing up, always 🪵","Be full of specific memories only we'd know 🌟","Be funny — he'd want it that way 😄","Be genuine and from the heart 💛"],
+  "dad|thankyou":            ["Say the thank you that's long overdue 🪵","Acknowledge the quiet ways he showed love 💛","Make him feel genuinely appreciated 🌟","Be honest about how much he shaped me 🌱"],
+  "dad|retirement":          ["Celebrate the man who gave everything to work 🌅","Be proud, warm, and full of respect 🌟","Be funny — he's earned the roast 😄","Paint a picture of this well-deserved next chapter 🌊"],
+  "dad|memorial":            ["Be a quiet, honest goodbye 🕊️","Celebrate the man he was 🪵","Say all the things I never got to say 💛","Carry his memory into everything I do 🌟"],
+
+  // ── Child ────────────────────────────────────────────────
+  "child|birthday":          ["Be joyful and uplifting 🎈","Feel like a proud parent moment 🥲","Be fun and just for them 🎊","Capture who they are right now 💛"],
+  "child|newbaby":           ["Be gentle and dreamy 🌙","Be a promise from us to them 🌹","Celebrate this new arrival 🎉","Be something they'll treasure forever 🎁"],
+  "child|graduation":        ["Overflow with parental pride 🌟","Be warm and look back over the journey 🥲","Be funny — we remember the struggle 😄","Launch them into everything ahead 🚀"],
+  "child|newchapter":        ["Be full of love and a little letting go 🌱","Be full of hope for what's ahead 🌟","Be honest — it's hard to watch them fly 🥲","Celebrate who they've become 🎉"],
+  "child|recovery":          ["Say how proud I am beyond words 💪","Be deeply warm and full of relief 🤗","Be about strength, not just survival 🌟","Remind them how far they've come 🌱"],
+  "child|memorial":          ["Be the gentlest, most loving goodbye 🕊️","Carry every memory and every laugh 💛","Say all the things I hold in my heart 🌹","Be a song for them, always 🌙"],
+
+  // ── Friend ───────────────────────────────────────────────
+  "friend|birthday":         ["Roast them (lovingly) 😂","Be heartfelt and sincere 💛","Be a pure celebration banger 🚀","Capture our friendship perfectly 🤝"],
+  "friend|wedding":          ["Make them cry at the altar 😭","Roast the couple (kindly) 😂","Get the whole room dancing 🎉","Say what words alone can't 💛"],
+  "friend|justbecause":      ["Feel like a warm shoutout 🤝","Be funny and full of inside jokes 😂","Be genuinely touching 💛","Capture what makes us us 🌟"],
+  "friend|longdistance":     ["Say I miss them more than I ever admit 💛","Be funny about the distance — it hurts 😂","Feel like a voice note that actually matters 🤗","Be hopeful — we'll be in the same city again 🌍"],
+  "friend|newchapter":       ["Be a proud send-off for what comes next 🚀","Be bittersweet and full of shared history 🥲","Be funny — they're leaving and we're not okay 😂","Celebrate everything we've been through 🤝"],
+  "friend|roast":            ["Be surgical. Affectionate, but surgical 🔥","Drag every specific habit they have 😂","Balance the roast with genuine love 💛","Be the song that gets played at their wedding 🎉"],
+  "friend|memorial":         ["Be warm and full of laughter, like they were 🌟","Say how much our friendship changed me 💛","Be honest and full of love 🕊️","Hold every memory we made together 🤝"],
+
+  // ── Grandparent ──────────────────────────────────────────
+  "grandparent|birthday":    ["Bring the whole family to tears 😭","Celebrate a life well lived 🌟","Be warm and nostalgic 🤗","Be a gift from all the grandchildren 💛"],
+  "grandparent|thankyou":    ["Say thank you for a lifetime of love 💛","Feel warm and full of memories 🤗","Celebrate their wisdom 🌟","Be something the whole family can share 🎁"],
+  "grandparent|justbecause": ["Say they are loved beyond words 💛","Be full of memories only we share 🤗","Be funny — they've earned a laugh 😄","Thank them for everything they've quietly given 🌟"],
+  "grandparent|memorial":    ["Be a quiet, beautiful farewell 🕊️","Celebrate the full, remarkable life they lived 🌟","Carry their memory through the generations 💛","Say all the things we're glad we said 🌹"],
+
+  // ── Sibling ──────────────────────────────────────────────
+  "sibling|birthday":        ["Roast them (they'll love it) 😂","Be genuinely heartfelt 💛","Feel like only a sibling could write it 🫂","Be a hype song for their big day 🚀"],
+  "sibling|wedding":         ["Be a proud, emotional speech in song form 😭","Roast them in front of everyone 😂","Say what a sibling can't say with words 💛","Get the whole family up dancing 🎉"],
+  "sibling|justbecause":     ["Say I'm grateful you're my sibling 🫂","Be a roast disguised as a love song 😂","Be honest about how annoying and wonderful they are 💛","Be a tribute to our shared weirdness 🌟"],
+  "sibling|newchapter":      ["Be proud and a little sad to see them go 🥲","Be funny — sibling energy 😂","Be a beautiful send-off for what's next 🌟","Say everything I've never quite managed to say 🫂"],
+  "sibling|recovery":        ["Say how proud and relieved I am 💪","Be full of quiet sibling love 💛","Acknowledge the strength I always knew they had 🌟","Be a reminder I'm always in their corner 🫂"],
+
+  // ── Pet ──────────────────────────────────────────────────
+  "pet|justbecause":         ["Be from the pet's perspective 🐾","Be silly and absolutely chaotic 😄","Be a genuine love letter to our pet 💛","Tell the story of our life together 🌍"],
+  "pet|birthday":            ["Be over-the-top adorable 🎂","Be from the pet's point of view 🐾","Be funny about what pets actually care about 😄","Celebrate their whole little life 💛"],
+  "pet|memorial":            ["Be a gentle, loving goodbye 🕊️","Celebrate every chaotic, wonderful thing about them 🐾","Say how much smaller life is without them 💛","Hold every cuddle and every memory 🌹"],
+
+  // ── Colleague ────────────────────────────────────────────
+  "colleague|leavingwork":   ["Be a chaotic office send-off 🏃","Roast every habit their desk-neighbour endured 😂","Be warm and genuinely celebratory 🌟","Be the highlight of a party they'll never forget 🎉"],
+  "colleague|retirement":    ["Celebrate what they built over a career 🌟","Be warm and heartfelt from the whole team 🤝","Be funny — they've earned the roast 😄","Wish them well on this very well-deserved chapter 🌅"],
+  "colleague|birthday":      ["Be funny and deeply office-specific 😂","Be warm and team-spirited 🤝","Be a genuine tribute to them as a person 💛","Be the song everyone at work will be humming 🎉"],
+  "colleague|roast":         ["Hold nothing back — this is the leaving roast 🔥","Be specific about every quirk. Every. Single. One. 😂","Balance the chaos with genuine warmth 💛","Be legendary. They deserve nothing less. 🌟"],
+  "colleague|thankyou":      ["Say thank you for mentorship and guidance 🌟","Be warm and specifically about what they gave 💛","Acknowledge the impact they had on my career 🌱","Be the kind of tribute that makes them tear up a little 🥲"],
+
+  // ── Self ─────────────────────────────────────────────────
+  "self|birthday":           ["Be a full self-celebration anthem 🥂","Be reflective — another year, a better me 🪞","Be a little arrogant, actually — I deserve it 😄","Be honest about the journey and proud of it 🌟"],
+  "self|newchapter":         ["Be a hype anthem for what's next 🚀","Be reflective and full of intention 🪞","Be honest about the fear and the excitement 🌱","Be the song I play on the first day of everything new 🌅"],
+  "self|graduation":         ["Be a victory lap, full volume 🎓","Be reflective — the hard years were worth it 🥲","Launch me into whatever's next 🚀","Be something my future self will thank me for 🌟"],
+  "self|recovery":           ["Be about how far I've actually come 💪","Be honest — it was hard, and I made it 🌱","Be an anthem I can return to when it gets hard again 🌟","Be about the version of me that survived 🦋"],
+  "self|divorce":            ["Be about freedom and a brand new start ✌️","Be empowering — I choose myself now 💃","Be bittersweet but ultimately hopeful 🌅","Be the song I blast on the drive home alone 😤"],
+
+  // ── Ex ───────────────────────────────────────────────────
+  "ex|justbecause":          ["Be about closure — the door is finally closed 🚪","Be bittersweet and honest, no anger 🥲","Be about the love that was real, even if it ended 💛","Be the last thing I ever needed to say 💌"],
+
+  // ── Universal overrides ──────────────────────────────────
+  "*|memorial":              ["Be a quiet, loving goodbye 🕊️","Celebrate everything they were 🌟","Carry their memory forward 💌","Feel like they're still speaking to us 💛"],
+  "*|recovery":              ["Say how incredibly proud I am 💪","Be full of warmth and genuine relief 🤗","Celebrate the strength it took to get here 🌟","Be a reminder they are not alone 💛"],
+  "*|roast":                 ["Be affectionate but hold absolutely nothing back 🔥","Be specific — generalities aren't funny 😂","Balance the chaos with a moment of real love 💛","Be the song people quote for years 🌟"],
+  "*|apology":               ["Be genuinely, sincerely sorry — no spin 🙈","Be honest about what happened 💛","Be humble and full of love 🌹","Say I know it wasn't okay, and I mean it 🌱"],
+  "*|newchapter":            ["Be full of excitement for what's ahead 🚀","Be a little bittersweet about what's left behind 🥲","Be an anthem for the leap of faith 🌟","Be the best send-off they've ever heard 🎉"],
+
+  // ── Default ──────────────────────────────────────────────
+  "default":                 ["Feel warm and heartfelt 💛","Make them feel truly seen 🥲","Be uplifting and celebratory 🎉","Be something they'll never forget 🌟"],
+},
+ 
   genres: [
     { id:"acoustic-pop",      icon:"🎸", name:"Acoustic Pop",      desc:"Warm, guitar-forward. Emotional and universally loved.",       track:"Acoustic Pop Example",      src:"audio/acoustic-pop.mp3" },
     { id:"singer-songwriter", icon:"🎙️", name:"Singer-Songwriter", desc:"Intimate, lyric-driven. Stripped-back and close to the bone.",track:"Singer-Songwriter Example", src:"audio/singer-songwriter.mp3" },
