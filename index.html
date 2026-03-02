@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orphsody — Custom Song</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  :root {
+    --bg:#080808; --card:#111111; --border:#1e1e1e;
+    --green:#4dff91; --green-lt:#80ffb0; --green-dim:rgba(77,255,145,0.08);
+    --gold:var(--green); --gold-lt:var(--green-lt); --gold-dim:var(--green-dim);
+    --cream:#f0f0f0; --muted:#555555; --red:#ff4d4d;
+    --radius:12px; --ease:cubic-bezier(0.4,0,0.2,1);
+  }
+  html { scroll-behavior:smooth; }
+  body { font-family:'Bricolage Grotesque',sans-serif; background:var(--bg); color:var(--cream); min-height:100vh; overflow-x:hidden; }
+  body::before {
+    content:''; position:fixed; inset:0;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events:none; z-index:0; opacity:0.4;
+  }
+  .shell { position:relative; z-index:1; max-width:720px; margin:0 auto; padding:60px 24px 120px; }
+
+  /* HEADER */
+  .site-header { text-align:center; margin-bottom:56px; }
+  .logo-mark { display:inline-flex; align-items:center; gap:10px; font-family:'Space Mono',monospace; font-size:13px; letter-spacing:.15em; text-transform:uppercase; color:var(--green); margin-bottom:32px; }
+  .logo-mark svg { width:20px; height:20px; }
+  h1 { font-family:'Bricolage Grotesque',sans-serif; font-size:clamp(30px,5vw,46px); font-weight:700; line-height:1.1; color:var(--cream); margin-bottom:16px; letter-spacing:-0.02em; }
+  h1 em { font-style:italic; color:var(--green); font-weight:400; }
+  .subtitle { font-size:15px; color:var(--muted); font-weight:400; line-height:1.6; max-width:480px; margin:0 auto; }
+
+  /* PROGRESS — 10 steps (0–9) */
+  .progress-wrap { display:flex; align-items:center; gap:6px; margin-bottom:48px; }
+  .prog-step { flex:1; height:3px; background:var(--border); border-radius:99px; transition:background 0.4s var(--ease); }
+  .prog-step.done   { background:var(--gold); }
+  .prog-step.active { background:linear-gradient(90deg,var(--gold),var(--gold-lt)); }
+  .prog-label { font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); white-space:nowrap; }
+
+  /* STEPS */
+  .step { display:none; animation:fadeUp 0.4s var(--ease) both; }
+  .step.active { display:block; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+  .step-eyebrow { font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--green); margin-bottom:10px; display:flex; align-items:center; gap:8px; font-family:'Space Mono',monospace; }
+  .step-eyebrow::after { content:''; flex:1; height:1px; background:var(--border); }
+  .step-title { font-family:'Bricolage Grotesque',sans-serif; font-size:clamp(22px,3.5vw,30px); font-weight:700; margin-bottom:8px; color:var(--cream); letter-spacing:-0.02em; }
+  .step-hint { font-size:14px; color:var(--muted); margin-bottom:32px; font-weight:400; line-height:1.6; }
+
+  /* OWN LYRICS (Step 0) & LANGUAGE */
+  .choice-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .lang-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
+  .tile-card { background:var(--card); border:1.5px solid var(--border); border-radius:var(--radius); padding:24px 16px; cursor:pointer; transition:border-color 0.2s,background 0.2s,transform 0.15s; text-align:center; position:relative; overflow:hidden; user-select:none; }
+  .tile-card::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,var(--gold-dim),transparent); opacity:0; transition:opacity 0.25s; }
+  .tile-card:hover { border-color:#2a2a2a; transform:translateY(-2px); }
+  .tile-card:hover::before,.tile-card.selected::before { opacity:1; }
+  .tile-card.selected { border-color:var(--green); background:#0d1a12; }
+  .tile-card-icon { font-size:32px; display:block; margin-bottom:12px; }
+  .tile-card-title { font-size:15px; font-weight:500; color:var(--cream); display:block; margin-bottom:3px; }
+  .tile-card-sub { font-size:11px; color:var(--muted); }
+  .check-icon { position:absolute; top:10px; right:10px; width:18px; height:18px; border-radius:50%; background:var(--gold); display:flex; align-items:center; justify-content:center; opacity:0; transform:scale(0.5); transition:opacity 0.2s,transform 0.2s; }
+  .tile-card.selected .check-icon { opacity:1; transform:scale(1); }
+  .check-icon svg,.tile-check svg,.genre-check svg { width:10px; height:10px; fill:none; stroke:#0e0c0a; stroke-width:2.5; }
+
+  /* PERSON TILES */
+  .tile-grid { display:grid; gap:12px; }
+  .tile-grid.cols-2 { grid-template-columns:1fr 1fr; }
+  .tile { background:var(--card); border:1.5px solid var(--border); border-radius:var(--radius); padding:20px 18px; cursor:pointer; transition:border-color 0.2s,background 0.2s,transform 0.15s; position:relative; overflow:hidden; user-select:none; }
+  .tile::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,var(--gold-dim),transparent); opacity:0; transition:opacity 0.25s; }
+  .tile:hover { border-color:#2a2a2a; transform:translateY(-2px); }
+  .tile:hover::before,.tile.selected::before { opacity:1; }
+  .tile.selected { border-color:var(--green); background:#0d1a12; }
+  .tile-icon { font-size:28px; margin-bottom:10px; display:block; line-height:1; }
+  .tile-label { font-size:15px; font-weight:500; color:var(--cream); display:block; margin-bottom:4px; }
+  .tile-sub { font-size:12px; color:var(--muted); font-weight:300; line-height:1.4; }
+  .tile-check { position:absolute; top:12px; right:12px; width:20px; height:20px; border-radius:50%; background:var(--gold); display:flex; align-items:center; justify-content:center; opacity:0; transform:scale(0.5); transition:opacity 0.2s,transform 0.2s; }
+  .tile.selected .tile-check { opacity:1; transform:scale(1); }
+  /* compact person tiles for 8-up grid */
+  #person-grid .tile { padding:16px 14px; }
+  #person-grid .tile-icon { font-size:24px; margin-bottom:6px; }
+  #person-grid .tile-label { font-size:13px; }
+  #person-grid .tile-sub { font-size:11px; }
+
+  /* GENRE CARDS */
+  .genre-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .genre-card { background:var(--card); border:1.5px solid var(--border); border-radius:var(--radius); overflow:hidden; cursor:pointer; transition:border-color 0.2s,transform 0.15s; position:relative; user-select:none; }
+  .genre-card::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,var(--gold-dim),transparent); opacity:0; transition:opacity 0.25s; pointer-events:none; }
+  .genre-card:hover { border-color:#2a2a2a; transform:translateY(-2px); }
+  .genre-card:hover::before,.genre-card.selected::before { opacity:1; }
+  .genre-card.selected { border-color:var(--green); }
+  .genre-card-top { padding:16px 16px 10px; display:flex; align-items:flex-start; justify-content:space-between; gap:8px; }
+  .genre-icon { font-size:22px; display:block; margin-bottom:6px; }
+  .genre-name { font-size:14px; font-weight:500; color:var(--cream); display:block; margin-bottom:3px; }
+  .genre-desc { font-size:11.5px; color:var(--muted); line-height:1.4; }
+  .genre-check { width:20px; height:20px; border-radius:50%; background:var(--gold); display:flex; align-items:center; justify-content:center; opacity:0; transform:scale(0.5); transition:opacity 0.2s,transform 0.2s; flex-shrink:0; margin-top:2px; }
+  .genre-card.selected .genre-check { opacity:1; transform:scale(1); }
+  /* mini player */
+  .genre-player { background:rgba(0,0,0,0.3); border-top:1px solid var(--border); padding:10px 14px; display:flex; align-items:center; gap:10px; }
+  .play-btn { width:30px; height:30px; border-radius:50%; background:var(--gold); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:background 0.15s,transform 0.15s; }
+  .play-btn:hover { background:var(--gold-lt); transform:scale(1.08); }
+  .play-btn.playing { background:var(--gold-lt); }
+  .play-btn svg { width:12px; height:12px; fill:#0e0c0a; }
+  .player-info { flex:1; min-width:0; }
+  .player-track { font-size:11px; color:var(--cream); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-bottom:4px; }
+  .player-bar { height:3px; background:var(--border); border-radius:99px; overflow:hidden; }
+  .player-fill { height:100%; background:var(--gold); border-radius:99px; width:0%; transition:width 0.1s linear; }
+  .player-time { font-size:10px; color:var(--muted); white-space:nowrap; }
+
+  /* OCCASION */
+  .occasion-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px; }
+  .occasion-divider { display:flex; align-items:center; gap:12px; margin:4px 0 12px; }
+  .occasion-divider::before,.occasion-divider::after { content:''; flex:1; height:1px; background:var(--border); }
+  .occasion-divider-text { font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); white-space:nowrap; }
+  .justbecause-tile { background:var(--card); border:1.5px dashed var(--border); border-radius:var(--radius); padding:18px 20px; cursor:pointer; transition:border-color 0.2s,background 0.2s,transform 0.15s; position:relative; overflow:hidden; user-select:none; display:flex; align-items:center; gap:16px; }
+  .justbecause-tile::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,var(--gold-dim),transparent); opacity:0; transition:opacity 0.25s; }
+  .justbecause-tile:hover { border-color:rgba(77,255,145,0.5); transform:translateY(-1px); }
+  .justbecause-tile:hover::before,.justbecause-tile.selected::before { opacity:1; }
+  .justbecause-tile.selected { border-color:var(--gold); border-style:solid; background:#0d1a12; }
+  .justbecause-icon { font-size:32px; flex-shrink:0; }
+  .justbecause-body {}
+  .justbecause-label { font-size:16px; font-weight:500; color:var(--cream); display:block; margin-bottom:4px; }
+  .justbecause-sub { font-size:13px; color:var(--muted); font-weight:300; line-height:1.5; }
+  .justbecause-check { position:absolute; top:14px; right:14px; width:20px; height:20px; border-radius:50%; background:var(--gold); display:flex; align-items:center; justify-content:center; opacity:0; transform:scale(0.5); transition:opacity 0.2s,transform 0.2s; }
+  .justbecause-tile.selected .justbecause-check { opacity:1; transform:scale(1); }
+
+  /* VIBE */
+  .vibe-grid { grid-template-columns:1fr; gap:10px; display:grid; }
+  .vibe-tile { background:var(--card); border:1.5px solid var(--border); border-radius:10px; padding:14px 18px; cursor:pointer; display:flex; align-items:center; gap:12px; transition:border-color 0.2s,background 0.2s,transform 0.15s; user-select:none; }
+  .vibe-tile:hover { border-color:#2a2a2a; transform:translateY(-1px); }
+  .vibe-tile.selected { border-color:var(--green); background:#0d1a12; }
+  .vibe-emoji { font-size:22px; flex-shrink:0; }
+  .vibe-name { font-size:14px; font-weight:500; color:var(--cream); }
+  .vibe-limit-note { font-size:12px; color:var(--gold); margin-bottom:16px; font-style:italic; }
+
+  /* ANGLE in vibe step */
+  .angle-wrap { margin-top:24px; }
+  .angle-grid { display:grid; gap:10px; }
+  .angle-tile { background:var(--card); border:1.5px solid var(--border); border-radius:10px; padding:14px 16px; cursor:pointer; transition:border-color 0.2s,background 0.2s,transform 0.15s; position:relative; overflow:hidden; user-select:none; }
+  .angle-tile::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,var(--gold-dim),transparent); opacity:0; transition:opacity 0.25s; }
+  .angle-tile:hover { border-color:#2a2a2a; }
+  .angle-tile:hover::before,.angle-tile.selected::before { opacity:1; }
+  .angle-tile.selected { border-color:var(--green); background:#0d1a12; }
+  .angle-tile-label { font-size:14px; font-weight:500; color:var(--cream); }
+
+  /* TOGGLE */
+  .toggle-row { display:flex; align-items:center; justify-content:space-between; background:var(--card); border:1.5px solid var(--border); border-radius:10px; padding:14px 18px; margin-top:16px; cursor:pointer; transition:border-color 0.2s; }
+  .toggle-row:hover { border-color:#2a2a2a; }
+  .toggle-label { font-size:14px; color:var(--cream); }
+  .toggle-sub { font-size:12px; color:var(--muted); margin-top:2px; }
+  .toggle-switch { width:44px; height:24px; background:var(--border); border-radius:99px; position:relative; transition:background 0.2s; flex-shrink:0; }
+  .toggle-switch.on { background:var(--gold); }
+  .toggle-switch::after { content:''; position:absolute; width:18px; height:18px; background:white; border-radius:50%; top:3px; left:3px; transition:transform 0.2s var(--ease); }
+  .toggle-switch.on::after { transform:translateX(20px); }
+
+  /* STORY (Step 6) - UPDATED OPTIONAL FIELDS */
+  .soft-details-wrap { margin-bottom:28px; }
+  .soft-details-label { font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-bottom:12px; }
+  
+  .details-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px; }
+  .detail-input-wrap {}
+  .detail-input-wrap label { display:block; font-size:11px; color:var(--muted); margin-bottom:4px; margin-left:2px; }
+  .detail-input { width:100%; background:var(--card); border:1.5px solid var(--border); border-radius:10px; padding:12px 14px; color:var(--cream); font-family:'Bricolage Grotesque',sans-serif; font-size:13.5px; font-weight:300; outline:none; transition:border-color 0.2s; margin-top:4px; }
+  .detail-input:focus { border-color:var(--gold); }
+  .detail-input::placeholder { color:var(--muted); }
+
+  .story-mode-tabs { display:flex; background:var(--card); border:1.5px solid var(--border); border-radius:10px; padding:4px; margin-bottom:24px; }
+  .story-mode-tab { flex:1; padding:10px 16px; border-radius:7px; border:none; background:none; color:var(--muted); font-family:'Bricolage Grotesque',sans-serif; font-size:13px; font-weight:500; cursor:pointer; transition:background 0.2s,color 0.2s; text-align:center; }
+  .story-mode-tab.active { background:var(--green-dim); color:var(--green-lt); border:1px solid rgba(77,255,145,0.3); }
+
+  .prompt-chips { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:8px; }
+  .prompt-chip { background:var(--card); border:1.5px solid var(--border); border-radius:99px; padding:7px 14px; font-size:12.5px; color:var(--muted); cursor:pointer; transition:border-color 0.2s,color 0.2s,background 0.2s,transform 0.15s; user-select:none; line-height:1.3; }
+  .prompt-chip:hover { border-color:rgba(77,255,145,0.5); color:var(--cream); transform:translateY(-1px); }
+  .prompt-chip.active { border-color:var(--green); background:var(--green-dim); color:var(--green-lt); }
+  .prompt-chip.active::before { content:'✓  '; opacity:.7; font-size:11px; }
+  .prompt-hint { font-size:12px; color:var(--muted); font-style:italic; margin-bottom:16px; }
+  .prompt-answers { display:flex; flex-direction:column; gap:12px; margin-bottom:8px; }
+  .prompt-answer-block { background:var(--card); border:1.5px solid var(--border); border-radius:var(--radius); overflow:hidden; animation:fadeUp 0.25s var(--ease) both; }
+  .prompt-answer-block:focus-within { border-color:var(--gold); }
+  .prompt-answer-label { padding:10px 14px 0; font-size:11.5px; color:var(--green); font-style:italic; }
+  .prompt-answer-block textarea { border:none; border-radius:0; min-height:68px; padding:8px 14px 12px; font-size:13.5px; resize:none; width:100%; background:transparent; color:var(--cream); font-family:'Bricolage Grotesque',sans-serif; outline:none; }
+  .prompt-answer-block textarea::placeholder { color:var(--muted); }
+
+  .nudge-label { font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
+  .freewrite-nudge { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px; }
+  .nudge-tag { font-size:12px; background:var(--card); border:1px solid var(--border); border-radius:6px; padding:5px 11px; color:var(--muted); cursor:pointer; transition:border-color 0.15s,color 0.15s; user-select:none; }
+  .nudge-tag:hover { border-color:rgba(77,255,145,0.4); color:var(--cream); }
+
+  textarea { width:100%; background:var(--card); border:1.5px solid var(--border); border-radius:var(--radius); padding:16px; color:var(--cream); font-family:'Bricolage Grotesque',sans-serif; font-size:14px; font-weight:300; line-height:1.7; resize:vertical; outline:none; transition:border-color 0.2s; }
+  textarea:focus { border-color:var(--gold); }
+  textarea::placeholder { color:var(--muted); }
+  .char-count { font-size:12px; color:var(--muted); text-align:right; margin-top:6px; }
+  .char-count.warn { color:var(--gold); }
+  .btn-more-prompts { display:inline-flex; align-items:center; gap:6px; margin-top:12px; background:none; border:1.5px dashed var(--border); border-radius:99px; padding:8px 16px; color:var(--muted); font-family:'Bricolage Grotesque',sans-serif; font-size:12.5px; cursor:pointer; transition:border-color 0.2s,color 0.2s; }
+  .btn-more-prompts:hover { border-color:rgba(77,255,145,0.5); color:var(--gold-lt); }
+
+  /* MUSIC DETAILS */
+  .select-group { margin-bottom:24px; }
+  .select-label { font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-bottom:10px; }
+  .pill-row { display:flex; flex-wrap:wrap; gap:8px; }
+  .pill { background:var(--card); border:1.5px solid var(--border); border-radius:99px; padding:8px 16px; font-size:13px; color:var(--cream); cursor:pointer; transition:border-color 0.2s,background 0.2s; user-select:none; }
+  .pill:hover { border-color:#2a2a2a; }
+  .pill.selected { border-color:var(--green); background:var(--green-dim); color:var(--green-lt); }
+  .input-row { display:flex; align-items:center; gap:12px; background:var(--card); border:1.5px solid var(--border); border-radius:10px; padding:12px 16px; transition:border-color 0.2s; }
+  .input-row:focus-within { border-color:var(--gold); }
+  .input-row input { flex:1; background:none; border:none; outline:none; color:var(--cream); font-family:'Bricolage Grotesque',sans-serif; font-size:14px; font-weight:300; }
+  .input-row input::placeholder { color:var(--muted); }
+
+  /* NAV */
+  .nav-row { display:flex; gap:12px; margin-top:40px; align-items:center; }
+  .btn-back { background:none; border:1.5px solid var(--border); border-radius:10px; padding:14px 20px; color:var(--muted); font-family:'Bricolage Grotesque',sans-serif; font-size:14px; cursor:pointer; transition:border-color 0.2s,color 0.2s; }
+  .btn-back:hover { border-color:#333; color:var(--cream); }
+  .btn-next { flex:1; background:var(--green); border:none; border-radius:10px; padding:15px 24px; color:#080808; font-family:'Bricolage Grotesque',sans-serif; font-size:15px; font-weight:700; cursor:pointer; transition:background 0.2s,transform 0.15s; display:flex; align-items:center; justify-content:center; gap:8px; letter-spacing:-0.01em; }
+  .btn-next:hover { background:var(--green-lt); transform:translateY(-1px); }
+  .btn-next svg { width:16px; height:16px; }
+  .err-msg { font-size:13px; color:var(--red); margin-top:12px; display:none; }
+  .err-msg.show { display:block; }
+
+  /* SUMMARY */
+  .summary-card { background:var(--card); border:1.5px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-bottom:16px; }
+  .summary-row { display:flex; gap:16px; padding:14px 18px; border-bottom:1px solid var(--border); align-items:flex-start; position:relative; }
+  .summary-row:last-child { border-bottom:none; }
+  .summary-key { font-size:11px; text-transform:uppercase; letter-spacing:.1em; color:var(--muted); width:110px; flex-shrink:0; padding-top:4px; }
+  .summary-val { font-size:14px; color:var(--cream); line-height:1.5; flex:1; padding-right:40px; }
+  .btn-edit-link { position:absolute; right:16px; top:12px; background:none; border:none; color:var(--gold); font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.05em; cursor:pointer; padding:4px 8px; border-radius:4px; transition:background 0.2s; }
+  .btn-edit-link:hover { background:rgba(77,255,145,0.1); }
+  
+  .btn-submit { width:100%; background:var(--green); border:none; border-radius:10px; padding:18px 24px; color:#080808; font-family:'Bricolage Grotesque',sans-serif; font-size:18px; font-weight:700; letter-spacing:-0.01em; cursor:pointer; transition:opacity 0.2s,transform 0.15s; margin-top:8px; }
+  .btn-submit:hover { opacity:.9; transform:translateY(-1px); }
+  .submit-note { text-align:center; font-size:12px; color:var(--muted); margin-top:12px; }
+
+  /* NEW: WHAT YOU GET PAGE (Step 9) */
+  .package-card { background:var(--card); border:1.5px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-bottom:16px; display:flex; flex-direction:column; }
+  .package-img { width:100%; height:160px; object-fit:cover; background:#2e2720; }
+  .package-content { padding:20px; }
+  .package-title { font-family:'Bricolage Grotesque',sans-serif; font-size:20px; font-weight:700; color:var(--cream); margin-bottom:12px; display:flex; align-items:center; gap:8px; letter-spacing:-0.01em; }
+  .package-list { list-style:none; }
+  .package-list li { font-size:14px; color:var(--muted); margin-bottom:8px; position:relative; padding-left:18px; line-height:1.5; }
+  .package-list li::before { content:'•'; color:var(--gold); position:absolute; left:0; top:0; font-weight:bold; }
+  @media(min-width:500px) {
+    .package-card { flex-direction:row; align-items:stretch; }
+    .package-img { width:140px; height:auto; }
+  }
+
+  @media(max-width:520px){
+    .choice-grid { grid-template-columns:1fr; }
+    .lang-grid { grid-template-columns:1fr; }
+    .genre-grid,.tile-grid.cols-2,.occasion-grid { grid-template-columns:1fr 1fr; }
+  }
+  .dev-badge { position:fixed; bottom:16px; right:16px; background:#111; border:1px solid var(--border); border-radius:8px; padding:8px 12px; font-size:11px; color:var(--muted); z-index:100; font-family:'Space Mono',monospace; }
+  .dev-badge strong { color:var(--green); }
+
+  /* ADD-ON STYLES */
+.addon-label { font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin:24px 0 12px; }
+.addon-card { display:flex; align-items:center; justify-content:space-between; background:var(--card); border:1.5px solid var(--border); border-radius:10px; padding:16px 20px; margin-bottom:10px; cursor:pointer; transition:border-color 0.2s, background 0.2s; user-select:none; }
+.addon-card:hover { border-color:#2a2a2a; }
+.addon-card.selected { border-color:var(--gold); background:rgba(77,255,145,0.08); }
+.addon-left { display:flex; align-items:center; gap:14px; }
+.addon-check { width:22px; height:22px; border-radius:6px; border:1.5px solid var(--muted); display:flex; align-items:center; justify-content:center; transition:all 0.2s; flex-shrink:0; }
+.addon-card.selected .addon-check { background:var(--gold); border-color:var(--gold); }
+.addon-check svg { width:14px; height:14px; stroke:#0e0c0a; fill:none; stroke-width:3; stroke-linecap:round; stroke-linejoin:round; opacity:0; transform:scale(0.5); transition:all 0.2s cubic-bezier(0.4,0,0.2,1); }
+.addon-card.selected .addon-check svg { opacity:1; transform:scale(1); }
+.addon-name { font-size:15px; color:var(--cream); font-weight:500; }
+.addon-price { font-size:14px; color:var(--gold); font-weight:600; letter-spacing:0.02em; }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <header class="site-header">
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M0 6 Q3 0 6 6 Q9 12 12 6 Q15 0 18 6 Q21 12 24 6"/></svg>
+      Orphsody
+    </div>
+    <h1>Your story needs a<br><em>soundtrack.</em></h1>
+    <p class="subtitle">We handle the production — you provide the soul. A custom song delivered in 48 hours.</p>
+  </header>
+
+  <div class="progress-wrap">
+    <span class="prog-label">Start</span>
+    <div class="prog-step active" id="pb-0"></div>
+    <div class="prog-step" id="pb-1"></div>
+    <div class="prog-step" id="pb-2"></div>
+    <div class="prog-step" id="pb-3"></div>
+    <div class="prog-step" id="pb-4"></div>
+    <div class="prog-step" id="pb-5"></div>
+    <div class="prog-step" id="pb-6"></div>
+    <div class="prog-step" id="pb-7"></div>
+    <div class="prog-step" id="pb-8"></div>
+    <div class="prog-step" id="pb-9"></div>
+    <span class="prog-label">Done</span>
+  </div>
+
+  <div class="step active" id="step-0">
+    <div class="step-eyebrow">First things first</div>
+    <h2 class="step-title">Do you have your own lyrics?</h2>
+    <p class="step-hint">We can write the lyrics for you, or set your words to music.</p>
+    <div class="choice-grid" id="lyrics-choice-grid"></div>
+    <div class="err-msg" id="err-0">Please make a selection to continue.</div>
+    <div class="nav-row">
+      <button class="btn-next" onclick="nextStep(0)">Continue <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+    </div>
+  </div>
+
+  <div class="step" id="step-1">
+    <div class="step-eyebrow">Step 1 of 9</div>
+    <h2 class="step-title">What language should the song be in?</h2>
+    <p class="step-hint">This is the language your songwriter will use.</p>
+    <div class="lang-grid" id="lang-grid"></div>
+    <div class="err-msg" id="err-1">Please choose a language to continue.</div>
+    <div class="nav-row">
+      <button class="btn-back" onclick="prevStep(1)">Back</button>
+      <button class="btn-next" onclick="nextStep(1)">Continue <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+    </div>
+  </div>
+
+  <div class="step" id="step-2">
+    <div class="step-eyebrow">Step 2 of 9</div>
+    <h2 class="step-title">Who is this song for?</h2>
+    <p class="step-hint">Choose the person who will receive this gift.</p>
+    <div class="tile-grid cols-2" id="person-grid" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr));"></div>
+    <div class="err-msg" id="err-2">Please choose a person to continue.</div>
+    <div class="nav-row">
+      <button class="btn-back" onclick="prevStep(2)">Back</button>
+      <button class="btn-next" onclick="nextStep(2)">Continue <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+    </div>
+  </div>
+
+  <div class="step" id="step-3">
+    <div class="step-eyebrow">Step 3 of 9</div>
+    <h2 class="step-title">What should it sound like?</h2>
+    <p class="step-hint">Pick a genre — press ▶ to hear an example, then click the card to select it.</p>
+    <div class="genre-grid" id="genre-grid"></div>
+    <div class="err-msg" id="err-3">Please choose a genre to continue.</div>
+    <div class="nav-row">
+      <button class="btn-back" onclick="prevStep(3)">Back</button>
+      <button class="btn-next" onclick="nextStep(3)">Continue <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+    </div>
+  </div>
+
+  <div class="step" id="step-4">
+    <div class="step-eyebrow">Step 4 of 9</div>
+    <h2 class="step-title">Is there an occasion?</h2>
+    <p class="step-hint">Choose one if there's something to celebrate — or skip straight to "just because".</p>
+
+    <div class="occasion-grid" id="occasion-grid"></div>
+
+    <div id="occasion-other-box" style="display:none;margin-bottom:12px;">
+      <input type="text" class="detail-input" id="occasion-other-input"
+        placeholder="What's the occasion? e.g. moving abroad, beating cancer, retirement party…"
+        oninput="STATE.occasionOtherText=this.value">
+    </div>
+
+    <div class="occasion-divider"><span class="occasion-divider-text">or</span></div>
+
+    <div class="justbecause-tile" id="jb-tile" onclick="selectOccasion('justbecause')">
+      <div class="justbecause-check"><svg viewBox="0 0 12 9"><polyline points="1,4 4,7 11,1"/></svg></div>
+      <span class="justbecause-icon">💛</span>
+      <div class="justbecause-body">
+        <span class="justbecause-label">No occasion — just because</span>
+        <span class="justbecause-sub">Sometimes love doesn't need a reason. This is a gift simply because they deserve it.</span>
+      </div>
+    </div>
+
+    <div class="err-msg" id="err-4">Please choose an occasion (or "just because") to continue.</div>
+    <div class="nav-row">
+      <button class="btn-back" onclick="prevStep(4)">Back</button>
+      <button class="btn-next" onclick="nextStep(4)">Continue <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+    </div>
+  </div>
+
+  <div class="step" id="step-5">
+    <div class="step-eyebrow">Step 5 of 9</div>
+    <h2 class="step-title">How should it feel?</h2>
+    <p class="step-hint">Pick the sentence that best describes the mood you're going for.</p>
+    <div class="vibe-grid" id="vibe-grid"></div>
+
+    <div id="mood-other-box" style="display:none;margin-top:12px;">
+      <textarea id="mood-other-input" placeholder="Describe the mood in your own words…" style="min-height:80px;" oninput="STATE.moodOtherText=this.value"></textarea>
+    </div>
+
+    <div class="angle-wrap" id="angle-wrap" style="display:none;">
+      <div class="select-label" id="angle-question-label" style="margin-top:24px;margin-bottom:10px;"></div>
+      <div class="angle-grid" id="angle-grid"></div>
+    </div>
+
+    <div class="toggle-row" onclick="toggleOccasionMention()" id="occasion-toggle-row" style="display:none;">
+      <div>
+        <div class="toggle-label" id="occasion-toggle-label">Mention the occasion in the song?</div>
+        <div class="toggle-sub">e.g. "Happy Birthday" or "Congratulations"</div>
+      </div>
+      <div class="toggle-switch" id="toggle-switch"></div>
+    </div>
+
+    <div class="err-msg" id="err-5">Please choose a mood to continue.</div>
+    <div class="nav-row">
+      <button class="btn-back" onclick="prevStep(5)">Back</button>
+      <button class="btn-next" onclick="nextStep(5)">Continue <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+    </div>
+  </div>
+
+  <div class="step" id="step-6">
+    <div class="step-eyebrow">Step 6 of 9</div>
+    <h2 class="step-title">Tell us your story</h2>
+    <p class="step-hint">This is what the songwriter will use. The more you share, the better your song.</p>
+
+    <div class="soft-details-wrap">
+      <div class="soft-details-label">Any names to mention? <span style="color:var(--muted);font-size:10px;letter-spacing:0;text-transform:none;">(optional)</span></div>
+      <div class="detail-input-wrap" style="margin-bottom:12px;">
+        <label style="display:block;font-size:11px;color:var(--muted);margin-bottom:4px;">Names to weave into the song</label>
+        <input type="text" class="detail-input" id="opt-names" placeholder="e.g. Sofia, Alex, little Mia… whoever should be mentioned">
+      </div>
+      <div class="detail-input-wrap">
+        <label style="display:block;font-size:11px;color:var(--muted);margin-bottom:4px;">Dates, places, or other details to include <span style="color:var(--muted);">(optional)</span></label>
+        <input type="text" class="detail-input" id="opt-other-details" placeholder="e.g. 14th Feb · Munich · their first apartment">
+      </div>
+    </div>
+
+    <div class="story-mode-tabs">
+      <button class="story-mode-tab active" id="tab-prompted" onclick="setStoryMode('prompted')">💬 Answer prompts</button>
+      <button class="story-mode-tab" id="tab-freewrite" onclick="setStoryMode('freewrite')">✍️ Write freely</button>
+    </div>
+
+    <div id="mode-prompted">
+      <div class="prompt-chips" id="prompt-chips"></div>
+      <p class="prompt-hint" id="prompt-hint-text">Tap a prompt above to answer it. Pick as many as you like.</p>
+      <div class="prompt-answers" id="prompt-answers"></div>
+      <button class="btn-more-prompts" id="more-prompts-btn" onclick="showMorePrompts()" style="display:none;">
+        ✦ More prompts
+      </button>
+    </div>
+
+    <div id="mode-freewrite" style="display:none;">
+      <div class="nudge-label">Not sure where to start? Tap a nudge:</div>
+      <div class="freewrite-nudge" id="freewrite-nudge"></div>
+      <textarea id="story-box" placeholder="Write your story here — in your own words, in any order." oninput="updateCharCount()" style="min-height:200px;"></textarea>
+    </div>
+
+    <div class="char-count" id="char-count">0 / 80 minimum</div>
+    <div class="err-msg" id="err-6">Please add a bit more — the songwriter needs at least 80 characters to work with.</div>
+    <div class="nav-row">
+      <button class="btn-back" onclick="prevStep(6)">Back</button>
+      <button class="btn-next" onclick="nextStep(6)">Continue <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+    </div>
+  </div>
+
+  <div class="step" id="step-7">
+    <div class="step-eyebrow">Step 7 of 9</div>
+    <h2 class="step-title">A few final details</h2>
+    <p class="step-hint">You chose <strong id="chosen-genre-label" style="color:var(--gold-lt);font-weight:500;"></strong> — now help us fine-tune the sound.</p>
+
+    <div class="select-group">
+      <div class="select-label">Tempo</div>
+      <div class="pill-row" id="tempo-pills"></div>
+    </div>
+    <div class="select-group">
+      <div class="select-label">Singer's voice</div>
+      <div class="pill-row" id="voice-pills"></div>
+    </div>
+    <div class="select-group" style="margin-bottom:0;">
+      <div class="select-label">Sounds like (optional)</div>
+      <div class="input-row"><input type="text" id="sounds-like" placeholder='e.g. "Ed Sheeran" or "Silbermond"'></div>
+    </div>
+
+    <div class="err-msg" id="err-7">Please select a tempo and voice to continue.</div>
+    <div class="nav-row">
+      <button class="btn-back" onclick="prevStep(7)">Back</button>
+      <button class="btn-next" onclick="nextStep(7)">Review order <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+    </div>
+  </div>
+
+  <div class="step" id="step-8">
+    <div class="step-eyebrow">Step 8 of 9</div>
+    <h2 class="step-title">Review your order</h2>
+    <p class="step-hint">Everything look right? Use the edit buttons to make changes.</p>
+    <div class="summary-card" id="summary-card"></div>
+    <div class="nav-row" style="margin-top:24px;">
+      <button class="btn-back" onclick="prevStep(8)">Back</button>
+      <button class="btn-next" onclick="nextStep(8)">Continue <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+    </div>
+  </div>
+
+  <div class="step" id="step-9">
+    <div class="step-eyebrow">The package</div>
+    <h2 class="step-title">You're so close!</h2>
+    <p class="step-hint">Here is what's included with your order today:</p>
+
+    <div class="package-card">
+      <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=400&auto=format&fit=crop" class="package-img" alt="Song Page">
+      <div class="package-content">
+        <div class="package-title">⭐ Your Own Song Page</div>
+        <ul class="package-list">
+          <li>2:30 min one-of-a-kind song</li>
+          <li>Studio quality (WAV & MP3)</li>
+          <li>Change the picture on the player</li>
+          <li>Including downloadable MP3</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="addon-label">Optional Add-ons</div>
+    
+    <div class="addon-card" onclick="toggleAddon(this, 10)">
+      <div class="addon-left">
+        <div class="addon-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <span class="addon-name">Beautiful Lyrics Sheet (PDF)</span>
+      </div>
+      <span class="addon-price">+ $10</span>
+    </div>
+
+    <div class="addon-card" onclick="toggleAddon(this, 5)">
+      <div class="addon-left">
+        <div class="addon-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <span class="addon-name">Personalised QR Code</span>
+      </div>
+      <span class="addon-price">+ $5</span>
+    </div>
+
+    <button class="btn-submit" id="btn-pay" onclick="submitForm()">Pay & Place Order →</button>
+    <p class="submit-note">PayPal &amp; Klarna accepted · Secure Checkout</p>
+    
+    <div class="nav-row" style="margin-top:24px;">
+      <button class="btn-back" style="flex:1;" onclick="prevStep(9)">← Review Details</button>
+    </div>
+   </div>
+
+
+    </div>
+  </div>
+
+</div><div class="dev-badge">🛠 <strong>Prototype v6.0</strong></div>
+
+<script>
+/* ═══════════════════════════════════════════════════
+   DATA
+   ═══════════════════════════════════════════════════ */
+const DATA = {
+
+  // New options for Step 0
+  lyricsOptions: [
+    { id: "no",  icon: "📝", title: "No, write them for me", sub: "I'll tell you my story, you write the lyrics." },
+    { id: "yes", icon: "🎵", title: "Yes, I have lyrics",    sub: "I have a poem or text I want set to music." }
+  ],
+
+  languages: [
+    { id:"de",   flag:"🇩🇪", name:"Deutsch",  sub:"German lyrics" },
+    { id:"en",   flag:"🇬🇧", name:"English",  sub:"English lyrics" },
+    { id:"both", flag:"🌍",  name:"Mix",      sub:"German & English" },
+  ],
+
+  persons: [
+    { id:"partner",    icon:"💑", label:"Mein Partner / Meine Liebe", sub:"Husband, wife, boyfriend, girlfriend, fiancé, or a crush" },
+    { id:"parents",    icon:"👨‍👩‍👧", label:"Meine Eltern",              sub:"Mother, father, stepparents, or a parent figure" },
+    { id:"child",      icon:"🌱", label:"Mein Kind",                  sub:"Newborn, toddler, daughter, or son" },
+    { id:"friend",     icon:"🤝", label:"Beste Freunde",              sub:"Best friend, the girls, the boys, maid of honour, or best man" },
+    { id:"grandparent",icon:"👴", label:"Oma & Opa",                  sub:"Grandparents — together or individually" },
+    { id:"sibling",    icon:"🫂", label:"Geschwister",                sub:"Brother, sister, or twin" },
+    { id:"pet",        icon:"🐾", label:"Mein Haustier",              sub:"Dog, cat, horse, or any beloved pet" },
+    { id:"other",      icon:"🎁", label:"Kollegen & Sonstige",        sub:"Colleague, boss, mentor, farewell gift, or just because" },
+  ],
+
+  occasions: [
+    { id:"birthday",    icon:"🎂", label:"Birthday",                    sub:"Especially milestone birthdays",         for:["partner","parents","child","friend","grandparent","sibling","pet","other"] },
+    { id:"anniversary", icon:"❤️", label:"Anniversary / Valentine's",   sub:"Celebrating love & time together",       for:["partner"] },
+    { id:"wedding",     icon:"💍", label:"Wedding",                     sub:"First dance, vows, or gift",             for:["partner","friend","sibling","other"] },
+    { id:"thankyou",    icon:"🙏", label:"Thank You",                   sub:"Mother's Day, Father's Day, gratitude",  for:["parents","grandparent","friend","other"] },
+    { id:"newbaby",     icon:"🍼", label:"New Baby / Christening",      sub:"Celebrating a new arrival",              for:["parents","partner","friend","sibling","other"] },
+    { id:"memorial",    icon:"🕊️", label:"Memorial / Tribute",          sub:"Honouring someone special",              for:["partner","parents","child","friend","grandparent","sibling","pet","other"] },
+    { id:"graduation",  icon:"🎓", label:"Graduation",                  sub:"A major milestone achieved",             for:["child","sibling","friend","partner","other"] },
+    { id:"retirement",  icon:"🌅", label:"Retirement / Farewell",       sub:"Abschiedsgeschenk — a new chapter",      for:["parents","grandparent","other","friend"] },
+    { id:"other",       icon:"🎊", label:"Other occasion",              sub:"Something else — you'll tell us below",  for:["partner","parents","child","friend","grandparent","sibling","pet","other"] },
+  ],
+
+  moods: {
+    "partner|anniversary":  ["It should feel like a love letter 💌","It should make us both cry happy tears 😭","It should capture exactly who we are 🥂","It should be light, fun, and romantic 💃"],
+    "partner|wedding":      ["It should feel like our first dance 💃","It should make everyone in the room feel it ❤️","It should be intimate — just for us 🤫","It should be joyful and celebratory 🎉"],
+    "partner|justbecause":  ["It should feel like a warm hug 🤗","It should say what I can't say out loud 🌹","It should be playful and fun between us 😄","It should be deep and meaningful 💛"],
+    "parents|birthday":     ["It should make them cry (happy tears) 😭","It should be warm and grateful 🙏","It should be funny and nostalgic 😄","It should celebrate everything they've built 🌟"],
+    "parents|thankyou":     ["It should say thank you from the heart 💛","It should feel like a hug they can hear 🤗","It should acknowledge their sacrifice 🌹","It should make them incredibly proud 🌟"],
+    "child|birthday":       ["It should be joyful and uplifting 🎈","It should feel like a proud parent moment 🥲","It should be fun and made for them 🎊","It should capture who they are right now 💛"],
+    "child|newbaby":        ["It should be gentle and dreamy 🌙","It should be a promise from us to them 🌹","It should celebrate this new arrival 🎉","It should be something they'll treasure forever 🎁"],
+    "friend|birthday":      ["It should roast them (lovingly) 😂","It should be heartfelt and sincere 💛","It should be a pure celebration banger 🚀","It should capture our friendship perfectly 🤝"],
+    "friend|wedding":       ["It should make them cry at the altar 😭","It should roast the couple (kindly) 😂","It should get the whole room dancing 🎉","It should say what words alone can't 💛"],
+    "grandparent|birthday": ["It should bring the whole family to tears 😭","It should celebrate a life well lived 🌟","It should be warm and nostalgic 🤗","It should be a gift from all the grandchildren 💛"],
+    "sibling|birthday":     ["It should roast them (they'll love it) 😂","It should be genuinely heartfelt 💛","It should feel like only a sibling could write it 🫂","It should be a hype song for their big day 🚀"],
+    "pet|justbecause":      ["It should be from the pet's perspective 🐾","It should be silly and fun 😄","It should be a love letter to our pet 💛","It should tell the story of our life together 🌍"],
+    "*|memorial":           ["It should be a quiet, loving goodbye 🕊️","It should celebrate everything they were 🌟","It should carry their memory forward 💌","It should feel like they're still speaking to us 💛"],
+    "other|retirement":     ["It should celebrate what they built 🌟","It should be warm and heartfelt from the team 🤝","It should be funny and full of shared memories 😄","It should wish them well on this next chapter 🌅"],
+    "default":              ["It should feel warm and heartfelt 💛","It should make them feel truly seen 🥲","It should be uplifting and celebratory 🎉","It should be something they'll never forget 🌟"],
+  },
+
+  vibes: [
+    { id:"romantic",     emoji:"❤️",  name:"Romantic" },
+    { id:"heartfelt",    emoji:"💛",  name:"Heartfelt" },
+    { id:"comical",      emoji:"😂",  name:"Comical" },
+    { id:"reflective",   emoji:"🪞",  name:"Reflective" },
+    { id:"uplifting",    emoji:"🚀",  name:"Uplifting" },
+    { id:"somber",       emoji:"🌑",  name:"Somber" },
+    { id:"happy",        emoji:"😊",  name:"Happy" },
+    { id:"lighthearted", emoji:"🎈",  name:"Lighthearted" },
+  ],
+
+  genres: [
+    { id:"acoustic-pop",      icon:"🎸", name:"Acoustic Pop",       desc:"Warm, guitar-forward. Emotional and universally loved.",        track:"Acoustic Pop Example",       src:"audio/acoustic-pop.mp3" },
+    { id:"singer-songwriter", icon:"🎙️", name:"Singer-Songwriter",  desc:"Intimate, lyric-driven. Stripped-back and close to the bone.", track:"Singer-Songwriter Example",  src:"audio/singer-songwriter.mp3" },
+    { id:"schlager",          icon:"🇩🇪", name:"Schlager",           desc:"Classic German pop. Upbeat, melodic, instantly familiar.",      track:"Schlager Example",           src:"audio/schlager.mp3" },
+    { id:"folk",              icon:"🌿", name:"Folk",               desc:"Acoustic and timeless. Great for nostalgia and tributes.",      track:"Folk Example",               src:"audio/folk.mp3" },
+    { id:"rnb",               icon:"🎷", name:"R&B",                desc:"Smooth, soulful, modern. Emotional but contemporary.",          track:"R&B Example",                src:"audio/rnb.mp3" },
+    { id:"pop",               icon:"✨", name:"Pop",                desc:"Bright and catchy. Big choruses, radio-ready energy.",          track:"Pop Example",                src:"audio/pop.mp3" },
+    { id:"country",           icon:"🤠", name:"Country",            desc:"Storytelling-forward with warmth and twang.",                   track:"Country Example",            src:"audio/country.mp3" },
+    { id:"lullaby",           icon:"🌙", name:"Lullaby",            desc:"Gentle and dreamy. Perfect for babies and young children.",     track:"Lullaby Example",            src:"audio/lullaby.mp3" },
+    { id:"hiphop",            icon:"🎤", name:"Hip-Hop",            desc:"Rhythmic and lyric-dense. Great for funny or hype songs.",      track:"Hip-Hop Example",            src:"audio/hiphop.mp3" },
+    { id:"rock",              icon:"🔥", name:"Rock",               desc:"Electric energy. Emotional ballad or full-on anthem.",          track:"Rock Example",               src:"audio/rock.mp3" },
+  ],
+
+  tempos: ["Slow", "Medium", "Upbeat"],
+  voices: ["Female", "Male", "Duet", "Any"],
+
+  branches: {
+    "partner|anniversary": {
+      branch:"A", angleQuestion:"How will this song be used?",
+      angleOptions:["Our First Dance 💃","A private romantic gift 🎁","Playing it at the reception 🥂"],
+      prompts:["How did you meet? Tell the full story.","What was your very first impression of them?","What quirk of theirs do you secretly love?","What promises are you making for the future?"],
+      extendedPrompts:["What moment made you realise you were in love?","What do they do that still makes you smile after all this time?","What is your favourite ordinary moment together?","How has loving them changed you?","What do you want the next chapter of your life together to look like?","What is something you've never said out loud that you want this song to say?"],
+      defaultTempo:"Slow", defaultVoice:"Female",
+    },
+    // ... (other branches hidden for brevity, logic handles fallback) ...
+    "default": {
+      branch:"—", angleQuestion:null, angleOptions:[],
+      prompts:["Who is this person and what makes them special?","What is your most cherished memory with them?","What do you want them to feel when they hear this song?","What are your wishes for their future?"],
+      // ADDED THIS so the "More Prompts" button always works for testing:
+      extendedPrompts:["Is there a specific place that is important in your story?","What is a phrase, saying, or word that represents them?","How has knowing them changed you?","What would you say to them if you knew they were listening right now?","Describe them in exactly 3 words.","What do other people not know about them that you do?"],
+      defaultTempo:"Medium", defaultVoice:"Any",
+    },
+  },
+};
+
+/* ═══════════════════════════════════════════════════
+   STATE
+   ═══════════════════════════════════════════════════ */
+const STATE = {
+  step:0,
+  hasLyrics:null,
+  language:null, person:null, genre:null, occasion:null,
+  occasionOtherText:"",
+  mood:null,
+  angle:null, occasionMention:true,
+  namesField:"",
+  otherDetails:"",
+  story:"",
+  tempo:null, voice:null, soundsLike:"",
+};
+
+let _lastStoryContext = "";
+let _showingMorePrompts = false;
+
+let storyMode     = "prompted";
+let activePrompts = [];
+let promptAnswers = {};
+let currentAudio  = null;
+let currentGenreId = null;
+let animTimers    = [];
+
+/* ═══════════════════════════════════════════════════
+   HELPERS
+   ═══════════════════════════════════════════════════ */
+function getBranch() {
+  const k1=`${STATE.person}|${STATE.occasion}`, k2=`*|${STATE.occasion}`;
+  // Ensure we get a branch with extendedPrompts if available
+  const branch = DATA.branches[k1] || DATA.branches[k2] || DATA.branches["default"];
+  // Fallback to default extended prompts if the specific branch lacks them
+  if(!branch.extendedPrompts) branch.extendedPrompts = DATA.branches["default"].extendedPrompts;
+  return branch;
+}
+function svgCheck(cls) {
+  return `<div class="${cls}"><svg viewBox="0 0 12 9"><polyline points="1,4 4,7 11,1"/></svg></div>`;
+}
+
+/* ═══════════════════════════════════════════════════
+   RENDER: LYRICS CHOICE (Step 0)
+   ═══════════════════════════════════════════════════ */
+function renderLyricsChoice() {
+  document.getElementById("lyrics-choice-grid").innerHTML = DATA.lyricsOptions.map(o=>`
+    <div class="tile-card ${STATE.hasLyrics===o.id?'selected':''}" onclick="selectLyricsOption('${o.id}')">
+      ${svgCheck('check-icon')}
+      <span class="tile-card-icon">${o.icon}</span>
+      <span class="tile-card-title">${o.title}</span>
+      <span class="tile-card-sub">${o.sub}</span>
+    </div>`).join("");
+}
+function selectLyricsOption(id) { STATE.hasLyrics=id; renderLyricsChoice(); hideErr("err-0"); }
+
+/* ═══════════════════════════════════════════════════
+   RENDER: LANGUAGE (Step 1)
+   ═══════════════════════════════════════════════════ */
+function renderLanguages() {
+  document.getElementById("lang-grid").innerHTML = DATA.languages.map(l=>`
+    <div class="tile-card ${STATE.language===l.id?'selected':''}" onclick="selectLanguage('${l.id}')">
+      ${svgCheck('check-icon')}
+      <span class="tile-card-icon" style="font-size:36px;margin-bottom:10px;">${l.flag}</span>
+      <span class="tile-card-title">${l.name}</span>
+      <span class="tile-card-sub">${l.sub}</span>
+    </div>`).join("");
+}
+function selectLanguage(id) { STATE.language=id; renderLanguages(); hideErr("err-1"); }
+
+/* ═══════════════════════════════════════════════════
+   RENDER: PERSONS (Step 2)
+   ═══════════════════════════════════════════════════ */
+function renderPersons() {
+  document.getElementById("person-grid").innerHTML = DATA.persons.map(p=>`
+    <div class="tile ${STATE.person===p.id?'selected':''}" onclick="selectPerson('${p.id}')">
+      ${svgCheck('tile-check')}
+      <span class="tile-icon">${p.icon}</span>
+      <span class="tile-label">${p.label}</span>
+      <span class="tile-sub">${p.sub}</span>
+    </div>`).join("");
+}
+function selectPerson(id) {
+  STATE.person=id; STATE.occasion=null; STATE.vibes=[]; STATE.angle=null; STATE.tempo=null; STATE.voice=null;
+  renderPersons(); hideErr("err-2");
+}
+
+/* ═══════════════════════════════════════════════════
+   RENDER: GENRE (Step 3)
+   ═══════════════════════════════════════════════════ */
+function renderGenres() {
+  document.getElementById("genre-grid").innerHTML = DATA.genres.map(g=>`
+    <div class="genre-card ${STATE.genre===g.id?'selected':''}" id="gcard-${g.id}" onclick="selectGenre('${g.id}')">
+      <div class="genre-card-top">
+        <div>
+          <span class="genre-icon">${g.icon}</span>
+          <span class="genre-name">${g.name}</span>
+          <span class="genre-desc">${g.desc}</span>
+        </div>
+        ${svgCheck('genre-check')}
+      </div>
+      <div class="genre-player">
+        <button class="play-btn" id="playbtn-${g.id}" onclick="event.stopPropagation();togglePlay('${g.id}','${g.src}','${g.track}')">
+          <svg id="playicon-${g.id}" viewBox="0 0 16 16"><polygon points="4,2 14,8 4,14"/></svg>
+        </button>
+        <div class="player-info">
+          <div class="player-track">${g.track}</div>
+          <div class="player-bar"><div class="player-fill" id="pfill-${g.id}"></div></div>
+        </div>
+        <div class="player-time" id="ptime-${g.id}">0:00</div>
+      </div>
+    </div>`).join("");
+}
+function selectGenre(id) {
+  STATE.genre=id;
+  document.querySelectorAll(".genre-card").forEach(c=>c.classList.toggle("selected",c.id===`gcard-${id}`));
+  hideErr("err-3");
+}
+
+/* Audio player logic (same as before) */
+function togglePlay(gid, src, track) {
+  if(currentAudio && currentGenreId!==gid) stopAudio(currentGenreId);
+  if(currentAudio && currentGenreId===gid) {
+    currentAudio.paused ? (currentAudio.play(), tickProgress(gid), setPlayIcon(gid,true))
+                        : (currentAudio.pause(), setPlayIcon(gid,false));
+    return;
+  }
+  currentAudio=new Audio(src);
+  currentGenreId=gid;
+  currentAudio.play().catch(()=>simulateProgress(gid));
+  currentAudio.addEventListener("timeupdate",()=>drawProgress(gid));
+  currentAudio.addEventListener("ended",()=>{ setPlayIcon(gid,false); drawProgress(gid,true); });
+  tickProgress(gid); setPlayIcon(gid,true);
+}
+function stopAudio(gid) {
+  animTimers.forEach(t=>{ clearTimeout(t); cancelAnimationFrame(t); });
+  animTimers=[];
+  if(currentAudio){ currentAudio.pause(); currentAudio=null; }
+  if(gid){ setPlayIcon(gid,false); resetProgress(gid); }
+  currentGenreId=null;
+}
+function tickProgress(gid) {
+  const id=requestAnimationFrame(()=>{ drawProgress(gid); tickProgress(gid); });
+  animTimers.push(id);
+}
+function drawProgress(gid, reset=false) {
+  if(!currentAudio) return;
+  const pct=reset?0:(currentAudio.duration?currentAudio.currentTime/currentAudio.duration*100:0);
+  const s=reset?0:Math.floor(currentAudio.currentTime);
+  const fill=document.getElementById("pfill-"+gid);
+  const time=document.getElementById("ptime-"+gid);
+  if(fill) fill.style.width=pct+"%";
+  if(time) time.textContent=`${Math.floor(s/60)}:${String(s%60).padStart(2,"0")}`;
+}
+function resetProgress(gid) {
+  const fill=document.getElementById("pfill-"+gid);
+  const time=document.getElementById("ptime-"+gid);
+  if(fill) fill.style.width="0%";
+  if(time) time.textContent="0:00";
+}
+function simulateProgress(gid) {
+  let t=0; const dur=30;
+  function tick(){
+    t+=0.15; if(t>dur){ setPlayIcon(gid,false); return; }
+    const fill=document.getElementById("pfill-"+gid);
+    const time=document.getElementById("ptime-"+gid);
+    const s=Math.floor(t);
+    if(fill) fill.style.width=(t/dur*100)+"%";
+    if(time) time.textContent=`${Math.floor(s/60)}:${String(s%60).padStart(2,"0")}`;
+    const id=setTimeout(tick,100); animTimers.push(id);
+  }
+  tick();
+}
+function setPlayIcon(gid, playing) {
+  const btn=document.getElementById("playbtn-"+gid);
+  const ico=document.getElementById("playicon-"+gid);
+  if(!btn||!ico) return;
+  btn.classList.toggle("playing",playing);
+  ico.innerHTML=playing
+    ?`<rect x="3" y="2" width="4" height="12"/><rect x="9" y="2" width="4" height="12"/>`
+    :`<polygon points="4,2 14,8 4,14"/>`;
+}
+
+/* ═══════════════════════════════════════════════════
+   RENDER: OCCASION (Step 4)
+   ═══════════════════════════════════════════════════ */
+function renderOccasions() {
+  const filtered = DATA.occasions.filter(o =>
+    !o.for || o.for.includes(STATE.person)
+  );
+  document.getElementById("occasion-grid").innerHTML = filtered.map(o=>`
+    <div class="tile ${STATE.occasion===o.id?'selected':''}" onclick="selectOccasion('${o.id}')">
+      ${svgCheck('tile-check')}
+      <span class="tile-icon">${o.icon}</span>
+      <span class="tile-label">${o.label}</span>
+      <span class="tile-sub">${o.sub}</span>
+    </div>`).join("");
+  const otherBox = document.getElementById("occasion-other-box");
+  if(otherBox) {
+    otherBox.style.display = STATE.occasion==="other" ? "block" : "none";
+    document.getElementById("occasion-other-input").value = STATE.occasionOtherText||"";
+  }
+  const jb=document.getElementById("jb-tile");
+  if(jb) jb.classList.toggle("selected", STATE.occasion==="justbecause");
+}
+function selectOccasion(id) {
+  STATE.occasion=id; STATE.mood=null; STATE.angle=null;
+  renderOccasions(); renderVibes(); hideErr("err-4");
+}
+
+/* ═══════════════════════════════════════════════════
+   RENDER: MOOD (Step 5)
+   ═══════════════════════════════════════════════════ */
+function getMoods() {
+  const k1=`${STATE.person}|${STATE.occasion}`, k2=`*|${STATE.occasion}`;
+  return DATA.moods[k1] || DATA.moods[k2] || DATA.moods["default"];
+}
+function renderVibes() {
+  const moods = getMoods();
+  document.getElementById("vibe-grid").innerHTML = moods.map((m,i)=>`
+    <div class="vibe-tile ${STATE.mood===i?'selected':''}" onclick="selectMood(${i})">
+      <span class="vibe-name" style="font-size:13.5px;line-height:1.45;">${m}</span>
+    </div>`).join("") +
+  `<div class="vibe-tile ${STATE.mood==='other'?'selected':''}" onclick="selectMood('other')">
+    <span class="vibe-name" style="font-size:13.5px;line-height:1.45;">✏️ Something else — I'll describe it</span>
+  </div>`;
+
+  const ob = document.getElementById("mood-other-box");
+  if(ob) ob.style.display = STATE.mood==="other" ? "block" : "none";
+
+  const branch=getBranch();
+  const aw=document.getElementById("angle-wrap");
+  if(branch.angleQuestion) {
+    document.getElementById("angle-question-label").textContent=branch.angleQuestion;
+    document.getElementById("angle-grid").innerHTML=branch.angleOptions.map((o,i)=>`
+      <div class="angle-tile ${STATE.angle===i?'selected':''}" onclick="selectAngle(${i})">
+        <span class="angle-tile-label">${o}</span>
+      </div>`).join("");
+    aw.style.display="block";
+  } else {
+    aw.style.display="none";
+  }
+
+  const tog=document.getElementById("occasion-toggle-row");
+  if(STATE.occasion && STATE.occasion!=="justbecause" && STATE.occasion!=="other") {
+    const occ=DATA.occasions.find(o=>o.id===STATE.occasion);
+    if(occ) document.getElementById("occasion-toggle-label").textContent=`Mention "${occ.label}" in the song?`;
+    document.getElementById("toggle-switch").className="toggle-switch"+(STATE.occasionMention?" on":"");
+    tog.style.display="flex";
+  } else {
+    tog.style.display="none";
+  }
+}
+function selectMood(i) {
+  STATE.mood=i;
+  renderVibes(); hideErr("err-5");
+}
+function selectAngle(i) { STATE.angle=i; renderVibes(); }
+function toggleOccasionMention() {
+  STATE.occasionMention=!STATE.occasionMention;
+  document.getElementById("toggle-switch").className="toggle-switch"+(STATE.occasionMention?" on":"");
+}
+
+/* ═══════════════════════════════════════════════════
+   RENDER: STORY (Step 6)
+   ═══════════════════════════════════════════════════ */
+function renderStoryStep() {
+  const namesEl = document.getElementById("opt-names");
+  const detailsEl = document.getElementById("opt-other-details");
+  if(namesEl) namesEl.value = STATE.namesField||"";
+  if(detailsEl) detailsEl.value = STATE.otherDetails||"";
+
+  const ctx = STATE.person+"|"+STATE.occasion;
+  if(ctx !== _lastStoryContext) {
+    activePrompts=[]; promptAnswers={};
+    _showingMorePrompts = false;
+    _lastStoryContext = ctx;
+  }
+  renderPromptChips(); renderPromptAnswers(); renderFreewriteNudges();
+  const box=document.getElementById("story-box");
+  if(box && !box.value) box.value=STATE.story||"";
+  setStoryMode(storyMode); updateCharCount();
+}
+function setStoryMode(mode) {
+  storyMode=mode;
+  document.getElementById("mode-prompted").style.display  =mode==="prompted" ?"block":"none";
+  document.getElementById("mode-freewrite").style.display =mode==="freewrite"?"block":"none";
+  document.getElementById("tab-prompted").classList.toggle("active", mode==="prompted");
+  document.getElementById("tab-freewrite").classList.toggle("active",mode==="freewrite");
+  updateCharCount();
+}
+function togglePromptChip(idx) {
+  if(activePrompts.includes(idx)) activePrompts=activePrompts.filter(i=>i!==idx);
+  else activePrompts.push(idx);
+  renderPromptChips(); renderPromptAnswers(); updateCharCount();
+}
+function renderPromptChips() {
+  const branch=getBranch();
+  const base = branch.prompts || [];
+  const extra = branch.extendedPrompts || [];
+  const allPrompts = _showingMorePrompts ? [...base, ...extra] : base;
+
+  document.getElementById("prompt-chips").innerHTML=allPrompts.map((p,i)=>
+    `<div class="prompt-chip ${activePrompts.includes(i)?'active':''}" onclick="togglePromptChip(${i})">${p}</div>`
+  ).join("");
+
+  const moreBtn = document.getElementById("more-prompts-btn");
+  if(moreBtn) {
+    moreBtn.style.display = (!_showingMorePrompts && extra.length>0) ? "inline-flex" : "none";
+  }
+
+  const hint=document.getElementById("prompt-hint-text");
+  hint.style.display=activePrompts.length===0?"block":"none";
+}
+function showMorePrompts() {
+  _showingMorePrompts = true;
+  renderPromptChips();
+}
+function renderPromptAnswers() {
+  const branch=getBranch();
+  // Map activePrompts to correct text regardless of whether extended or not
+  const base = branch.prompts || [];
+  const extra = branch.extendedPrompts || [];
+  const fullList = [...base, ...extra];
+  
+  document.getElementById("prompt-answers").innerHTML=activePrompts.map(idx=>`
+    <div class="prompt-answer-block">
+      <div class="prompt-answer-label">${fullList[idx]}</div>
+      <textarea placeholder="Your answer..." oninput="savePromptAnswer(${idx},this.value);updateCharCount();">${promptAnswers[idx]||""}</textarea>
+    </div>`).join("");
+}
+function savePromptAnswer(idx,val) { promptAnswers[idx]=val; }
+function renderFreewriteNudges() {
+  const branch=getBranch();
+  document.getElementById("freewrite-nudge").innerHTML=branch.prompts.map(p=>
+    `<span class="nudge-tag" onclick="appendNudge(this,'${p.replace(/'/g,"\\'")}')">
+      ${p.length>42?p.slice(0,39)+"…":p}
+    </span>`).join("");
+}
+function appendNudge(el,text) {
+  const box=document.getElementById("story-box");
+  box.value+=(box.value.trim().length>0?"\n\n":"")+text+" ";
+  box.focus(); box.selectionStart=box.selectionEnd=box.value.length;
+  updateCharCount();
+  el.style.borderColor="var(--gold)"; el.style.color="var(--gold-lt)";
+  setTimeout(()=>{el.style.borderColor="";el.style.color="";},600);
+}
+function getStoryText() {
+  if(storyMode==="freewrite") return document.getElementById("story-box")?.value||"";
+  const branch=getBranch();
+  const base = branch.prompts || [];
+  const extra = branch.extendedPrompts || [];
+  const fullList = [...base, ...extra];
+  
+  return activePrompts.map(idx=>{
+    const ans=(promptAnswers[idx]||"").trim();
+    return ans?fullList[idx]+"\n"+ans:"";
+  }).filter(Boolean).join("\n\n");
+}
+function updateCharCount() {
+  const count=getStoryText().length;
+  const el=document.getElementById("char-count");
+  if(!el) return;
+  el.textContent=`${count} / 80 minimum`;
+  el.className="char-count"+(count>0&&count<80?" warn":"");
+}
+
+/* ═══════════════════════════════════════════════════
+   RENDER: MUSIC DETAILS (Step 7)
+   ═══════════════════════════════════════════════════ */
+function renderMusicDetails() {
+  const branch=getBranch();
+  const genreObj=DATA.genres.find(g=>g.id===STATE.genre);
+  const lbl=document.getElementById("chosen-genre-label");
+  if(lbl) lbl.textContent=genreObj?`${genreObj.icon} ${genreObj.name}`:"your chosen genre";
+
+  document.getElementById("tempo-pills").innerHTML=DATA.tempos.map(t=>
+    `<div class="pill ${STATE.tempo===t?'selected':''}" onclick="selectPill('tempo','${t}')">${t}</div>`
+  ).join("");
+  if(!STATE.tempo&&branch.defaultTempo) setTimeout(()=>selectPill("tempo",branch.defaultTempo),0);
+
+  document.getElementById("voice-pills").innerHTML=DATA.voices.map(v=>
+    `<div class="pill ${STATE.voice===v?'selected':''}" onclick="selectPill('voice','${v}')">${v}</div>`
+  ).join("");
+  if(!STATE.voice&&branch.defaultVoice) setTimeout(()=>selectPill("voice",branch.defaultVoice),0);
+
+  document.getElementById("sounds-like").value=STATE.soundsLike||"";
+}
+function selectPill(type,val) {
+  STATE[type]=val;
+  const map={tempo:"tempo-pills",voice:"voice-pills"};
+  const c=document.getElementById(map[type]);
+  if(c) c.querySelectorAll(".pill").forEach(p=>p.classList.toggle("selected",p.textContent===val));
+  hideErr("err-7");
+}
+
+/* ═══════════════════════════════════════════════════
+   RENDER: SUMMARY (Step 8)
+   ═══════════════════════════════════════════════════ */
+function renderSummary() {
+  const branch=getBranch();
+  const lyricOpt = DATA.lyricsOptions.find(l=>l.id===STATE.hasLyrics);
+  const lang=DATA.languages.find(l=>l.id===STATE.language);
+  const person=DATA.persons.find(p=>p.id===STATE.person);
+  const genreObj=DATA.genres.find(g=>g.id===STATE.genre);
+  const ownLyrics = STATE.hasLyrics==="yes";
+
+  let occLabel = "—";
+  if(STATE.occasion==="justbecause") occLabel="No occasion — just because";
+  else if(STATE.occasion==="other") occLabel="Other: "+(STATE.occasionOtherText||"—");
+  else occLabel=DATA.occasions.find(o=>o.id===STATE.occasion)?.label||"—";
+
+  const moods=getMoods();
+  let moodLabel="—";
+  if(STATE.mood==="other") moodLabel="Other: "+(document.getElementById("mood-other-input")?.value||"");
+  else if(STATE.mood!==null && moods[STATE.mood]) moodLabel=moods[STATE.mood];
+
+  const angle=branch.angleOptions&&STATE.angle!==null?branch.angleOptions[STATE.angle]:"—";
+  const names=STATE.namesField||"—";
+  const otherDets=STATE.otherDetails||"—";
+  const story=STATE.story;
+
+  const rows = [
+    { key:"Own Lyrics", val:lyricOpt?lyricOpt.title:"—",                    step:0 },
+    { key:"Language",   val:lang?`${lang.flag} ${lang.name}`:"—",           step:1 },
+    { key:"For",        val:person?.label||"—",                              step:2 },
+    { key:"Genre",      val:genreObj?`${genreObj.icon} ${genreObj.name}`:"—",step:3},
+    ...(!ownLyrics ? [
+      { key:"Occasion", val:occLabel,                                        step:4 },
+      { key:"Mood",     val:moodLabel,                                       step:5 },
+      { key:"Angle",    val:angle,                                           step:5 },
+      { key:"Names mentioned", val:names,                                   step:6 },
+      { key:"Other details",   val:otherDets,                               step:6 },
+      { key:"Story",    val:story?story.slice(0,160)+(story.length>160?"…":""):"—", step:6 },
+      { key:"Tempo",    val:STATE.tempo||"—",                               step:7 },
+      { key:"Voice",    val:STATE.voice||"—",                               step:7 },
+      { key:"Sounds like", val:STATE.soundsLike||"—",                       step:7 },
+    ] : [
+      { key:"Tempo",    val:STATE.tempo||"—",                               step:3 },
+      { key:"Voice",    val:STATE.voice||"—",                               step:3 },
+    ]),
+  ];
+
+  document.getElementById("summary-card").innerHTML = rows.map(item => `
+    <div class="summary-row">
+      <span class="summary-key">${item.key}</span>
+      <span class="summary-val" style="white-space:pre-line">${item.val}</span>
+      <button class="btn-edit-link" onclick="goToStep(${item.step})">Edit</button>
+    </div>
+  `).join("");
+}
+
+/* ═══════════════════════════════════════════════════
+   NAVIGATION
+   ═══════════════════════════════════════════════════ */
+const TOTAL_STEPS = 9; // steps 0–9
+
+function nextStep(from) {
+  if(!validate(from)) return;
+  if(from===6) {
+    STATE.story=getStoryText();
+    STATE.namesField=document.getElementById("opt-names")?.value||"";
+    STATE.otherDetails=document.getElementById("opt-other-details")?.value||"";
+  }
+  if(from===7) {
+    STATE.soundsLike=document.getElementById("sounds-like")?.value||"";
+  }
+  if(from===3) stopAudio(currentGenreId);
+  if(from===3 && STATE.hasLyrics==="yes") { goToStep(8); return; }
+  goToStep(from+1);
+}
+function prevStep(current) {
+  if(current===4) stopAudio(currentGenreId);
+  if(current===8 && STATE.hasLyrics==="yes") { goToStep(3); return; }
+  goToStep(current-1);
+}
+function goToStep(n) {
+  document.getElementById(`step-${STATE.step}`).classList.remove("active");
+  STATE.step=n;
+  if(n===0) renderLyricsChoice();
+  if(n===1) renderLanguages();
+  if(n===2) renderPersons();
+  if(n===3) renderGenres();
+  if(n===4) renderOccasions();
+  if(n===5) renderVibes();
+  if(n===6) renderStoryStep();
+  if(n===7) renderMusicDetails();
+  if(n===8) renderSummary();
+  // n=9 is static (what you get)
+  const el=document.getElementById(`step-${n}`);
+  el.classList.add("active");
+  el.scrollIntoView({behavior:"smooth",block:"start"});
+  updateProgressBar(n);
+}
+function updateProgressBar(n) {
+  for(let i=0;i<=TOTAL_STEPS;i++){
+    const el=document.getElementById(`pb-${i}`);
+    if(el) el.className="prog-step"+(i<n?" done":i===n?" active":"");
+  }
+}
+
+/* ═══════════════════════════════════════════════════
+   VALIDATION
+   ═══════════════════════════════════════════════════ */
+function validate(step) {
+  hideErr(`err-${step}`);
+  if(step===0 && !STATE.hasLyrics)                        { showErr("err-0"); return false; }
+  if(step===1 && !STATE.language)                         { showErr("err-1"); return false; }
+  if(step===2 && !STATE.person)                           { showErr("err-2"); return false; }
+  if(step===3 && !STATE.genre)                            { showErr("err-3"); return false; }
+  if(step===3 && STATE.hasLyrics==="yes")                 { return true; }
+  if(step===4 && !STATE.occasion)                         { showErr("err-4"); return false; }
+  if(step===5 && STATE.mood===null)     { showErr("err-5"); return false; }
+  if(step===6 && getStoryText().length<80)                { showErr("err-6"); return false; }
+  if(step===7 && (!STATE.tempo||!STATE.voice))            { showErr("err-7"); return false; }
+  return true;
+}
+function showErr(id) { document.getElementById(id)?.classList.add("show"); }
+function hideErr(id) { document.getElementById(id)?.classList.remove("show"); }
+
+/* ═══════════════════════════════════════════════════
+   SUBMIT
+   ═══════════════════════════════════════════════════ */
+function submitForm() {
+  async function submitForm() {
+     const btn = document.querySelector(".btn-submit");
+     btn.textContent = "Sending…";
+     btn.disabled = true;
+     try {
+       await fetch("https://formspree.io/f/xdalrokn", {
+         method: "POST",
+         headers: { "Content-Type": "application/json" },
+         body: JSON.stringify(STATE)
+       });
+       btn.textContent = "✓ Order sent!";
+       // Optionally redirect to a thank-you page here
+     } catch(e) {
+       btn.textContent = "Error — please try again";
+       btn.disabled = false;
+     }
+   }
+}
+
+function toggleAddon(el, price) {
+  el.classList.toggle("selected");
+  // Optional: Logic to update total price if you have a variable for it
+  // console.log("Addon toggled. Price: " + price);
+}
+
+/* INIT */
+renderLyricsChoice();
+</script>
+</body>
+</html>
