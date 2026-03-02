@@ -698,93 +698,351 @@ moods: {
 
   tempos: ["Slow", "Medium", "Upbeat"],
 
-  branches: {
-    "partner|anniversary": {
-      prompts:["How did you meet? Tell the full story.","What was your very first impression of them?","What quirk of theirs do you secretly love?","What promises are you making for the future?"],
-      extendedPrompts:["What moment made you realise you were in love?","What do they do that still makes you smile?","What is your favourite ordinary moment together?","How has loving them changed you?","What do you want the next chapter to look like?","Something you've never said out loud — what is it?"],
-      defaultTempo:"Slow",
-    },
-    "partner|wedding": {
-      prompts:["Describe the moment you knew they were the one.","What do you love most about them right now?","What are your promises to them today?","How do you want your life together to feel?"],
-      extendedPrompts:["What's a funny or tender memory of your relationship?","What does your future together look like?","How has loving them made you a better person?","What do you want them to feel when they hear this song?"],
-      defaultTempo:"Slow",
-    },
-    "partner|birthday": {
-      prompts:["What do you love about them that no one else sees?","What's your favourite memory together this year?","How do you want them to feel on their birthday?","What are you wishing for them?"],
-      extendedPrompts:["How have they changed over the time you've known them?","What makes them laugh?","What do you want to celebrate about who they are?"],
-      defaultTempo:"Medium",
-    },
-    "partner|justbecause": {
-      prompts:["What made you want to give them a song today?","What do you love most about them right now?","What do you want them to feel when they hear this?","What's a little moment you share that no one else knows?"],
-      extendedPrompts:["How does being with them make your life better?","What's something they do that always makes you smile?","What would you want to say if they were listening right now?"],
-      defaultTempo:"Medium",
-    },
-    "parents|birthday": {
-      prompts:["What has your mum or dad given you that you're most grateful for?","What's your favourite memory with them?","What do you want to celebrate about who they are?","What are your wishes for their next chapter?"],
-      extendedPrompts:["What did they sacrifice for you that you understand better now?","How have they shaped who you are?","What do you want them to know about how you feel?"],
-      defaultTempo:"Medium",
-    },
-    "parents|thankyou": {
-      prompts:["What's the one thing they did that changed your life?","What did you take for granted that you now appreciate?","How have they shown you love in their own way?","What do you want to say to them that you've never said?"],
-      extendedPrompts:["What values did they teach you?","What memory always makes you emotional?","What are you most proud of in your relationship with them?"],
-      defaultTempo:"Slow",
-    },
-    "child|birthday": {
-      prompts:["What's something special about who they are right now?","What's your favourite moment with them this year?","What do you dream for their future?","How do you want them to feel when they hear this?"],
-      extendedPrompts:["What makes them uniquely themselves?","What do you hope they always remember about their childhood?","What do you want them to know about how much they're loved?"],
-      defaultTempo:"Medium",
-    },
-    "child|newbaby": {
-      prompts:["What did you feel the moment you saw them?","What do you hope for their future?","What promises are you making to this new little person?","How has your life changed since they arrived?"],
-      extendedPrompts:["What do you want them to know about the family they've joined?","What are you most excited to share with them?","Describe the first moment you held them."],
-      defaultTempo:"Slow",
-    },
-    "friend|birthday": {
-      prompts:["How did you two become friends?","What's your most ridiculous shared memory?","What do you love about them that they probably don't know?","What are you wishing for them?"],
-      extendedPrompts:["What have they taught you?","How have they shown up for you?","What inside joke or shared reference would they love?"],
-      defaultTempo:"Upbeat",
-    },
-    "friend|wedding": {
-      prompts:["How do you know the couple?","What's a memory of them together that stands out?","What do you want to say about their love?","What are your wishes for them?"],
-      extendedPrompts:["What makes them perfect for each other?","What's something funny or tender from the relationship?","What do you want the room to feel?"],
-      defaultTempo:"Medium",
-    },
-    "friend|justbecause": {
-      prompts:["What made you want to do this for them today?","What do you love about your friendship?","What's a moment that defines your bond?","What do you want them to feel?"],
-      extendedPrompts:["What do they bring to your life?","What's a shared memory that always makes you smile?","What would you want them to always know?"],
-      defaultTempo:"Medium",
-    },
-    "grandparent|birthday": {
-      prompts:["What do you love most about your grandparent?","What's a story or memory you'll always treasure?","What have they taught you about life?","How do you want them to feel when they hear this?"],
-      extendedPrompts:["What makes them special to the whole family?","What's a tradition or phrase they're known for?","What do you hope they know about how much they're loved?"],
-      defaultTempo:"Slow",
-    },
-    "grandparent|thankyou": {
-      prompts:["What's the most important thing they've given you?","What's a memory that defines who they are?","What values did they teach you?","What do you want them to hear?"],
-      extendedPrompts:["What stories have they told that you'll always remember?","How have they shaped the family?","What do you want to celebrate about their life?"],
-      defaultTempo:"Slow",
-    },
-    "sibling|birthday": {
-      prompts:["What's the funniest memory you have with your sibling?","What do you genuinely admire about them?","What do you want to celebrate about this birthday?","What are your wishes for them?"],
-      extendedPrompts:["What's a memory only a sibling would understand?","How have they shaped who you are?","What's something you've never properly said to them?"],
-      defaultTempo:"Upbeat",
-    },
-    "pet|justbecause": {
-      prompts:["Describe your pet and their personality.","What's your favourite thing they do?","How has having them changed your life?","What would you say to them if they could understand?"],
-      extendedPrompts:["What's the funniest thing they do?","What do they always do when you come home?","What would they say about you if they could talk?"],
-      defaultTempo:"Medium",
-    },
-    "other|retirement": {
-      prompts:["What has this person built or achieved that deserves celebrating?","What's a memory from working with them?","What does the team want to say?","What do you wish them for their next chapter?"],
-      extendedPrompts:["What's a funny shared memory?","What will the team miss most?","What's something they're known for?"],
-      defaultTempo:"Upbeat",
-    },
-    "default": {
-      prompts:["Who is this person and what makes them special?","What is your most cherished memory with them?","What do you want them to feel when they hear this song?","What are your wishes for their future?"],
-      extendedPrompts:["Is there a place that is important in your story?","What is a phrase or word that represents them?","How has knowing them changed you?","What would you say if you knew they were listening right now?","Describe them in exactly 3 words.","What do others not see about them that you do?"],
-      defaultTempo:"Medium",
-    },
+ branches: {
+
+  // ══ PARTNER ══════════════════════════════════════════════════════════════
+
+  "partner|anniversary": {
+    prompts:["How did you meet? Tell the full story.","What was your very first impression of them?","What quirk of theirs do you secretly love?","What promises are you making for the future?"],
+    extendedPrompts:["What moment made you realise you were in love?","What do they do that still makes you smile after all this time?","What is your favourite ordinary moment together?","How has loving them changed you?","What do you want the next chapter to look like?","Something you've never said out loud — what is it?"],
+    defaultTempo:"Slow",
   },
+  "partner|wedding": {
+    prompts:["Describe the moment you knew they were the one.","What do you love most about them right now?","What are your promises to them today?","How do you want your life together to feel?"],
+    extendedPrompts:["What's a funny or tender memory only you two would know?","What does your future together look like in your mind?","How has loving them made you a better person?","What do you want them to feel when they hear this song?"],
+    defaultTempo:"Slow",
+  },
+  "partner|engagement": {
+    prompts:["How did the proposal happen — every detail.","What was the moment you knew you wanted to marry them?","What do you love about them that you've never put into words?","What does the rest of your life with them look like?"],
+    extendedPrompts:["How have they changed you?","What do you want them to feel every time they hear this?","What's a small, ordinary moment that says everything about your relationship?","What are you most excited about for the future?"],
+    defaultTempo:"Medium",
+  },
+  "partner|birthday": {
+    prompts:["What do you love about them that no one else sees?","What's your favourite memory together this year?","How do you want them to feel on their birthday?","What are you wishing for them?"],
+    extendedPrompts:["How have they changed since you've known them?","What makes them laugh?","What do you want to celebrate about who they are right now?"],
+    defaultTempo:"Medium",
+  },
+  "partner|justbecause": {
+    prompts:["What made you want to give them a song today?","What do you love most about them right now?","What's a little moment you share that no one else would know?","What do you want them to feel when they hear this?"],
+    extendedPrompts:["How does being with them make your everyday life better?","What's something they do that always makes you smile?","What would you want to say if they were listening right now?"],
+    defaultTempo:"Medium",
+  },
+  "partner|longdistance": {
+    prompts:["How long have you been apart and what's the hardest part?","What do you miss most — be specific.","What moment do you replay in your head?","What's waiting for you when you're finally together again?"],
+    extendedPrompts:["What does a normal day feel like without them?","What do you do to feel close to them?","What's the first thing you'll do when you're reunited?","What do you want them to remember when it gets hard?"],
+    defaultTempo:"Slow",
+  },
+  "partner|proposal": {
+    prompts:["How did you know this was the person you wanted to marry?","What do you love about them that you've never said out loud?","What does the rest of your life with them look like?","What do you want to ask them — in your own words?"],
+    extendedPrompts:["What's the moment that changed everything for you?","What's something small about them that says everything?","How have they made you a different person?","What are you promising them with this question?"],
+    defaultTempo:"Slow",
+  },
+  "partner|apology": {
+    prompts:["What happened, in your own honest words?","What do you wish you'd done differently?","What do you want them to know about how you feel now?","What are you promising going forward?"],
+    extendedPrompts:["What does this relationship mean to you?","What do you want them to understand about your feelings?","What does repair look like for you both?"],
+    defaultTempo:"Slow",
+  },
+
+  // ══ MUM ══════════════════════════════════════════════════════════════════
+
+  "mum|birthday": {
+    prompts:["What's a memory of your mum that says everything about who she is?","What has she given you that money can't buy?","What's a funny or chaotic family moment she was at the centre of?","What do you want her to feel on her birthday?"],
+    extendedPrompts:["What did she do that you only appreciated as an adult?","What's something she always says that lives in your head?","How has she shaped who you are?","What do you want her to know that you never quite say?"],
+    defaultTempo:"Medium",
+  },
+  "mum|mothersday": {
+    prompts:["What's the one thing your mum did that changed your life?","What did you take for granted growing up that you're grateful for now?","What's a small, specific thing she does that shows her love?","What do you want to say that you've never quite found the words for?"],
+    extendedPrompts:["What values did she teach you without ever stating them?","What memory always makes you emotional when you think about it?","What does she mean to your family?","What do you hope she knows about how she's loved?"],
+    defaultTempo:"Slow",
+  },
+  "mum|thankyou": {
+    prompts:["What's the biggest sacrifice she made for you?","What's a specific moment of her love you'll never forget?","What has she taught you about how to live?","What do you want her to hear that's been unsaid?"],
+    extendedPrompts:["How has she shown love in her own unique way?","What would your life look like without her in it?","What are you most proud of about her?","What's a phrase or habit of hers that lives on in you?"],
+    defaultTempo:"Slow",
+  },
+  "mum|justbecause": {
+    prompts:["What made you want to do this for her today?","What's something she does that you've never properly acknowledged?","What does she mean to your everyday life?","What do you want her to feel?"],
+    extendedPrompts:["What's a small moment between you that no one else would understand?","What do you love about her that she probably doesn't realise?","What do you want her to know, simply?"],
+    defaultTempo:"Medium",
+  },
+  "mum|memorial": {
+    prompts:["What's the memory of her you hold closest?","What did she give you that you carry with you every day?","What would you want to say to her if you had one more moment?","How has she shaped who you've become?"],
+    extendedPrompts:["What would she say to you right now if she could?","What do you miss most about her presence?","What's something she always said that you still hear?","How do you keep her memory alive?"],
+    defaultTempo:"Slow",
+  },
+
+  // ══ DAD ══════════════════════════════════════════════════════════════════
+
+  "dad|birthday": {
+    prompts:["What's a memory with your dad that says everything about him?","What's the most dad thing he's ever done?","What do you genuinely admire about him that you've never said?","What do you want to celebrate about who he is?"],
+    extendedPrompts:["What did he teach you without realising it?","What's a joke, habit, or phrase that is completely and utterly him?","How has he shaped who you are?","What do you want him to know on his birthday?"],
+    defaultTempo:"Medium",
+  },
+  "dad|fathersday": {
+    prompts:["What's the most important thing your dad has given you?","What did he show you about how to be a person?","What's a specific memory with him you'll always hold on to?","What do you want to say that you don't say enough?"],
+    extendedPrompts:["What did he do for you that you only understand now you're older?","What's something quiet he did that showed enormous love?","How has he shaped your idea of strength, or family, or home?","What do you hope he knows about how you see him?"],
+    defaultTempo:"Medium",
+  },
+  "dad|thankyou": {
+    prompts:["What has he done for you that deserves a proper thank you?","What sacrifice did he make that you want to acknowledge?","What has he taught you that stays with you?","What do you want him to hear?"],
+    extendedPrompts:["What's a moment between you that meant everything?","What do you admire about him now that you're older?","How is he present in the way you live your life?"],
+    defaultTempo:"Slow",
+  },
+  "dad|retirement": {
+    prompts:["What did he build over his career that deserves celebrating?","What will his life look like now — what's he looking forward to?","What do you want to say on behalf of the family?","What's a funny or legendary work story?"],
+    extendedPrompts:["What has his work ethic taught the people around him?","What will people miss most about him?","What does this new chapter mean for the whole family?","What are you wishing for him?"],
+    defaultTempo:"Medium",
+  },
+  "dad|memorial": {
+    prompts:["What's the memory of him you go back to most?","What did he teach you about how to live?","What would you want him to hear if he could?","How is he still present in your everyday life?"],
+    extendedPrompts:["What's something he said that you still hear in your head?","What do you miss most?","How has losing him changed you?","What do you want people to know about who he was?"],
+    defaultTempo:"Slow",
+  },
+
+  // ══ PARENTS (both) ════════════════════════════════════════════════════════
+
+  "parents|birthday": {
+    prompts:["What have your parents given you that you're most grateful for?","What's a memory that captures who they are together?","What do you want to celebrate about them?","What are your wishes for their next chapter?"],
+    extendedPrompts:["What did they sacrifice for you that you understand better now?","How have they shaped who you are?","What do you want them to know about how you feel?","What's something funny that defines your family?"],
+    defaultTempo:"Medium",
+  },
+  "parents|thankyou": {
+    prompts:["What's the one thing they did that changed your life?","What did you take for granted that you now appreciate?","How have they shown you love in their own way?","What do you want to say that you've never said?"],
+    extendedPrompts:["What values did they teach you?","What memory always makes you emotional?","What are you most proud of in your relationship with them?","What do you hope they know?"],
+    defaultTempo:"Slow",
+  },
+  "parents|memorial": {
+    prompts:["What's the memory of them you hold closest?","What did they give you that you carry every day?","What would you want to say if you had one more moment?","How have they shaped who you've become?"],
+    extendedPrompts:["What did they teach you without knowing it?","What do you miss most about them being here?","What do you want the world to know about who they were?"],
+    defaultTempo:"Slow",
+  },
+
+  // ══ CHILD ════════════════════════════════════════════════════════════════
+
+  "child|birthday": {
+    prompts:["What's something special about who they are right now, at this exact age?","What's your favourite moment with them this year?","What do you dream for their future?","How do you want them to feel when they hear this?"],
+    extendedPrompts:["What makes them uniquely, irreplaceably themselves?","What do you hope they always remember about this time?","What do you want them to know about how much they're loved?","What has being their parent taught you?"],
+    defaultTempo:"Medium",
+  },
+  "child|newbaby": {
+    prompts:["What did you feel the moment you saw them?","What do you hope for their future?","What promises are you making to this new little person?","How has your life changed since they arrived?"],
+    extendedPrompts:["What do you want them to know about the family they've joined?","What are you most excited to share with them as they grow?","Describe the first moment you held them.","What kind of person do you hope they become?"],
+    defaultTempo:"Slow",
+  },
+  "child|graduation": {
+    prompts:["What do you remember about the beginning of this journey?","What moment this year made you the proudest?","What do you want them to know as they step into what's next?","What are you wishing for them?"],
+    extendedPrompts:["What have you watched them overcome?","What makes them extraordinary in your eyes?","What's a moment you'll carry forever from this chapter?","What do you want them to hold onto going forward?"],
+    defaultTempo:"Upbeat",
+  },
+  "child|newchapter": {
+    prompts:["What chapter are they stepping into?","What do you want to say as you watch them go?","What do you love about who they've become?","What are you wishing for them?"],
+    extendedPrompts:["What has raising them taught you?","What will you miss most?","What do you hope they carry with them?","What do you want them to know they can always come back to?"],
+    defaultTempo:"Medium",
+  },
+  "child|recovery": {
+    prompts:["What did they fight through?","What moment made you realise how strong they truly are?","What do you want them to know about how you see them?","What does the road ahead look like now?"],
+    extendedPrompts:["What did this experience teach you both?","What do you want them to hold onto when it gets hard again?","How has going through this together changed your relationship?"],
+    defaultTempo:"Slow",
+  },
+  "child|memorial": {
+    prompts:["What's the memory of them you'll always hold closest?","What do you miss most about their presence?","What did they teach you about love?","What do you want the world to know about who they were?"],
+    extendedPrompts:["What would they say if they could hear this?","What small things carry them forward in your daily life?","What do you want them to know?","How do you keep them close?"],
+    defaultTempo:"Slow",
+  },
+
+  // ══ FRIEND ════════════════════════════════════════════════════════════════
+
+  "friend|birthday": {
+    prompts:["How did you two become friends — the real story?","What's the most ridiculous memory you share?","What do you love about them that they probably don't know?","What are you wishing for them this year?"],
+    extendedPrompts:["What have they taught you?","How have they shown up for you when it mattered?","What inside reference or shared joke would they love in this song?","How have they changed since you've known them?"],
+    defaultTempo:"Upbeat",
+  },
+  "friend|wedding": {
+    prompts:["How do you know the couple and how did you watch their love grow?","What's a memory of them together that you'll always hold onto?","What do you want to say about what their love means?","What are your wishes for them?"],
+    extendedPrompts:["What makes them perfect for each other — specific, honest reasons?","What's something funny or tender from their relationship story?","What do you want the room to feel when this plays?","What do you hope for their future together?"],
+    defaultTempo:"Medium",
+  },
+  "friend|justbecause": {
+    prompts:["What made you want to do this for them today?","What do you love about your friendship that you never say out loud?","What's a moment that defines your bond?","What do you want them to feel?"],
+    extendedPrompts:["What do they bring to your life that no one else does?","What's a shared memory that always makes you smile?","What would you want them to always know about how you see them?"],
+    defaultTempo:"Medium",
+  },
+  "friend|longdistance": {
+    prompts:["How did you end up living apart and how long has it been?","What do you miss most — be specific and honest?","What's a memory that always comes back to you?","What does your friendship look like across the distance?"],
+    extendedPrompts:["What's something only the two of you would laugh about?","What do you want them to remember when they feel far away?","What does it feel like when you're finally together again?","What are you holding on to until next time?"],
+    defaultTempo:"Medium",
+  },
+  "friend|newchapter": {
+    prompts:["What chapter are they moving into?","What memory captures everything about your friendship?","What do you love about who they've become?","What do you want to say as you watch them go?"],
+    extendedPrompts:["What are you most proud of about them?","What will your friendship look like from here?","What do you want them to carry with them?","What are you wishing for them?"],
+    defaultTempo:"Upbeat",
+  },
+  "friend|roast": {
+    prompts:["What is the most embarrassing thing they've done that everyone knows about?","What habit or quirk of theirs drives people completely mad?","What's the story that always gets told when they're not there?","What's the most 'them' thing they've ever done?"],
+    extendedPrompts:["What do they think is cool that absolutely isn't?","What's something they've said that became a running joke?","What would their worst enemy and their best friend agree on?","What do you actually, genuinely love about them — sneak it in at the end?"],
+    defaultTempo:"Upbeat",
+  },
+  "friend|memorial": {
+    prompts:["What's the memory of them that lives most vividly in your mind?","What did they teach you about how to live?","What made them irreplaceable?","What do you want to say to them now?"],
+    extendedPrompts:["What would they say if they could hear this?","What do you miss most about having them here?","What lives on in you because of them?","How do you carry them forward?"],
+    defaultTempo:"Slow",
+  },
+
+  // ══ GRANDPARENT ══════════════════════════════════════════════════════════
+
+  "grandparent|birthday": {
+    prompts:["What do you love most about your grandparent?","What's a story or memory you'll always treasure?","What have they taught you about life — knowingly or not?","How do you want them to feel when they hear this?"],
+    extendedPrompts:["What makes them special to the whole family?","What's a tradition, phrase, or habit that is completely them?","What do you hope they know about how much they're loved?","What do you want to celebrate about the life they've built?"],
+    defaultTempo:"Slow",
+  },
+  "grandparent|thankyou": {
+    prompts:["What's the most important thing they've given you or your family?","What's a memory that defines who they are?","What values did they pass down that live on in you?","What do you want them to hear?"],
+    extendedPrompts:["What stories have they told that you'll always remember?","How have they shaped your family?","What do you want to celebrate about their life?","What do you hope they know they've built?"],
+    defaultTempo:"Slow",
+  },
+  "grandparent|memorial": {
+    prompts:["What's the memory of them you hold the most tightly?","What did they give to this family that lives on?","What would you want to say if you had one more moment?","How are they still present in everyday life?"],
+    extendedPrompts:["What's something they always said that you still hear?","What do you miss most about them?","What do you want the younger generations to know about who they were?","How do they live on in the people they raised?"],
+    defaultTempo:"Slow",
+  },
+
+  // ══ SIBLING ══════════════════════════════════════════════════════════════
+
+  "sibling|birthday": {
+    prompts:["What's the funniest memory you have with them — no filter?","What do you genuinely admire about them that you'd never say sober?","What does it mean to have them as your sibling?","What are you wishing for them?"],
+    extendedPrompts:["What's a memory only a sibling would understand?","How have they shaped who you are?","What's something you've never properly said to them?","What do you love about who they've become?"],
+    defaultTempo:"Upbeat",
+  },
+  "sibling|wedding": {
+    prompts:["What's a memory of your sibling that captures exactly who they are?","What do you think of their partner — honestly and lovingly?","What do you want to say in front of everyone?","What are your wishes for their marriage?"],
+    extendedPrompts:["What's the funniest thing that happened in the lead-up to today?","How have you watched them change since they found this person?","What do you hope their life together looks like?","What's something only a sibling would know to say?"],
+    defaultTempo:"Medium",
+  },
+  "sibling|justbecause": {
+    prompts:["What made you want to do this for them today?","What's a memory that is completely and utterly yours?","What do you love about them that you'd never say to their face?","What do you want them to feel?"],
+    extendedPrompts:["What's the most 'them' thing they've ever done?","How have they shaped who you are without knowing it?","What would you want them to always know?"],
+    defaultTempo:"Medium",
+  },
+  "sibling|recovery": {
+    prompts:["What did they fight through?","What moment made you see how strong they really are?","What do you want them to know from a sibling's perspective?","What does the road ahead look like together?"],
+    extendedPrompts:["How has this experience changed your relationship?","What do you want them to hold onto when it gets hard again?","What are you most proud of about them?"],
+    defaultTempo:"Slow",
+  },
+
+  // ══ PET ══════════════════════════════════════════════════════════════════
+
+  "pet|justbecause": {
+    prompts:["Describe your pet and their full, chaotic personality.","What's your favourite thing they do?","How has having them changed your life?","What would you say to them if they could understand?"],
+    extendedPrompts:["What's the funniest thing they've ever done?","What do they always do when you come home?","What would they say about you if they could talk?","What's a habit of theirs that's annoying but you secretly love?"],
+    defaultTempo:"Medium",
+  },
+  "pet|birthday": {
+    prompts:["Describe your pet's personality like you're pitching a TV character.","What's the most chaotic thing they've done this year?","What does a perfect day look like from their perspective?","What would they say if they could give a birthday speech?"],
+    extendedPrompts:["What do they love more than anything?","What is their sworn enemy (postman, vacuum, neighbour's cat)?","What do you love most about having them in your life?"],
+    defaultTempo:"Upbeat",
+  },
+  "pet|memorial": {
+    prompts:["What was their personality like — the real them?","What's the memory you'll hold most tightly?","What did having them teach you?","What do you want to say to them now?"],
+    extendedPrompts:["What do you miss most about having them here?","What did they give you that nothing else can replace?","What will they always mean to you?","How do you keep them close?"],
+    defaultTempo:"Slow",
+  },
+
+  // ══ COLLEAGUE ════════════════════════════════════════════════════════════
+
+  "colleague|leavingwork": {
+    prompts:["What will people miss most about them — be specific and honest?","What's a legendary work story everyone knows?","What habit, phrase, or quirk of theirs is famous in the office?","What do you want to say on behalf of the team?"],
+    extendedPrompts:["What's something they'd never admit they're proud of?","What's the most chaotic thing they were ever involved in at work?","What has the team genuinely learned from them?","What are you wishing for them in what comes next?"],
+    defaultTempo:"Upbeat",
+  },
+  "colleague|retirement": {
+    prompts:["What has this person built or achieved over their career?","What's a specific memory from working with them?","What will the team miss, honestly?","What do you wish them for this next chapter?"],
+    extendedPrompts:["What's a funny shared memory from the years together?","What are they most known for?","What wisdom have they shared — knowingly or not?","What does life without them in the office actually look like?"],
+    defaultTempo:"Medium",
+  },
+  "colleague|thankyou": {
+    prompts:["What has this person done for you or the team that deserves a real thank you?","What specific impact have they had?","What's a memory of them going above and beyond?","What do you want them to know?"],
+    extendedPrompts:["What have they taught you without realising it?","How has working with them changed how you work?","What do you hope they know about the difference they've made?"],
+    defaultTempo:"Medium",
+  },
+  "colleague|roast": {
+    prompts:["What is this person famous for in the office — good, bad, or legendary?","What habit of theirs has driven everyone quietly mad for years?","What's the story that always gets told at work events?","What do they think about themselves that everyone else finds hilarious?"],
+    extendedPrompts:["What's something they've said that became an office in-joke?","What would their job title be if it were honest?","What's their relationship with the coffee machine / printer / meeting room?","What do you actually love about them — slip it in at the very end?"],
+    defaultTempo:"Upbeat",
+  },
+
+  // ══ SELF ════════════════════════════════════════════════════════════════
+
+  "self|birthday": {
+    prompts:["What has this year actually looked like — the real version?","What are you most proud of about yourself right now?","What are you leaving behind going into the next year?","What do you want for yourself — no filter?"],
+    extendedPrompts:["What have you learned about yourself this year?","What would last year's version of you think of you now?","What's one thing you've finally let go of?","What does the next chapter look like?"],
+    defaultTempo:"Upbeat",
+  },
+  "self|newchapter": {
+    prompts:["What chapter are you stepping into?","What are you leaving behind?","What does this new version of your life look like?","What do you want this song to make you feel every time you hear it?"],
+    extendedPrompts:["What has brought you to this point?","What are you most excited about?","What are you most afraid of — and leaning into anyway?","What do you want to remind yourself of when it gets hard?"],
+    defaultTempo:"Upbeat",
+  },
+  "self|recovery": {
+    prompts:["What did you fight through?","What does the version of you who made it through look like?","What do you know now that you didn't before?","What do you want this song to say to you when you need it most?"],
+    extendedPrompts:["What was the hardest moment?","What kept you going?","Who or what do you want to acknowledge?","What does the road ahead look like from here?"],
+    defaultTempo:"Medium",
+  },
+  "self|divorce": {
+    prompts:["What chapter is closing and what's opening?","What are you reclaiming about yourself?","What do you want to feel when this song plays?","What does freedom look like right now?"],
+    extendedPrompts:["What did you learn about yourself through this?","What are you leaving behind — genuinely and completely?","What are you excited about that you haven't admitted yet?","What do you want to tell yourself six months from now?"],
+    defaultTempo:"Upbeat",
+  },
+  "self|graduation": {
+    prompts:["What has this journey actually cost you — honestly?","What are you most proud of?","What do you know now that you didn't when you started?","What's next, and what does it feel like?"],
+    extendedPrompts:["What would you say to the version of you who started?","Who do you want to acknowledge?","What do you want to remember about this moment?","What are you stepping into?"],
+    defaultTempo:"Upbeat",
+  },
+
+  // ══ EX ══════════════════════════════════════════════════════════════════
+
+  "ex|justbecause": {
+    prompts:["What do you want to say that you never properly got to?","What was real about what you had — what do you want to honour?","Where are you now with all of it?","What does moving forward look like for you?"],
+    extendedPrompts:["What did you love about them that you'll always carry?","What did the relationship teach you about yourself?","What do you want them to know without it being complicated?","What does closure mean to you?"],
+    defaultTempo:"Slow",
+  },
+
+  // ══ UNIVERSAL OCCASION OVERRIDES ════════════════════════════════════════
+
+  "*|memorial": {
+    prompts:["What's the memory of them you hold closest?","What did they give to the people around them?","What would you say if you had one more moment?","How do you want this song to feel?"],
+    extendedPrompts:["What's something they always said that you still hear?","What do you miss most?","How do they live on in the people who loved them?","What do you want the world to know about who they were?"],
+    defaultTempo:"Slow",
+  },
+  "*|recovery": {
+    prompts:["What did they face and what did it take to get through?","What moment showed you how strong they are?","What do you want them to know from where you're standing?","What does the road ahead look like?"],
+    extendedPrompts:["What did this experience reveal about them?","How has it changed your relationship?","What do you want them to hold onto?","What are you proud of — specific and honest?"],
+    defaultTempo:"Slow",
+  },
+  "*|roast": {
+    prompts:["What are they most infamous for — the story everyone knows?","What habit or quirk of theirs is legendary?","What do they think about themselves that others find hilarious?","What's the funniest thing they've ever done — genuinely?"],
+    extendedPrompts:["What would their honest job title / life title be?","What's something they've said that became a running joke?","What do they love that no one else understands?","What do you actually love about them — the genuine bit at the end?"],
+    defaultTempo:"Upbeat",
+  },
+  "*|apology": {
+    prompts:["What happened — in your own honest, undefended words?","What do you wish you'd done differently?","What do you want them to know about how you feel now?","What are you promising going forward?"],
+    extendedPrompts:["What does this relationship mean to you?","What do you want them to understand that you struggle to say?","What does repair look like from here?"],
+    defaultTempo:"Slow",
+  },
+  "*|newchapter": {
+    prompts:["What chapter are they stepping into?","What do you want to say as you watch them go?","What do you love about who they've become?","What are you wishing for them?"],
+    extendedPrompts:["What's a memory that captures everything about your relationship?","What do you hope they carry with them?","What will you miss?","What are you most proud of about them?"],
+    defaultTempo:"Medium",
+  },
+
+  // ══ DEFAULT ══════════════════════════════════════════════════════════════
+
+  "default": {
+    prompts:["Who is this person and what makes them genuinely special?","What is your most cherished memory with them?","What do you want them to feel when they hear this song?","What are your wishes for their future?"],
+    extendedPrompts:["Is there a place that's important in your story together?","What's a phrase, word, or saying that represents them?","How has knowing them changed you?","What would you say if you knew they were listening right now?","Describe them in exactly 3 words.","What do others not see about them that you do?"],
+    defaultTempo:"Medium",
+  },
+},
+ 
 };
 
 /* ═══════════════════════════════════════════════════
