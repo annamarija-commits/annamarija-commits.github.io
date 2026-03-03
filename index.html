@@ -41,11 +41,16 @@
   }
   .shell { position:relative; z-index:1; max-width:720px; margin:0 auto; padding:32px 24px 120px; }
 
-  /* PROGRESS */
-  .progress-wrap { display:flex; align-items:center; gap:6px; margin-bottom:40px; }
-  .prog-step { flex:1; height:3px; background:var(--border); border-radius:99px; transition:background 0.4s var(--ease), box-shadow 0.4s; }
-  .prog-step.done   { background:linear-gradient(90deg,#e8547a,#c42fa8); opacity:0.55; }
-  .prog-step.active { background:var(--accent-grad); box-shadow:0 0 8px rgba(232,84,122,0.5); }
+  /* PROGRESS — single continuous gradient bar */
+  .progress-wrap { display:flex; align-items:center; gap:8px; margin-bottom:40px; }
+  .prog-bar-track { flex:1; height:3px; background:var(--border); border-radius:99px; position:relative; overflow:hidden; }
+  .prog-bar-fill { position:absolute; left:0; top:0; bottom:0; border-radius:99px;
+    background:linear-gradient(90deg,#e8547a 0%,#c42fa8 100%);
+    transition:width 0.45s cubic-bezier(0.4,0,0.2,1);
+    box-shadow:0 0 10px rgba(196,47,168,0.45);
+  }
+  /* keep old .prog-step for JS compatibility but hidden */
+  .prog-step { display:none; }
   .prog-label { font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); white-space:nowrap; }
 
   /* STEPS */
@@ -158,13 +163,13 @@
   .toggle-switch.on::after { transform:translateX(18px); }
 
   /* STORY */
-  .story-name-wrap { background:var(--card); border:1.5px solid var(--border); border-radius:var(--radius); padding:18px 20px; margin-bottom:20px; }
+  .story-name-wrap { background:#161020; border:1.5px solid #2a1e30; border-radius:var(--radius); padding:18px 20px; margin-bottom:20px; }
   .story-name-label { font-size:13px; font-weight:500; color:var(--cream); margin-bottom:4px; }
-  .story-name-sub { font-size:12px; color:var(--muted); margin-bottom:12px; }
+  .story-name-sub { font-size:12px; color:#7a6878; margin-bottom:12px; }
   .story-name-row { display:flex; align-items:center; gap:12px; }
-  .story-name-row input { flex:1; background:var(--bg); border:1.5px solid var(--border); border-radius:8px; padding:10px 14px; color:var(--cream); font-family:'Bricolage Grotesque',sans-serif; font-size:14px; font-weight:300; outline:none; transition:border-color 0.2s; }
+  .story-name-row input { flex:1; background:#0f0b14; border:1.5px solid #2a1e30; border-radius:8px; padding:10px 14px; color:var(--cream); font-family:'Bricolage Grotesque',sans-serif; font-size:14px; font-weight:300; outline:none; transition:border-color 0.2s; }
   .story-name-row input:focus { border-color:var(--accent-border); }
-  .story-name-row input::placeholder { color:var(--muted); }
+  .story-name-row input::placeholder { color:#5a4858; }
 
   .soft-details-wrap { margin-top:16px; }
   .soft-details-label { font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-bottom:10px; }
@@ -179,25 +184,25 @@
   .story-mode-tab.active { background:rgba(232,84,122,0.12); color:var(--accent-text); border:1px solid rgba(232,84,122,0.28); }
 
   .prompt-chips { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:8px; }
-  .prompt-chip { background:var(--card); border:1.5px solid var(--border); border-radius:99px; padding:6px 13px; font-size:12px; color:var(--muted); cursor:pointer; transition:border-color 0.2s,color 0.2s,background 0.2s,transform 0.15s; user-select:none; line-height:1.3; }
-  .prompt-chip:hover { border-color:var(--accent-border); color:var(--cream); transform:translateY(-1px); }
-  .prompt-chip.active { border-color:var(--accent-border); background:var(--accent-dim); color:var(--accent-text); }
+  .prompt-chip { background:#1c1520; border:1.5px solid #332038; border-radius:99px; padding:6px 13px; font-size:12px; color:#b8a0b8; cursor:pointer; transition:border-color 0.2s,color 0.2s,background 0.2s,transform 0.15s; user-select:none; line-height:1.3; }
+  .prompt-chip:hover { border-color:rgba(232,84,122,0.45); color:var(--cream); background:#231828; transform:translateY(-1px); }
+  .prompt-chip.active { border-color:rgba(232,84,122,0.55); background:rgba(232,84,122,0.12); color:#f0a0be; }
   .prompt-chip.active::before { content:'✓  '; opacity:.7; font-size:10px; }
   .prompt-hint { font-size:12px; color:var(--muted); font-style:italic; margin-bottom:14px; }
   .prompt-answers { display:flex; flex-direction:column; gap:10px; margin-bottom:8px; }
-  .prompt-answer-block { background:var(--card); border:1.5px solid var(--border); border-radius:var(--radius); overflow:hidden; animation:fadeUp 0.25s var(--ease) both; }
-  .prompt-answer-block:focus-within { border-color:var(--accent-border); }
-  .prompt-answer-label { padding:10px 14px 0; font-size:11px; color:var(--accent-text); font-style:italic; opacity:0.8; }
+  .prompt-answer-block { background:#161020; border:1.5px solid #2e1e34; border-radius:var(--radius); overflow:hidden; animation:fadeUp 0.25s var(--ease) both; }
+  .prompt-answer-block:focus-within { border-color:rgba(232,84,122,0.4); }
+  .prompt-answer-label { padding:10px 14px 0; font-size:11px; color:#d080a0; font-style:italic; opacity:0.9; }
   .prompt-answer-block textarea { border:none; border-radius:0; min-height:64px; padding:8px 14px 12px; font-size:13px; resize:none; width:100%; background:transparent; color:var(--cream); font-family:'Bricolage Grotesque',sans-serif; outline:none; }
-  .prompt-answer-block textarea::placeholder { color:var(--muted); }
+  .prompt-answer-block textarea::placeholder { color:#5a4858; }
 
   .nudge-label { font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
   .freewrite-nudge { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px; }
   .nudge-tag { font-size:11px; background:transparent; border:1px dashed var(--border); border-radius:6px; padding:5px 10px; color:var(--muted); cursor:default; pointer-events:none; user-select:none; opacity:0.7; }
 
-  textarea { width:100%; background:var(--card); border:1.5px solid var(--border); border-radius:var(--radius); padding:14px; color:var(--cream); font-family:'Bricolage Grotesque',sans-serif; font-size:14px; font-weight:300; line-height:1.7; resize:vertical; outline:none; transition:border-color 0.2s; }
-  textarea:focus { border-color:var(--accent-border); }
-  textarea::placeholder { color:var(--muted); }
+  textarea { width:100%; background:#161020; border:1.5px solid #2a1e30; border-radius:var(--radius); padding:14px; color:var(--cream); font-family:'Bricolage Grotesque',sans-serif; font-size:14px; font-weight:300; line-height:1.7; resize:vertical; outline:none; transition:border-color 0.2s; }
+  textarea:focus { border-color:rgba(232,84,122,0.4); }
+  textarea::placeholder { color:#5a4858; }
   .char-count { font-size:11px; color:var(--muted); text-align:right; margin-top:6px; }
   .char-count.warn { color:var(--accent-text); opacity:0.7; }
   .btn-more-prompts { display:inline-flex; align-items:center; gap:6px; margin-top:10px; background:none; border:1.5px dashed var(--border); border-radius:99px; padding:7px 14px; color:var(--muted); font-family:'Bricolage Grotesque',sans-serif; font-size:12px; cursor:pointer; transition:border-color 0.2s,color 0.2s; }
@@ -219,10 +224,10 @@
   .nav-row { display:flex; gap:10px; margin-top:36px; align-items:center; }
   .btn-back { background:none; border:1.5px solid var(--border); border-radius:10px; padding:13px 18px; color:var(--muted); font-family:'Bricolage Grotesque',sans-serif; font-size:14px; cursor:pointer; transition:border-color 0.2s,color 0.2s; }
   .btn-back:hover { border-color:#333; color:var(--cream); }
-  /* Next button — gradient fill */
-  .btn-next { flex:1; background:var(--accent-grad); border:none; border-radius:10px; padding:14px 22px; color:#fff; font-family:'Bricolage Grotesque',sans-serif; font-size:15px; font-weight:600; cursor:pointer; transition:opacity 0.2s,transform 0.15s,box-shadow 0.2s; display:flex; align-items:center; justify-content:center; gap:8px; letter-spacing:-0.01em; box-shadow:0 4px 20px rgba(196,47,168,0.25); }
-  .btn-next:hover { opacity:0.88; transform:translateY(-1px); box-shadow:0 6px 28px rgba(196,47,168,0.38); }
-  .btn-next svg { width:15px; height:15px; stroke:#fff; }
+  /* Next button — dark subtle, accent border only */
+  .btn-next { flex:1; background:rgba(232,84,122,0.08); border:1.5px solid rgba(232,84,122,0.3); border-radius:10px; padding:14px 22px; color:var(--accent-text); font-family:'Bricolage Grotesque',sans-serif; font-size:15px; font-weight:600; cursor:pointer; transition:background 0.2s,border-color 0.2s,transform 0.15s; display:flex; align-items:center; justify-content:center; gap:8px; letter-spacing:-0.01em; box-shadow:none; }
+  .btn-next:hover { background:rgba(232,84,122,0.13); border-color:rgba(232,84,122,0.5); transform:translateY(-1px); }
+  .btn-next svg { width:15px; height:15px; stroke:var(--accent-text); }
   /* Done button (back to summary) */
   .btn-done { flex:1; background:transparent; border:1.5px solid var(--accent-border); border-radius:10px; padding:14px 22px; color:var(--accent-text); font-family:'Bricolage Grotesque',sans-serif; font-size:15px; font-weight:600; cursor:pointer; transition:background 0.2s,transform 0.15s; display:none; align-items:center; justify-content:center; gap:8px; }
   .btn-done.visible { display:flex; }
@@ -301,7 +306,11 @@
 
   <div class="progress-wrap">
     <span class="prog-label">Start</span>
-    <div class="prog-step active" id="pb-0"></div>
+    <div class="prog-bar-track" id="prog-bar-track">
+      <div class="prog-bar-fill" id="prog-bar-fill" style="width:0%"></div>
+    </div>
+    <!-- hidden legacy segments for JS compat -->
+    <div class="prog-step" id="pb-0"></div>
     <div class="prog-step" id="pb-1"></div>
     <div class="prog-step" id="pb-2"></div>
     <div class="prog-step" id="pb-3"></div>
@@ -1061,18 +1070,11 @@ function editFromSummary(step) {
 const TOTAL_STEPS = 7;
 
 function updateProgressBarSegments(total) {
-  const wrap = document.querySelector(".progress-wrap");
-  if (!wrap) return;
-  // Remove existing segments
-  wrap.querySelectorAll(".prog-step").forEach(e => e.remove());
-  // Re-insert correct number of segments after "Start" label
-  const startLabel = wrap.querySelector(".prog-label");
-  for (let i = 0; i < total; i++) {
-    const div = document.createElement("div");
-    div.className = "prog-step" + (i === 0 ? " active" : "");
-    div.id = `pb-${i}`;
-    wrap.insertBefore(div, wrap.querySelector(".prog-label:last-child"));
-  }
+  // For single-bar mode, just re-trigger progress update at current step
+  const n = typeof STATE.step === "number" ? STATE.step : 0;
+  const pct = total > 0 ? Math.round((n / total) * 100) : 0;
+  const fill = document.getElementById("prog-bar-fill");
+  if (fill) fill.style.width = pct + "%";
 }
 
 function nextStep(from) {
@@ -1140,6 +1142,11 @@ function goToStep(n) {
 }
 
 function updateProgressBar(n) {
+  const total = STATE.hasLyrics ? 5 : TOTAL_STEPS;
+  const pct = total > 0 ? Math.round((n / total) * 100) : 0;
+  const fill = document.getElementById("prog-bar-fill");
+  if (fill) fill.style.width = pct + "%";
+  // keep legacy segment classes for any other code that reads them
   for (let i = 0; i < TOTAL_STEPS; i++) {
     const el = document.getElementById(`pb-${i}`);
     if (el) el.className = "prog-step" + (i < n ? " done" : i === n ? " active" : "");
