@@ -398,21 +398,7 @@
     </div>
   </div>
 
-  <!-- STEP 2: GENRE -->
-  <div class="step" id="step-2">
-    <div class="step-eyebrow">Step 3 of 7</div>
-    <h2 class="step-title">What should it sound like?</h2>
-    <p class="step-hint">Pick a genre — press ▶ to hear an example, then click the card to select it.</p>
-    <div class="genre-grid" id="genre-grid"></div>
-    <div class="err-msg" id="err-2">Please choose a genre to continue.</div>
-    <div class="nav-row">
-      <button class="btn-back" onclick="prevStep(2)">Back</button>
-      <button class="btn-next" onclick="nextStep(2)">Continue <svg viewBox="0 0 16 16" fill="none" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
-      <button class="btn-done" id="btn-done-2" onclick="goToStep(6)">Done — Back to Summary</button>
-    </div>
-  </div>
-
-  <!-- STEP 3: OCCASION -->
+ <!-- STEP 2: OCCASION -->
   <div class="step" id="step-3">
     <div class="step-eyebrow">Step 4 of 7</div>
     <h2 class="step-title">Is there an occasion?</h2>
@@ -445,7 +431,7 @@
     </div>
   </div>
 
-  <!-- STEP 4: VIBE / MOOD -->
+  <!-- STEP 3: VIBE / MOOD -->
   <div class="step" id="step-4">
     <div class="step-eyebrow">Step 5 of 7</div>
     <h2 class="step-title">How should it feel?</h2>
@@ -471,6 +457,24 @@
       <button class="btn-done" id="btn-done-4" onclick="goToStep(6)">Done — Back to Summary</button>
     </div>
   </div>
+
+  <!-- STEP 4: GENRE -->
+  <div class="step" id="step-2">
+    <div class="step-eyebrow">Step 3 of 7</div>
+    <h2 class="step-title">What should it sound like?</h2>
+    <p class="step-hint">Pick a genre — press ▶ to hear an example, then click the card to select it.</p>
+    <div class="genre-grid" id="genre-grid"></div>
+    <div class="err-msg" id="err-2">Please choose a genre to continue.</div>
+    <div class="nav-row">
+      <button class="btn-back" onclick="prevStep(2)">Back</button>
+      <button class="btn-next" onclick="nextStep(2)">Continue <svg viewBox="0 0 16 16" fill="none" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+      <button class="btn-done" id="btn-done-2" onclick="goToStep(6)">Done — Back to Summary</button>
+    </div>
+  </div>
+
+  
+
+ 
 
   <!-- STEP 5: STORY -->
   <div class="step" id="step-5">
@@ -1074,19 +1078,29 @@ function renderSummary() {
       { key: "Language",  val: lang ? `${lang.flag} ${lang.name}` : "—", step: 0 },
       { key: "Lyrics",    val: STATE.ownLyricsText ? STATE.ownLyricsText.slice(0, 120) + (STATE.ownLyricsText.length > 120 ? "…" : "") : "—", step: "own-lyrics" },
       { key: "For",       val: person?.label || "—", step: 1 },
-      { key: "Genre",     val: genreObj ? `${genreObj.icon} ${genreObj.name}` : "—", step: 2 },
+      { key: "Genre",     val: genreObj ? `${genreObj.icon} ${genreObj.name}` : "—", step: 4 }, // Updated step number
     ];
   } else {
     rows = [
       { key: "Language",  val: lang ? `${lang.flag} ${lang.name}` : "—", step: 0 },
       { key: "For",       val: person?.label || "—", step: 1 },
-      { key: "Genre",     val: genreObj ? `${genreObj.icon} ${genreObj.name}` : "—", step: 2 },
-      { key: "Occasion",  val: occLabel, step: 3 },
-      { key: "Mood",      val: moodLabel, step: 4 },
+      { key: "Occasion",  val: occLabel, step: 2 }, // Updated step number
+      { key: "Mood",      val: moodLabel, step: 3 }, // Updated step number
+      { key: "Genre",     val: genreObj ? `${genreObj.icon} ${genreObj.name}` : "—", step: 4 }, // Updated step number
       { key: "Main name", val: mainName + (STATE.nameMention ? " (mentioned in lyrics)" : " (not mentioned)"), step: 5 },
       { key: "Story",     val: story ? story.slice(0, 160) + (story.length > 160 ? "…" : "") : "—", step: 5 },
     ];
   }
+
+
+  document.getElementById("summary-card").innerHTML = rows.map(item => `
+    <div class="summary-row">
+      <span class="summary-key">${item.key}</span>
+      <span class="summary-val" style="white-space:pre-line">${item.val}</span>
+      <button class="btn-edit-link" onclick="editFromSummary('${item.step}')">Edit</button>
+    </div>
+  `).join("");
+}
 
   document.getElementById("summary-card").innerHTML = rows.map(item => `
     <div class="summary-row">
@@ -1128,7 +1142,7 @@ function nextStep(from) {
     STATE.namesField = document.getElementById("opt-names")?.value || "";
     STATE.otherDetails = document.getElementById("opt-other-details")?.value || "";
   }
-  if (from === 2) stopAudio(currentGenreId);
+  if (from === 4) stopAudio(currentGenreId); // Genre is now step 4
 
   // If editing from summary, jump back to summary
   if (STATE.editingFromSummary) {
@@ -1148,7 +1162,7 @@ function nextStep(from) {
 
 function prevStep(current) {
   STATE.editingFromSummary = false;
-  if (current === 2) stopAudio(currentGenreId);
+  if (current === 4) stopAudio(currentGenreId); // Genre is now step 4
   if (current === "own-lyrics") { goToStep(0); return; }
   goToStep(current - 1);
 }
@@ -1162,9 +1176,9 @@ function goToStep(n) {
 
   if (n === 0) renderLanguages();
   if (n === 1) renderPersons();
-  if (n === 2) renderGenres();
-  if (n === 3) renderOccasions();
-  if (n === 4) renderVibes();
+  if (n === 2) renderOccasions(); // Occasion moved to step 2
+  if (n === 3) renderVibes();     // Vibe moved to step 3
+  if (n === 4) renderGenres();    // Genre moved to step 4
   if (n === 5) renderStoryStep();
   if (n === 6) renderSummary();
 
@@ -1174,6 +1188,13 @@ function goToStep(n) {
     el.classList.add("active");
     el.scrollIntoView({ behavior: "smooth", block: "start" });
   }
+
+  // Update done buttons visibility
+  showDoneBtn(n);
+
+  // Update progress bar (numeric steps only)
+  if (typeof n === "number") updateProgressBar(n);
+}
 
   // Update done buttons visibility
   showDoneBtn(n);
