@@ -716,39 +716,35 @@ function renderLanguages() {
     if (el && label) el.textContent = label;
   });
 
-  // Language grid — hide if own lyrics chosen (language not needed)
   const langGrid = document.getElementById("lang-grid");
   const step0title = document.querySelector("#step-0 .step-title");
   const step0hint = document.querySelector("#step-0 .step-hint");
-  if (isOwnLyrics) {
-    if (langGrid) langGrid.style.display = "none";
-    if (step0title) step0title.style.display = "none";
-    if (step0hint) step0hint.style.display = "none";
-  } else {
-    if (langGrid) {
-      langGrid.style.display = "";
-      langGrid.innerHTML = DATA.languages.map(l => `
-        <div class="tile-card ${STATE.language === l.id ? 'selected' : ''}" onclick="selectLanguage('${l.id}')">
-          ${svgCheck('check-icon')}
-          <span class="tile-card-icon" style="font-size:30px;margin-bottom:8px;">${l.flag}</span>
-          <span class="tile-card-title">${l.name}</span>
-          <span class="tile-card-sub">${l.sub}</span>
-        </div>`).join("");
-    }
-    if (step0title) step0title.style.display = "";
-    if (step0hint) step0hint.style.display = "";
+  
+  // Always render the language grid first
+  if (langGrid) {
+    langGrid.innerHTML = DATA.languages.map(l => `
+      <div class="tile-card ${STATE.language === l.id ? 'selected' : ''}" onclick="selectLanguage('${l.id}')">
+        ${svgCheck('check-icon')}
+        <span class="tile-card-icon" style="font-size:30px;margin-bottom:8px;">${l.flag}</span>
+        <span class="tile-card-title">${l.name}</span>
+        <span class="tile-card-sub">${l.sub}</span>
+      </div>`).join("");
+    
+    // Only hide if own lyrics is selected
+    langGrid.style.display = isOwnLyrics ? "none" : "";
   }
+  
+  if (step0title) step0title.style.display = isOwnLyrics ? "none" : "";
+  if (step0hint) step0hint.style.display = isOwnLyrics ? "none" : "";
+
   const btn = document.getElementById("own-lyrics-btn");
-  if (STATE.hasLyrics) btn.classList.add("selected");
-  else btn.classList.remove("selected");
+  if (btn) {
+    if (STATE.hasLyrics) btn.classList.add("selected");
+    else btn.classList.remove("selected");
+  }
 
   // Update progress bar segment count
   updateProgressBarSegments(totalSteps);
-}
-function selectLanguage(id) { STATE.language = id; renderLanguages(); hideErr("err-0"); }
-function toggleOwnLyrics() {
-  STATE.hasLyrics = !STATE.hasLyrics;
-  renderLanguages();
 }
 
 /* ═══════════════════════════════════════════════════
