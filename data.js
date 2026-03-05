@@ -11,9 +11,7 @@ const DATA = {
 
  persons: [
   { id:"partner",     icon:"💑", label:"My Partner",          sub:"Husband, wife, boyfriend, girlfriend, fiancé" },
-  { id:"parents",     icon:"👨‍👩‍👧", label:"My Parents",          sub:"Mother, father, stepparents, or a parent figure" },
-  { id:"mum",         icon:"👩", label:"My Mum",               sub:"Mum, mom, stepmum, or a mother figure" },
-  { id:"dad",         icon:"👨", label:"My Dad",               sub:"Dad, pop, stepdad, or a father figure" },
+  { id:"parents",     icon:"👨‍👩‍👧", label:"My Parents",          sub:"Mum, dad, both together, or individually" },
   { id:"child",       icon:"🌱", label:"My Child",             sub:"Newborn, toddler, daughter, or son" },
   { id:"friend",      icon:"🤝", label:"Best Friend(s)",       sub:"Best friend, the girls, the boys, squad" },
   { id:"grandparent", icon:"👴", label:"Grandparents",         sub:"Grandma, grandpa — together or individually" },
@@ -26,25 +24,25 @@ const DATA = {
 ],
 
 occasions: [
-  { id:"birthday",        icon:"🎂", label:"Birthday",                    sub:"Milestone or everyday — every birthday counts",          for:["partner","parents","mum","dad","child","friend","grandparent","sibling","pet","colleague","self","other"] },
-  { id:"anniversary",     icon:"❤️", label:"Anniversary / Valentine's",   sub:"Celebrating love and time together",                     for:["partner"] },
+  { id:"birthday",        icon:"🎂", label:"Birthday",                    sub:"Milestone or everyday — every birthday counts",          for:["partner","parents","child","friend","grandparent","sibling","pet","colleague","self","other"] },
+  { id:"anniversary",     icon:"❤️", label:"Anniversary / Valentine's",   sub:"Celebrating love and time together",                     for:["partner","parents","grandparent"] },
   { id:"wedding",         icon:"💍", label:"Wedding",                     sub:"First dance, vows, speech, or gift",                     for:["partner","friend","sibling","other"] },
   { id:"engagement",      icon:"💎", label:"Engagement",                  sub:"The moment it all changed",                              for:["partner","friend","sibling","other"] },
-  { id:"newbaby",         icon:"🍼", label:"New Baby / Christening",      sub:"Celebrating a new arrival into the world",               for:["parents","mum","dad","partner","friend","sibling","other"] },
+  { id:"newbaby",         icon:"🍼", label:"New Baby / Christening",      sub:"Celebrating a new arrival into the world",               for:["parents","partner","friend","sibling","other"] },
   { id:"graduation",      icon:"🎓", label:"Graduation",                  sub:"Years of hard work — finally paid off",                  for:["child","sibling","friend","partner","self","other"] },
-  { id:"retirement",      icon:"🌅", label:"Retirement / Farewell",       sub:"A new chapter — no more Mondays",                       for:["parents","mum","dad","grandparent","colleague","other","friend"] },
-  { id:"thankyou",        icon:"🙏", label:"Thank You",                   sub:"Mother's Day, Father's Day, or heartfelt gratitude",     for:["parents","mum","dad","grandparent","friend","colleague","other"] },
-  { id:"mothersday",      icon:"🌸", label:"Mother's Day",                sub:"A dedicated tribute to the woman who raised you",        for:["mum","parents","other"] },
-  { id:"fathersday",      icon:"🪵", label:"Father's Day",                sub:"A proper thank-you for the man who showed up",           for:["dad","parents","other"] },
+  { id:"retirement",      icon:"🌅", label:"Retirement / Farewell",       sub:"A new chapter — no more Mondays",                       for:["parents","grandparent","colleague","other","friend"] },
+  { id:"thankyou",        icon:"🙏", label:"Thank You",                   sub:"Mother's Day, Father's Day, or heartfelt gratitude",     for:["parents","grandparent","friend","colleague","other"] },
+  { id:"mothersday",      icon:"🌸", label:"Mother's Day",                sub:"A dedicated tribute to the woman who raised you",        for:["parents","other"] },
+  { id:"fathersday",      icon:"🪵", label:"Father's Day",                sub:"A proper thank-you for the man who showed up",           for:["parents","other"] },
   { id:"newchapter",      icon:"🚪", label:"New Chapter",                 sub:"Moving, new job, emigrating, or a big life change",      for:["partner","friend","sibling","colleague","self","other"] },
-  { id:"recovery",        icon:"💪", label:"Recovery / Overcoming",       sub:"Beating illness, addiction, or something tough",         for:["partner","parents","mum","dad","child","friend","sibling","self","other"] },
+  { id:"recovery",        icon:"💪", label:"Recovery / Overcoming",       sub:"Beating illness, addiction, or something tough",         for:["partner","parents","child","friend","sibling","self","other"] },
   { id:"longdistance",    icon:"✈️", label:"Long Distance / Missing You", sub:"Miles apart but always close",                          for:["partner","friend","sibling","child","other"] },
   { id:"roast",           icon:"🔥", label:"Roast / Joke Song",           sub:"Funny, affectionate, and absolutely surgical",           for:["friend","sibling","partner","colleague","other"] },
-  { id:"apology",         icon:"🙈", label:"Apology Song",                sub:"You messed up. A song fixes everything. Probably.",      for:["partner","friend","sibling","parents","mum","dad","other"] },
+  { id:"apology",         icon:"🙈", label:"Apology Song",                sub:"You messed up. A song fixes everything. Probably.",      for:["partner","friend","sibling","parents","other"] },
   { id:"proposal",        icon:"💍", label:"Marriage Proposal",           sub:"The song playing when you pop the question",             for:["partner"] },
   { id:"leavingwork",     icon:"🏃", label:"Leaving Work Party",          sub:"For the colleague who finally escaped",                  for:["colleague","friend","other"] },
   { id:"divorce",         icon:"✌️", label:"Divorce / Moving On",         sub:"A new era. No bitterness — just freedom. Okay, maybe a little.", for:["self","partner","friend","other"] },
-  { id:"other",           icon:"🎊", label:"Other occasion",              sub:"Something unique — you'll tell us below",                for:["partner","parents","mum","dad","child","friend","grandparent","sibling","pet","colleague","self","ex","other"] },
+  { id:"other",           icon:"🎊", label:"Other occasion",              sub:"Something unique — you'll tell us below",                for:["partner","parents","child","friend","grandparent","sibling","pet","colleague","self","ex","other"] },
 ],
 
 moods: {
@@ -62,6 +60,9 @@ moods: {
   "parents|birthday":        ["Make them cry (happy tears) 😭","Be warm and grateful 🙏","Be funny and nostalgic 😄","Celebrate everything they've built 🌟"],
   "parents|thankyou":        ["Say thank you from the heart 💛","Feel like a hug they can hear 🤗","Acknowledge their sacrifice 🌹","Make them incredibly proud 🌟"],
   "parents|justbecause":     ["Say all the things I should say more often 💛","Be warm and deeply loving 🤗","Be funny and full of family memories 😄","Remind them they're my whole world 🌟"],
+   
+"parents|mothersday":      ["Say thank you to mum from the heart 🌸","Celebrate everything she's done for the family 🌟","Be warm and full of specific memories 🤗","Make her feel completely loved 💛"],
+"parents|fathersday":      ["Say thank you to dad from the heart 🪵","Celebrate everything he's done for the family 🌟","Be warm and full of specific memories 🤗","Make him feel completely appreciated 💛"],
   
 
   // ── Mum ──────────────────────────────────────────────────
@@ -139,6 +140,12 @@ moods: {
 
   // ── Default ──────────────────────────────────────────────
   "default":                 ["Feel warm and heartfelt 💛","Make them feel truly seen 🥲","Be uplifting and celebratory 🎉","Be something they'll never forget 🌟"],
+
+   // ── Parents (Anniversary) ─────────────────────────────────
+"parents|anniversary": ["Celebrate their love story 💕","Make them both cry happy tears 😭","Be warm and full of family gratitude 🏡","Honour everything they've built together 🌟"],
+
+// ── Grandparent (Anniversary) ─────────────────────────────
+"grandparent|anniversary": ["Celebrate decades of love and commitment 💕","Make the whole family emotional 😭","Be warm and deeply respectful 🌟","Honour a love that built a family 🏡"],
 },
  
   genres: [
@@ -201,61 +208,19 @@ moods: {
     defaultTempo:"Slow",
   },
 
-  // ══ MUM ══════════════════════════════════════════════════════════════════
+  // ══ PARENTS (Anniversary) ════════════════════════════════════════════════════
+"parents|anniversary": {
+  prompts:["How long have they been together and what makes their love special?","What's a memory of them together that captures who they are?","What has their relationship taught you about love?","What do you want to celebrate about their journey together?"],
+  extendedPrompts:["What's something they still do that shows their love?","How have they grown together over the years?","What do you hope they know about what they've built?","What are you wishing for their future together?"],
+  defaultTempo:"Slow",
+},
 
-  "mum|birthday": {
-    prompts:["What's a memory of your mum that says everything about who she is?","What has she given you that money can't buy?","What's a funny or chaotic family moment she was at the centre of?","What do you want her to feel on her birthday?"],
-    extendedPrompts:["What did she do that you only appreciated as an adult?","What's something she always says that lives in your head?","How has she shaped who you are?","What do you want her to know that you never quite say?"],
-    defaultTempo:"Medium",
-  },
-  "mum|mothersday": {
-    prompts:["What's the one thing your mum did that changed your life?","What did you take for granted growing up that you're grateful for now?","What's a small, specific thing she does that shows her love?","What do you want to say that you've never quite found the words for?"],
-    extendedPrompts:["What values did she teach you without ever stating them?","What memory always makes you emotional when you think about it?","What does she mean to your family?","What do you hope she knows about how she's loved?"],
-    defaultTempo:"Slow",
-  },
-  "mum|thankyou": {
-    prompts:["What's the biggest sacrifice she made for you?","What's a specific moment of her love you'll never forget?","What has she taught you about how to live?","What do you want her to hear that's been unsaid?"],
-    extendedPrompts:["How has she shown love in her own unique way?","What would your life look like without her in it?","What are you most proud of about her?","What's a phrase or habit of hers that lives on in you?"],
-    defaultTempo:"Slow",
-  },
-  "mum|justbecause": {
-    prompts:["What made you want to do this for her today?","What's something she does that you've never properly acknowledged?","What does she mean to your everyday life?","What do you want her to feel?"],
-    extendedPrompts:["What's a small moment between you that no one else would understand?","What do you love about her that she probably doesn't realise?","What do you want her to know, simply?"],
-    defaultTempo:"Medium",
-  },
-  "mum|memorial": {
-    prompts:["What's the memory of her you hold closest?","What did she give you that you carry with you every day?","What would you want to say to her if you had one more moment?","How has she shaped who you've become?"],
-    extendedPrompts:["What would she say to you right now if she could?","What do you miss most about her presence?","What's something she always said that you still hear?","How do you keep her memory alive?"],
-    defaultTempo:"Slow",
-  },
-
-  // ══ DAD ══════════════════════════════════════════════════════════════════
-
-  "dad|birthday": {
-    prompts:["What's a memory with your dad that says everything about him?","What's the most dad thing he's ever done?","What do you genuinely admire about him that you've never said?","What do you want to celebrate about who he is?"],
-    extendedPrompts:["What did he teach you without realising it?","What's a joke, habit, or phrase that is completely and utterly him?","How has he shaped who you are?","What do you want him to know on his birthday?"],
-    defaultTempo:"Medium",
-  },
-  "dad|fathersday": {
-    prompts:["What's the most important thing your dad has given you?","What did he show you about how to be a person?","What's a specific memory with him you'll always hold on to?","What do you want to say that you don't say enough?"],
-    extendedPrompts:["What did he do for you that you only understand now you're older?","What's something quiet he did that showed enormous love?","How has he shaped your idea of strength, or family, or home?","What do you hope he knows about how you see him?"],
-    defaultTempo:"Medium",
-  },
-  "dad|thankyou": {
-    prompts:["What has he done for you that deserves a proper thank you?","What sacrifice did he make that you want to acknowledge?","What has he taught you that stays with you?","What do you want him to hear?"],
-    extendedPrompts:["What's a moment between you that meant everything?","What do you admire about him now that you're older?","How is he present in the way you live your life?"],
-    defaultTempo:"Slow",
-  },
-  "dad|retirement": {
-    prompts:["What did he build over his career that deserves celebrating?","What will his life look like now — what's he looking forward to?","What do you want to say on behalf of the family?","What's a funny or legendary work story?"],
-    extendedPrompts:["What has his work ethic taught the people around him?","What will people miss most about him?","What does this new chapter mean for the whole family?","What are you wishing for him?"],
-    defaultTempo:"Medium",
-  },
-  "dad|memorial": {
-    prompts:["What's the memory of him you go back to most?","What did he teach you about how to live?","What would you want him to hear if he could?","How is he still present in your everyday life?"],
-    extendedPrompts:["What's something he said that you still hear in your head?","What do you miss most?","How has losing him changed you?","What do you want people to know about who he was?"],
-    defaultTempo:"Slow",
-  },
+// ══ GRANDPARENT (Anniversary) ════════════════════════════════════════════════
+"grandparent|anniversary": {
+  prompts:["How many years have they been together?","What's a story about their relationship that the family always tells?","What has their love shown you and your family?","What do you want to celebrate about their life together?"],
+  extendedPrompts:["What's something they still do that shows their love after all these years?","What values has their relationship taught the whole family?","What makes their bond special and enduring?","What are you wishing for them?"],
+  defaultTempo:"Slow",
+},
 
   // ══ PARENTS (both) ════════════════════════════════════════════════════════
 
@@ -274,6 +239,19 @@ moods: {
     extendedPrompts:["What did they teach you without knowing it?","What do you miss most about them being here?","What do you want the world to know about who they were?"],
     defaultTempo:"Slow",
   },
+    // ══ PARENTS (Mother's Day) ═══════════════════════════════════════════════════
+"parents|mothersday": {
+  prompts:["What's the one thing your mum did that changed your life?","What did you take for granted growing up that you're grateful for now?","What's a small, specific thing she does that shows her love?","What do you want to say that you've never quite found the words for?"],
+  extendedPrompts:["What values did she teach you without ever stating them?","What memory always makes you emotional when you think about it?","What does she mean to your family?","What do you hope she knows about how she's loved?"],
+  defaultTempo:"Slow",
+},
+
+// ══ PARENTS (Father's Day) ═══════════════════════════════════════════════════
+"parents|fathersday": {
+  prompts:["What's the most important thing your dad has given you?","What did he show you about how to be a person?","What's a specific memory with him you'll always hold on to?","What do you want to say that you don't say enough?"],
+  extendedPrompts:["What did he do for you that you only understand now you're older?","What's something quiet he did that showed enormous love?","How has he shaped your idea of strength, or family, or home?","What do you hope he knows about how you see him?"],
+  defaultTempo:"Medium",
+},
 
   // ══ CHILD ════════════════════════════════════════════════════════════════
 
