@@ -64,20 +64,17 @@ moods: {
 "parents|mothersday":      ["Say thank you to mum from the heart 🌸","Celebrate everything she's done for the family 🌟","Be warm and full of specific memories 🤗","Make her feel completely loved 💛"],
 "parents|fathersday":      ["Say thank you to dad from the heart 🪵","Celebrate everything he's done for the family 🌟","Be warm and full of specific memories 🤗","Make him feel completely appreciated 💛"],
   
+// ── Parents (Retirement) ─────────────────────────────────
+"parents|retirement": ["Celebrate everything they've built over their careers 🌅","Be warm and deeply proud 🌟","Be funny — they've both earned the roast 😄","Paint a picture of this well-deserved next chapter 🌊"],
 
-  // ── Mum ──────────────────────────────────────────────────
-  "mum|birthday":            ["Celebrate her and how far we've come 🌸","Make her ugly-cry at the table 😭","Be funny — she can take it 😄","Say what I never quite find the words for 💛"],
-  "mum|mothersday":          ["Say thank you for everything, always 🌸","Remind her she's my hero 🌟","Be warm and full of specific memories 🤗","Acknowledge that parenting us wasn't easy 😅"],
-  "mum|thankyou":            ["Say the thank you that's long overdue 💛","Be full of specific, personal memories 🌸","Acknowledge how much she shaped me 🌱","Make her feel completely, unconditionally loved 🤗"],
-  "mum|justbecause":         ["Just say I love her, simply 💛","Be full of the everyday moments we share 🌸","Be funny and full of our shared chaos 😄","Be a tribute to everything she does quietly 🌟"],
-  "mum|memorial":            ["Be a gentle, loving farewell 🕊️","Celebrate the woman she was 🌸","Carry her warmth forward in every note 💛","Say all the things I wish I'd said 🌹"],
+// ── Parents (Recovery) ───────────────────────────────────
+"parents|recovery": ["Say how incredibly proud and relieved I am 💪","Be full of warmth and deep gratitude 🤗","Celebrate the strength they showed 🌟","Remind them how loved they are 💛"],
 
-  // ── Dad ──────────────────────────────────────────────────
-  "dad|birthday":            ["Be a proper tribute from a proud kid 🌟","Be funny — full Dad joke energy 😄","Be heartfelt and full of memories 💛","Say what we don't usually say out loud 🙏"],
-  "dad|fathersday":          ["Say thank you for showing up, always 🪵","Be full of specific memories only we'd know 🌟","Be funny — he'd want it that way 😄","Be genuine and from the heart 💛"],
-  "dad|thankyou":            ["Say the thank you that's long overdue 🪵","Acknowledge the quiet ways he showed love 💛","Make him feel genuinely appreciated 🌟","Be honest about how much he shaped me 🌱"],
-  "dad|retirement":          ["Celebrate the man who gave everything to work 🌅","Be proud, warm, and full of respect 🌟","Be funny — he's earned the roast 😄","Paint a picture of this well-deserved next chapter 🌊"],
-  "dad|memorial":            ["Be a quiet, honest goodbye 🕊️","Celebrate the man he was 🪵","Say all the things I never got to say 💛","Carry his memory into everything I do 🌟"],
+// ── Parents (Apology) ────────────────────────────────────
+"parents|apology": ["Be genuinely, sincerely sorry 🙈","Be honest about what happened 💛","Acknowledge what they've given me 🌹","Look forward with love and respect 🌱"],
+
+// ── Grandparent (Retirement) ─────────────────────────────
+"grandparent|retirement": ["Celebrate a lifetime of work and dedication 🌅","Be warm and full of family pride 🌟","Be funny — they can take it 😄","Wish them joy in this new chapter 🌊"],
 
   // ── Child ────────────────────────────────────────────────
   "child|birthday":          ["Be joyful and uplifting 🎈","Feel like a proud parent moment 🥲","Be fun and just for them 🎊","Capture who they are right now 💛"],
@@ -250,6 +247,34 @@ moods: {
 "parents|fathersday": {
   prompts:["What's the most important thing your dad has given you?","What did he show you about how to be a person?","What's a specific memory with him you'll always hold on to?","What do you want to say that you don't say enough?"],
   extendedPrompts:["What did he do for you that you only understand now you're older?","What's something quiet he did that showed enormous love?","How has he shaped your idea of strength, or family, or home?","What do you hope he knows about how you see him?"],
+  defaultTempo:"Medium",
+},
+
+    // ══ PARENTS (Retirement) ═════════════════════════════════════════════════════
+"parents|retirement": {
+  prompts:["What have they built over their careers that deserves celebrating?","What will their lives look like now — what are they looking forward to?","What do you want to say on behalf of the family?","What's a funny or legendary work story about one or both of them?"],
+  extendedPrompts:["What has their work ethic taught the people around them?","What will people miss most about them at work?","What does this new chapter mean for the whole family?","What are you wishing for them both?"],
+  defaultTempo:"Medium",
+},
+
+// ══ PARENTS (Recovery) ═══════════════════════════════════════════════════════
+"parents|recovery": {
+  prompts:["What did they face and fight through?","What moment made you see how strong they truly are?","What do you want them to know from where you're standing?","What does the road ahead look like together?"],
+  extendedPrompts:["What did this experience reveal about them?","How has going through this changed your family?","What do you want them to hold onto?","What are you most grateful for right now?"],
+  defaultTempo:"Slow",
+},
+
+// ══ PARENTS (Apology) ════════════════════════════════════════════════════════
+"parents|apology": {
+  prompts:["What happened — in your own honest words?","What do you wish you'd done differently?","What do you want them to know about how you feel now?","What are you promising going forward?"],
+  extendedPrompts:["What does your relationship with them mean to you?","What do you want them to understand about your feelings?","What does repair look like from here?","What have they given you that you want to acknowledge?"],
+  defaultTempo:"Slow",
+},
+
+// ══ GRANDPARENT (Retirement) ═════════════════════════════════════════════════
+"grandparent|retirement": {
+  prompts:["What have they built or achieved over their career?","What's a specific memory or story from their working life?","What will the family miss about their work era?","What do you wish for them in this next chapter?"],
+  extendedPrompts:["What's a funny shared memory from their working years?","What are they most known for professionally?","What wisdom have they shared about work and life?","What does retirement look like for them?"],
   defaultTempo:"Medium",
 },
 
