@@ -407,23 +407,9 @@
     </div>
   </div>
 
-  <!-- STEP 2: GENRE -->
+  <!-- STEP 2: OCCASION -->
   <div class="step" id="step-2">
     <div class="step-eyebrow">Step 3 of 7</div>
-    <h2 class="step-title">What should it sound like?</h2>
-    <p class="step-hint">Pick a genre — press ▶ to hear an example, then click the card to select it.</p>
-    <div class="genre-grid" id="genre-grid"></div>
-    <div class="err-msg" id="err-2">Please choose a genre to continue.</div>
-    <div class="nav-row">
-      <button class="btn-back" onclick="prevStep(2)">Back</button>
-      <button class="btn-next" onclick="nextStep(2)">Continue <svg viewBox="0 0 16 16" fill="none" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
-      <button class="btn-done" id="btn-done-2" onclick="goToStep(6)">Done — Back to Summary</button>
-    </div>
-  </div>
-
-  <!-- STEP 3: OCCASION -->
-  <div class="step" id="step-3">
-    <div class="step-eyebrow">Step 4 of 7</div>
     <h2 class="step-title">Is there an occasion?</h2>
     <p class="step-hint">Choose one if there's something to celebrate — or skip straight to "just because".</p>
 
@@ -446,17 +432,17 @@
       </div>
     </div>
 
-    <div class="err-msg" id="err-3">Please choose an occasion (or "just because") to continue.</div>
+    <div class="err-msg" id="err-2">Please choose an occasion (or "just because") to continue.</div>
     <div class="nav-row">
-      <button class="btn-back" onclick="prevStep(3)">Back</button>
-      <button class="btn-next" onclick="nextStep(3)">Continue <svg viewBox="0 0 16 16" fill="none" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
-      <button class="btn-done" id="btn-done-3" onclick="goToStep(6)">Done — Back to Summary</button>
+      <button class="btn-back" onclick="prevStep(2)">Back</button>
+      <button class="btn-next" onclick="nextStep(2)">Continue <svg viewBox="0 0 16 16" fill="none" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+      <button class="btn-done" id="btn-done-2" onclick="goToStep(6)">Done — Back to Summary</button>
     </div>
   </div>
 
-  <!-- STEP 4: VIBE / MOOD -->
-  <div class="step" id="step-4">
-    <div class="step-eyebrow">Step 5 of 7</div>
+  <!-- STEP 3: VIBE / MOOD -->
+  <div class="step" id="step-3">
+    <div class="step-eyebrow">Step 4 of 7</div>
     <h2 class="step-title">How should it feel?</h2>
     <p class="step-hint">Pick the mood that best fits what you're going for.</p>
     <div class="vibe-grid" id="vibe-grid"></div>
@@ -473,7 +459,21 @@
       <div class="toggle-switch" id="toggle-switch"></div>
     </div>
 
-    <div class="err-msg" id="err-4">Please choose a mood to continue.</div>
+    <div class="err-msg" id="err-3">Please choose a mood to continue.</div>
+    <div class="nav-row">
+      <button class="btn-back" onclick="prevStep(3)">Back</button>
+      <button class="btn-next" onclick="nextStep(3)">Continue <svg viewBox="0 0 16 16" fill="none" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+      <button class="btn-done" id="btn-done-3" onclick="goToStep(6)">Done — Back to Summary</button>
+    </div>
+  </div>
+
+  <!-- STEP 4: GENRE -->
+  <div class="step" id="step-4">
+    <div class="step-eyebrow">Step 5 of 7</div>
+    <h2 class="step-title">What should it sound like?</h2>
+    <p class="step-hint">Pick a genre — press ▶ to hear an example, then click the card to select it.</p>
+    <div class="genre-grid" id="genre-grid"></div>
+    <div class="err-msg" id="err-4">Please choose a genre to continue.</div>
     <div class="nav-row">
       <button class="btn-back" onclick="prevStep(4)">Back</button>
       <button class="btn-next" onclick="nextStep(4)">Continue <svg viewBox="0 0 16 16" fill="none" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
@@ -1083,9 +1083,9 @@ function renderSummary() {
     rows = [
       { key: "Language",  val: lang ? `${lang.flag} ${lang.name}` : "—", step: 0 },
       { key: "For",       val: person?.label || "—", step: 1 },
-      { key: "Genre",     val: genreObj ? `${genreObj.icon} ${genreObj.name}` : "—", step: 2 },
-      { key: "Occasion",  val: occLabel, step: 3 },
-      { key: "Mood",      val: moodLabel, step: 4 },
+      { key: "Occasion",  val: occLabel, step: 2 },
+      { key: "Mood",      val: moodLabel, step: 3 },
+      { key: "Genre",     val: genreObj ? `${genreObj.icon} ${genreObj.name}` : "—", step: 4 },
       { key: "Main name", val: mainName + (STATE.nameMention ? " (mentioned in lyrics)" : " (not mentioned)"), step: 5 },
       { key: "Story",     val: story ? story.slice(0, 160) + (story.length > 160 ? "…" : "") : "—", step: 5 },
     ];
@@ -1131,7 +1131,7 @@ function nextStep(from) {
     STATE.namesField = document.getElementById("opt-names")?.value || "";
     STATE.otherDetails = document.getElementById("opt-other-details")?.value || "";
   }
-  if (from === 2) stopAudio(currentGenreId);
+  if (from === 4) stopAudio(currentGenreId);
 
   // If editing from summary, jump back to summary
   if (STATE.editingFromSummary) {
@@ -1151,7 +1151,7 @@ function nextStep(from) {
 
 function prevStep(current) {
   STATE.editingFromSummary = false;
-  if (current === 2) stopAudio(currentGenreId);
+  if (current === 4) stopAudio(currentGenreId);
   if (current === "own-lyrics") { goToStep(0); return; }
   goToStep(current - 1);
 }
@@ -1165,9 +1165,9 @@ function goToStep(n) {
 
   if (n === 0) renderLanguages();
   if (n === 1) renderPersons();
-  if (n === 2) renderGenres();
-  if (n === 3) renderOccasions();
-  if (n === 4) renderVibes();
+  if (n === 2) renderOccasions();
+  if (n === 3) renderVibes();
+  if (n === 4) renderGenres();
   if (n === 5) renderStoryStep();
   if (n === 6) renderSummary();
 
@@ -1204,9 +1204,9 @@ function validate(step) {
   hideErr(`err-${step}`);
   if (step === 0 && !STATE.language && !STATE.hasLyrics) { showErr("err-0"); return false; }
   if (step === 1 && !STATE.person) { showErr("err-1"); return false; }
-  if (step === 2 && !STATE.genre) { showErr("err-2"); return false; }
-  if (step === 3 && !STATE.occasion) { showErr("err-3"); return false; }
-  if (step === 4 && STATE.mood === null) { showErr("err-4"); return false; }
+  if (step === 2 && !STATE.occasion) { showErr("err-2"); return false; }
+  if (step === 3 && STATE.mood === null) { showErr("err-3"); return false; }
+  if (step === 4 && !STATE.genre) { showErr("err-4"); return false; }
   if (step === 5 && getStoryText().length < 80) { showErr("err-5"); return false; }
   return true;
 }
