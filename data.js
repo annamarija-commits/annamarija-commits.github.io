@@ -1,6 +1,3 @@
-/* ═══════════════════════════════════════════════════
-   DATA
-   ═══════════════════════════════════════════════════ */
 const DATA = {
 
   languages: [
@@ -46,7 +43,6 @@ occasions: [
 ],
 
 moods: {
-  // ── Partner ──────────────────────────────────────────────
   "partner|anniversary":     ["Feel like a love letter 💌","Make us both cry happy tears 😭","Capture exactly who we are 🥂","Be light, fun, and romantic 💃"],
   "partner|wedding":         ["Feel like our first dance 💃","Make everyone in the room feel it ❤️","Be intimate — just for us 🤫","Be joyful and celebratory 🎉"],
   "partner|engagement":      ["Capture the exact moment we said yes 💎","Be over-the-moon joyful 🎉","Feel tender and full of disbelief 🥲","Be the song we play forever 💌"],
@@ -55,36 +51,28 @@ moods: {
   "partner|longdistance":    ["Ache with how much I miss them 💔","Be hopeful — we'll close the distance 🌍","Feel like I'm right there beside them 🤗","Be bittersweet and real 🥲"],
   "partner|proposal":        ["Build slowly and explode with joy 💍","Make everyone watching cry 😭","Be romantic but unmistakably us 🥂","Be the best story we ever tell 🌟"],
   "partner|apology":         ["Be genuinely, sincerely sorry 🙈","Be honest — no excuses, just love 💛","Look forward without dwelling 🌱","Be a little grovelling, actually 😅"],
-
-  // ── Parents ──────────────────────────────────────────────
   "parents|birthday":        ["Make them cry (happy tears) 😭","Be warm and grateful 🙏","Be funny and nostalgic 😄","Celebrate everything they've built 🌟"],
   "parents|thankyou":        ["Say thank you from the heart 💛","Feel like a hug they can hear 🤗","Acknowledge their sacrifice 🌹","Make them incredibly proud 🌟"],
   "parents|justbecause":     ["Say all the things I should say more often 💛","Be warm and deeply loving 🤗","Be funny and full of family memories 😄","Remind them they're my whole world 🌟"],
-   
-"parents|mothersday":      ["Say thank you to mum from the heart 🌸","Celebrate everything she's done for the family 🌟","Be warm and full of specific memories 🤗","Make her feel completely loved 💛"],
-"parents|fathersday":      ["Say thank you to dad from the heart 🪵","Celebrate everything he's done for the family 🌟","Be warm and full of specific memories 🤗","Make him feel completely appreciated 💛"],
-  
-// ── Parents (Retirement) ─────────────────────────────────
-"parents|retirement": ["Celebrate everything they've built over their careers 🌅","Be warm and deeply proud 🌟","Be funny — they've both earned the roast 😄","Paint a picture of this well-deserved next chapter 🌊"],
-
-// ── Parents (Recovery) ───────────────────────────────────
-"parents|recovery": ["Say how incredibly proud and relieved I am 💪","Be full of warmth and deep gratitude 🤗","Celebrate the strength they showed 🌟","Remind them how loved they are 💛"],
-
-// ── Parents (Apology) ────────────────────────────────────
-"parents|apology": ["Be genuinely, sincerely sorry 🙈","Be honest about what happened 💛","Acknowledge what they've given me 🌹","Look forward with love and respect 🌱"],
-
-// ── Grandparent (Retirement) ─────────────────────────────
-"grandparent|retirement": ["Celebrate a lifetime of work and dedication 🌅","Be warm and full of family pride 🌟","Be funny — they can take it 😄","Wish them joy in this new chapter 🌊"],
-
-  // ── Child ────────────────────────────────────────────────
+  "parents|mothersday":      ["Say thank you to mum from the heart 🌸","Celebrate everything she's done for the family 🌟","Be warm and full of specific memories 🤗","Make her feel completely loved 💛"],
+  "parents|fathersday":      ["Say thank you to dad from the heart 🪵","Celebrate everything he's done for the family 🌟","Be warm and full of specific memories 🤗","Make him feel completely appreciated 💛"],
+  "parents|retirement":      ["Celebrate everything they've built over their careers 🌅","Be warm and deeply proud 🌟","Be funny — they've both earned the roast 😄","Paint a picture of this well-deserved next chapter 🌊"],
+  "parents|recovery":        ["Say how incredibly proud and relieved I am 💪","Be full of warmth and deep gratitude 🤗","Celebrate the strength they showed 🌟","Remind them how loved they are 💛"],
+  "parents|apology":         ["Be genuinely, sincerely sorry 🙈","Be honest about what happened 💛","Acknowledge what they've given me 🌹","Look forward with love and respect 🌱"],
+  "parents|anniversary":     ["Celebrate their love story 💕","Make them both cry happy tears 😭","Be warm and full of family gratitude 🏡","Honour everything they've built together 🌟"],
+  "grandparent|birthday":    ["Bring the whole family to tears 😭","Celebrate a life well lived 🌟","Be warm and nostalgic 🤗","Be a gift from all the grandchildren 💛"],
+  "grandparent|thankyou":    ["Say thank you for a lifetime of love 💛","Feel warm and full of memories 🤗","Celebrate their wisdom 🌟","Be something the whole family can share 🎁"],
+  "grandparent|justbecause": ["Say they are loved beyond words 💛","Be full of memories only we share 🤗","Be funny — they've earned a laugh 😄","Thank them for everything they've quietly given 🌟"],
+  "grandparent|memorial":    ["Be a quiet, beautiful farewell 🕊️","Celebrate the full, remarkable life they lived 🌟","Carry their memory through the generations 💛","Say all the things we're glad we said 🌹"],
+  "parents|memorial":        ["Be a gentle tribute to everything they gave 🕊️","Celebrate the full life they lived 🌟","Say all the things I'm glad I said 💛","Carry their memory forward for the whole family 🌹"],
+  "grandparent|retirement":  ["Celebrate a lifetime of work and dedication 🌅","Be warm and full of family pride 🌟","Be funny — they can take it 😄","Wish them joy in this new chapter 🌊"],
+  "grandparent|anniversary": ["Celebrate decades of love and commitment 💕","Make the whole family emotional 😭","Be warm and deeply respectful 🌟","Honour a love that built a family 🏡"],
   "child|birthday":          ["Be joyful and uplifting 🎈","Feel like a proud parent moment 🥲","Be fun and just for them 🎊","Capture who they are right now 💛"],
   "child|newbaby":           ["Be gentle and dreamy 🌙","Be a promise from us to them 🌹","Celebrate this new arrival 🎉","Be something they'll treasure forever 🎁"],
   "child|graduation":        ["Overflow with parental pride 🌟","Be warm and look back over the journey 🥲","Be funny — we remember the struggle 😄","Launch them into everything ahead 🚀"],
   "child|newchapter":        ["Be full of love and a little letting go 🌱","Be full of hope for what's ahead 🌟","Be honest — it's hard to watch them fly 🥲","Celebrate who they've become 🎉"],
   "child|recovery":          ["Say how proud I am beyond words 💪","Be deeply warm and full of relief 🤗","Be about strength, not just survival 🌟","Remind them how far they've come 🌱"],
   "child|memorial":          ["Be the gentlest, most loving goodbye 🕊️","Carry every memory and every laugh 💛","Say all the things I hold in my heart 🌹","Be a song for them, always 🌙"],
-
-  // ── Friend ───────────────────────────────────────────────
   "friend|birthday":         ["Roast them (lovingly) 😂","Be heartfelt and sincere 💛","Be a pure celebration banger 🚀","Capture our friendship perfectly 🤝"],
   "friend|wedding":          ["Make them cry at the altar 😭","Roast the couple (kindly) 😂","Get the whole room dancing 🎉","Say what words alone can't 💛"],
   "friend|justbecause":      ["Feel like a warm shoutout 🤝","Be funny and full of inside jokes 😂","Be genuinely touching 💛","Capture what makes us us 🌟"],
@@ -92,59 +80,33 @@ moods: {
   "friend|newchapter":       ["Be a proud send-off for what comes next 🚀","Be bittersweet and full of shared history 🥲","Be funny — they're leaving and we're not okay 😂","Celebrate everything we've been through 🤝"],
   "friend|roast":            ["Be surgical. Affectionate, but surgical 🔥","Drag every specific habit they have 😂","Balance the roast with genuine love 💛","Be the song that gets played at their wedding 🎉"],
   "friend|memorial":         ["Be warm and full of laughter, like they were 🌟","Say how much our friendship changed me 💛","Be honest and full of love 🕊️","Hold every memory we made together 🤝"],
-
-  // ── Grandparent ──────────────────────────────────────────
-  "grandparent|birthday":    ["Bring the whole family to tears 😭","Celebrate a life well lived 🌟","Be warm and nostalgic 🤗","Be a gift from all the grandchildren 💛"],
-  "grandparent|thankyou":    ["Say thank you for a lifetime of love 💛","Feel warm and full of memories 🤗","Celebrate their wisdom 🌟","Be something the whole family can share 🎁"],
-  "grandparent|justbecause": ["Say they are loved beyond words 💛","Be full of memories only we share 🤗","Be funny — they've earned a laugh 😄","Thank them for everything they've quietly given 🌟"],
-  "grandparent|memorial":    ["Be a quiet, beautiful farewell 🕊️","Celebrate the full, remarkable life they lived 🌟","Carry their memory through the generations 💛","Say all the things we're glad we said 🌹"],
-
-  // ── Sibling ──────────────────────────────────────────────
   "sibling|birthday":        ["Roast them (they'll love it) 😂","Be genuinely heartfelt 💛","Feel like only a sibling could write it 🫂","Be a hype song for their big day 🚀"],
   "sibling|wedding":         ["Be a proud, emotional speech in song form 😭","Roast them in front of everyone 😂","Say what a sibling can't say with words 💛","Get the whole family up dancing 🎉"],
   "sibling|justbecause":     ["Say I'm grateful you're my sibling 🫂","Be a roast disguised as a love song 😂","Be honest about how annoying and wonderful they are 💛","Be a tribute to our shared weirdness 🌟"],
   "sibling|newchapter":      ["Be proud and a little sad to see them go 🥲","Be funny — sibling energy 😂","Be a beautiful send-off for what's next 🌟","Say everything I've never quite managed to say 🫂"],
   "sibling|recovery":        ["Say how proud and relieved I am 💪","Be full of quiet sibling love 💛","Acknowledge the strength I always knew they had 🌟","Be a reminder I'm always in their corner 🫂"],
-
-  // ── Pet ──────────────────────────────────────────────────
   "pet|justbecause":         ["Be from the pet's perspective 🐾","Be silly and absolutely chaotic 😄","Be a genuine love letter to our pet 💛","Tell the story of our life together 🌍"],
   "pet|birthday":            ["Be over-the-top adorable 🎂","Be from the pet's point of view 🐾","Be funny about what pets actually care about 😄","Celebrate their whole little life 💛"],
   "pet|memorial":            ["Be a gentle, loving goodbye 🕊️","Celebrate every chaotic, wonderful thing about them 🐾","Say how much smaller life is without them 💛","Hold every cuddle and every memory 🌹"],
-
-  // ── Colleague ────────────────────────────────────────────
   "colleague|leavingwork":   ["Be a chaotic office send-off 🏃","Roast every habit their desk-neighbour endured 😂","Be warm and genuinely celebratory 🌟","Be the highlight of a party they'll never forget 🎉"],
   "colleague|retirement":    ["Celebrate what they built over a career 🌟","Be warm and heartfelt from the whole team 🤝","Be funny — they've earned the roast 😄","Wish them well on this very well-deserved chapter 🌅"],
   "colleague|birthday":      ["Be funny and deeply office-specific 😂","Be warm and team-spirited 🤝","Be a genuine tribute to them as a person 💛","Be the song everyone at work will be humming 🎉"],
   "colleague|roast":         ["Hold nothing back — this is the leaving roast 🔥","Be specific about every quirk. Every. Single. One. 😂","Balance the chaos with genuine warmth 💛","Be legendary. They deserve nothing less. 🌟"],
   "colleague|thankyou":      ["Say thank you for mentorship and guidance 🌟","Be warm and specifically about what they gave 💛","Acknowledge the impact they had on my career 🌱","Be the kind of tribute that makes them tear up a little 🥲"],
-
-  // ── Self ─────────────────────────────────────────────────
   "self|birthday":           ["Be a full self-celebration anthem 🥂","Be reflective — another year, a better me 🪞","Be a little arrogant, actually — I deserve it 😄","Be honest about the journey and proud of it 🌟"],
   "self|newchapter":         ["Be a hype anthem for what's next 🚀","Be reflective and full of intention 🪞","Be honest about the fear and the excitement 🌱","Be the song I play on the first day of everything new 🌅"],
   "self|graduation":         ["Be a victory lap, full volume 🎓","Be reflective — the hard years were worth it 🥲","Launch me into whatever's next 🚀","Be something my future self will thank me for 🌟"],
   "self|recovery":           ["Be about how far I've actually come 💪","Be honest — it was hard, and I made it 🌱","Be an anthem I can return to when it gets hard again 🌟","Be about the version of me that survived 🦋"],
   "self|divorce":            ["Be about freedom and a brand new start ✌️","Be empowering — I choose myself now 💃","Be bittersweet but ultimately hopeful 🌅","Be the song I blast on the drive home alone 😤"],
-
-  // ── Ex ───────────────────────────────────────────────────
   "ex|justbecause":          ["Be about closure — the door is finally closed 🚪","Be bittersweet and honest, no anger 🥲","Be about the love that was real, even if it ended 💛","Be the last thing I ever needed to say 💌"],
-
-  // ── Universal overrides ──────────────────────────────────
   "*|memorial":              ["Be a quiet, loving goodbye 🕊️","Celebrate everything they were 🌟","Carry their memory forward 💌","Feel like they're still speaking to us 💛"],
   "*|recovery":              ["Say how incredibly proud I am 💪","Be full of warmth and genuine relief 🤗","Celebrate the strength it took to get here 🌟","Be a reminder they are not alone 💛"],
   "*|roast":                 ["Be affectionate but hold absolutely nothing back 🔥","Be specific — generalities aren't funny 😂","Balance the chaos with a moment of real love 💛","Be the song people quote for years 🌟"],
   "*|apology":               ["Be genuinely, sincerely sorry — no spin 🙈","Be honest about what happened 💛","Be humble and full of love 🌹","Say I know it wasn't okay, and I mean it 🌱"],
   "*|newchapter":            ["Be full of excitement for what's ahead 🚀","Be a little bittersweet about what's left behind 🥲","Be an anthem for the leap of faith 🌟","Be the best send-off they've ever heard 🎉"],
-
-  // ── Default ──────────────────────────────────────────────
   "default":                 ["Feel warm and heartfelt 💛","Make them feel truly seen 🥲","Be uplifting and celebratory 🎉","Be something they'll never forget 🌟"],
-
-   // ── Parents (Anniversary) ─────────────────────────────────
-"parents|anniversary": ["Celebrate their love story 💕","Make them both cry happy tears 😭","Be warm and full of family gratitude 🏡","Honour everything they've built together 🌟"],
-
-// ── Grandparent (Anniversary) ─────────────────────────────
-"grandparent|anniversary": ["Celebrate decades of love and commitment 💕","Make the whole family emotional 😭","Be warm and deeply respectful 🌟","Honour a love that built a family 🏡"],
 },
- 
+
   genres: [
     { id:"acoustic-pop",      icon:"🎸", name:"Acoustic Pop",      desc:"Warm, guitar-forward. Emotional and universally loved.",       track:"Acoustic Pop Example",      src:"audio/acoustic-pop.mp3" },
     { id:"singer-songwriter", icon:"🎙️", name:"Singer-Songwriter", desc:"Intimate, lyric-driven. Stripped-back and close to the bone.",track:"Singer-Songwriter Example", src:"audio/singer-songwriter.mp3" },
@@ -161,9 +123,6 @@ moods: {
   tempos: ["Slow", "Medium", "Upbeat"],
 
  branches: {
-
-  // ══ PARTNER ══════════════════════════════════════════════════════════════
-
   "partner|anniversary": {
     prompts:["How did you meet? Tell the full story.","What was your very first impression of them?","What quirk of theirs do you secretly love?","What promises are you making for the future?"],
     extendedPrompts:["What moment made you realise you were in love?","What do they do that still makes you smile after all this time?","What is your favourite ordinary moment together?","How has loving them changed you?","What do you want the next chapter to look like?","Something you've never said out loud — what is it?"],
@@ -204,23 +163,16 @@ moods: {
     extendedPrompts:["What does this relationship mean to you?","What do you want them to understand about your feelings?","What does repair look like for you both?"],
     defaultTempo:"Slow",
   },
-
-  // ══ PARENTS (Anniversary) ════════════════════════════════════════════════════
-"parents|anniversary": {
-  prompts:["How long have they been together and what makes their love special?","What's a memory of them together that captures who they are?","What has their relationship taught you about love?","What do you want to celebrate about their journey together?"],
-  extendedPrompts:["What's something they still do that shows their love?","How have they grown together over the years?","What do you hope they know about what they've built?","What are you wishing for their future together?"],
-  defaultTempo:"Slow",
-},
-
-// ══ GRANDPARENT (Anniversary) ════════════════════════════════════════════════
-"grandparent|anniversary": {
-  prompts:["How many years have they been together?","What's a story about their relationship that the family always tells?","What has their love shown you and your family?","What do you want to celebrate about their life together?"],
-  extendedPrompts:["What's something they still do that shows their love after all these years?","What values has their relationship taught the whole family?","What makes their bond special and enduring?","What are you wishing for them?"],
-  defaultTempo:"Slow",
-},
-
-  // ══ PARENTS (both) ════════════════════════════════════════════════════════
-
+  "parents|anniversary": {
+    prompts:["How long have they been together and what makes their love special?","What's a memory of them together that captures who they are?","What has their relationship taught you about love?","What do you want to celebrate about their journey together?"],
+    extendedPrompts:["What's something they still do that shows their love?","How have they grown together over the years?","What do you hope they know about what they've built?","What are you wishing for their future together?"],
+    defaultTempo:"Slow",
+  },
+  "grandparent|anniversary": {
+    prompts:["How many years have they been together?","What's a story about their relationship that the family always tells?","What has their love shown you and your family?","What do you want to celebrate about their life together?"],
+    extendedPrompts:["What's something they still do that shows their love after all these years?","What values has their relationship taught the whole family?","What makes their bond special and enduring?","What are you wishing for them?"],
+    defaultTempo:"Slow",
+  },
   "parents|birthday": {
     prompts:["What have your parents given you that you're most grateful for?","What's a memory that captures who they are together?","What do you want to celebrate about them?","What are your wishes for their next chapter?"],
     extendedPrompts:["What did they sacrifice for you that you understand better now?","How have they shaped who you are?","What do you want them to know about how you feel?","What's something funny that defines your family?"],
@@ -236,50 +188,46 @@ moods: {
     extendedPrompts:["What did they teach you without knowing it?","What do you miss most about them being here?","What do you want the world to know about who they were?"],
     defaultTempo:"Slow",
   },
-    // ══ PARENTS (Mother's Day) ═══════════════════════════════════════════════════
-"parents|mothersday": {
-  prompts:["What's the one thing your mum did that changed your life?","What did you take for granted growing up that you're grateful for now?","What's a small, specific thing she does that shows her love?","What do you want to say that you've never quite found the words for?"],
-  extendedPrompts:["What values did she teach you without ever stating them?","What memory always makes you emotional when you think about it?","What does she mean to your family?","What do you hope she knows about how she's loved?"],
-  defaultTempo:"Slow",
-},
-
-// ══ PARENTS (Father's Day) ═══════════════════════════════════════════════════
-"parents|fathersday": {
-  prompts:["What's the most important thing your dad has given you?","What did he show you about how to be a person?","What's a specific memory with him you'll always hold on to?","What do you want to say that you don't say enough?"],
-  extendedPrompts:["What did he do for you that you only understand now you're older?","What's something quiet he did that showed enormous love?","How has he shaped your idea of strength, or family, or home?","What do you hope he knows about how you see him?"],
-  defaultTempo:"Medium",
-},
-
-    // ══ PARENTS (Retirement) ═════════════════════════════════════════════════════
-"parents|retirement": {
-  prompts:["What have they built over their careers that deserves celebrating?","What will their lives look like now — what are they looking forward to?","What do you want to say on behalf of the family?","What's a funny or legendary work story about one or both of them?"],
-  extendedPrompts:["What has their work ethic taught the people around them?","What will people miss most about them at work?","What does this new chapter mean for the whole family?","What are you wishing for them both?"],
-  defaultTempo:"Medium",
-},
-
-// ══ PARENTS (Recovery) ═══════════════════════════════════════════════════════
-"parents|recovery": {
-  prompts:["What did they face and fight through?","What moment made you see how strong they truly are?","What do you want them to know from where you're standing?","What does the road ahead look like together?"],
-  extendedPrompts:["What did this experience reveal about them?","How has going through this changed your family?","What do you want them to hold onto?","What are you most grateful for right now?"],
-  defaultTempo:"Slow",
-},
-
-// ══ PARENTS (Apology) ════════════════════════════════════════════════════════
-"parents|apology": {
-  prompts:["What happened — in your own honest words?","What do you wish you'd done differently?","What do you want them to know about how you feel now?","What are you promising going forward?"],
-  extendedPrompts:["What does your relationship with them mean to you?","What do you want them to understand about your feelings?","What does repair look like from here?","What have they given you that you want to acknowledge?"],
-  defaultTempo:"Slow",
-},
-
-// ══ GRANDPARENT (Retirement) ═════════════════════════════════════════════════
-"grandparent|retirement": {
-  prompts:["What have they built or achieved over their career?","What's a specific memory or story from their working life?","What will the family miss about their work era?","What do you wish for them in this next chapter?"],
-  extendedPrompts:["What's a funny shared memory from their working years?","What are they most known for professionally?","What wisdom have they shared about work and life?","What does retirement look like for them?"],
-  defaultTempo:"Medium",
-},
-
-  // ══ CHILD ════════════════════════════════════════════════════════════════
-
+  "parents|mothersday": {
+    prompts:["What's the one thing your mum did that changed your life?","What did you take for granted growing up that you're grateful for now?","What's a small, specific thing she does that shows her love?","What do you want to say that you've never quite found the words for?"],
+    extendedPrompts:["What values did she teach you without ever stating them?","What memory always makes you emotional when you think about it?","What does she mean to your family?","What do you hope she knows about how she's loved?"],
+    defaultTempo:"Slow",
+  },
+  "parents|fathersday": {
+    prompts:["What's the most important thing your dad has given you?","What did he show you about how to be a person?","What's a specific memory with him you'll always hold on to?","What do you want to say that you don't say enough?"],
+    extendedPrompts:["What did he do for you that you only understand now you're older?","What's something quiet he did that showed enormous love?","How has he shaped your idea of strength, or family, or home?","What do you hope he knows about how you see him?"],
+    defaultTempo:"Medium",
+  },
+  "parents|retirement": {
+    prompts:["What have they built over their careers that deserves celebrating?","What will their lives look like now — what are they looking forward to?","What do you want to say on behalf of the family?","What's a funny or legendary work story about one or both of them?"],
+    extendedPrompts:["What has their work ethic taught the people around them?","What will people miss most about them at work?","What does this new chapter mean for the whole family?","What are you wishing for them both?"],
+    defaultTempo:"Medium",
+  },
+  "parents|recovery": {
+    prompts:["What did they face and fight through?","What moment made you see how strong they truly are?","What do you want them to know from where you're standing?","What does the road ahead look like together?"],
+    extendedPrompts:["What did this experience reveal about them?","How has going through this changed your family?","What do you want them to hold onto?","What are you most grateful for right now?"],
+    defaultTempo:"Slow",
+  },
+  "parents|apology": {
+    prompts:["What happened — in your own honest words?","What do you wish you'd done differently?","What do you want them to know about how you feel now?","What are you promising going forward?"],
+    extendedPrompts:["What does your relationship with them mean to you?","What do you want them to understand about your feelings?","What does repair look like from here?","What have they given you that you want to acknowledge?"],
+    defaultTempo:"Slow",
+  },
+  "parents|justbecause": {
+    prompts:["What made you want to give them a song today — no occasion needed?","What do you love about them that you don't say enough?","What's a memory that captures who they are?","What do you want them to feel when they hear this?"],
+    extendedPrompts:["What have they given you that you're only now starting to fully appreciate?","What's something small they do that shows enormous love?","What does your relationship with them look like right now?","What do you want them to always know?"],
+    defaultTempo:"Slow",
+  },
+  "grandparent|justbecause": {
+    prompts:["What made you want to do this for them today?","What do you love most about them that you rarely say?","What's a memory only the two of you share?","What do you want them to feel when they hear this?"],
+    extendedPrompts:["What's a tradition or habit of theirs that is completely them?","What have they taught you without knowing it?","What do you hope they know about how loved they are?","What does your relationship with them mean to you?"],
+    defaultTempo:"Slow",
+  },
+  "grandparent|retirement": {
+    prompts:["What have they built or achieved over their career?","What's a specific memory or story from their working life?","What will the family miss about their work era?","What do you wish for them in this next chapter?"],
+    extendedPrompts:["What's a funny shared memory from their working years?","What are they most known for professionally?","What wisdom have they shared about work and life?","What does retirement look like for them?"],
+    defaultTempo:"Medium",
+  },
   "child|birthday": {
     prompts:["What's something special about who they are right now, at this exact age?","What's your favourite moment with them this year?","What do you dream for their future?","How do you want them to feel when they hear this?"],
     extendedPrompts:["What makes them uniquely, irreplaceably themselves?","What do you hope they always remember about this time?","What do you want them to know about how much they're loved?","What has being their parent taught you?"],
@@ -310,9 +258,6 @@ moods: {
     extendedPrompts:["What would they say if they could hear this?","What small things carry them forward in your daily life?","What do you want them to know?","How do you keep them close?"],
     defaultTempo:"Slow",
   },
-
-  // ══ FRIEND ════════════════════════════════════════════════════════════════
-
   "friend|birthday": {
     prompts:["How did you two become friends — the real story?","What's the most ridiculous memory you share?","What do you love about them that they probably don't know?","What are you wishing for them this year?"],
     extendedPrompts:["What have they taught you?","How have they shown up for you when it mattered?","What inside reference or shared joke would they love in this song?","How have they changed since you've known them?"],
@@ -348,9 +293,6 @@ moods: {
     extendedPrompts:["What would they say if they could hear this?","What do you miss most about having them here?","What lives on in you because of them?","How do you carry them forward?"],
     defaultTempo:"Slow",
   },
-
-  // ══ GRANDPARENT ══════════════════════════════════════════════════════════
-
   "grandparent|birthday": {
     prompts:["What do you love most about your grandparent?","What's a story or memory you'll always treasure?","What have they taught you about life — knowingly or not?","How do you want them to feel when they hear this?"],
     extendedPrompts:["What makes them special to the whole family?","What's a tradition, phrase, or habit that is completely them?","What do you hope they know about how much they're loved?","What do you want to celebrate about the life they've built?"],
@@ -366,9 +308,6 @@ moods: {
     extendedPrompts:["What's something they always said that you still hear?","What do you miss most about them?","What do you want the younger generations to know about who they were?","How do they live on in the people they raised?"],
     defaultTempo:"Slow",
   },
-
-  // ══ SIBLING ══════════════════════════════════════════════════════════════
-
   "sibling|birthday": {
     prompts:["What's the funniest memory you have with them — no filter?","What do you genuinely admire about them that you'd never say sober?","What does it mean to have them as your sibling?","What are you wishing for them?"],
     extendedPrompts:["What's a memory only a sibling would understand?","How have they shaped who you are?","What's something you've never properly said to them?","What do you love about who they've become?"],
@@ -389,9 +328,11 @@ moods: {
     extendedPrompts:["How has this experience changed your relationship?","What do you want them to hold onto when it gets hard again?","What are you most proud of about them?"],
     defaultTempo:"Slow",
   },
-
-  // ══ PET ══════════════════════════════════════════════════════════════════
-
+  "sibling|newchapter": {
+    prompts:["What chapter are they stepping into?","What's a memory that captures everything about your relationship?","What do you love about who they've become?","What do you want to say as you watch them go?"],
+    extendedPrompts:["What are you most proud of about them?","What will your relationship look like from here?","What do you want them to carry with them?","What are you wishing for them — honestly?"],
+    defaultTempo:"Medium",
+  },
   "pet|justbecause": {
     prompts:["Describe your pet and their full, chaotic personality.","What's your favourite thing they do?","How has having them changed your life?","What would you say to them if they could understand?"],
     extendedPrompts:["What's the funniest thing they've ever done?","What do they always do when you come home?","What would they say about you if they could talk?","What's a habit of theirs that's annoying but you secretly love?"],
@@ -407,9 +348,11 @@ moods: {
     extendedPrompts:["What do you miss most about having them here?","What did they give you that nothing else can replace?","What will they always mean to you?","How do you keep them close?"],
     defaultTempo:"Slow",
   },
-
-  // ══ COLLEAGUE ════════════════════════════════════════════════════════════
-
+  "colleague|birthday": {
+    prompts:["What is this person known for in the office — the real answer?","What's a memory or moment that captures who they are at work?","What do you genuinely appreciate about them?","What are you wishing for them today?"],
+    extendedPrompts:["What's something funny that defines their work personality?","How have they made the team or workplace better?","What would the office be like without them?","What do you want them to know about how they're valued?"],
+    defaultTempo:"Upbeat",
+  },
   "colleague|leavingwork": {
     prompts:["What will people miss most about them — be specific and honest?","What's a legendary work story everyone knows?","What habit, phrase, or quirk of theirs is famous in the office?","What do you want to say on behalf of the team?"],
     extendedPrompts:["What's something they'd never admit they're proud of?","What's the most chaotic thing they were ever involved in at work?","What has the team genuinely learned from them?","What are you wishing for them in what comes next?"],
@@ -430,9 +373,6 @@ moods: {
     extendedPrompts:["What's something they've said that became an office in-joke?","What would their job title be if it were honest?","What's their relationship with the coffee machine / printer / meeting room?","What do you actually love about them — slip it in at the very end?"],
     defaultTempo:"Upbeat",
   },
-
-  // ══ SELF ════════════════════════════════════════════════════════════════
-
   "self|birthday": {
     prompts:["What has this year actually looked like — the real version?","What are you most proud of about yourself right now?","What are you leaving behind going into the next year?","What do you want for yourself — no filter?"],
     extendedPrompts:["What have you learned about yourself this year?","What would last year's version of you think of you now?","What's one thing you've finally let go of?","What does the next chapter look like?"],
@@ -458,17 +398,11 @@ moods: {
     extendedPrompts:["What would you say to the version of you who started?","Who do you want to acknowledge?","What do you want to remember about this moment?","What are you stepping into?"],
     defaultTempo:"Upbeat",
   },
-
-  // ══ EX ══════════════════════════════════════════════════════════════════
-
   "ex|justbecause": {
     prompts:["What do you want to say that you never properly got to?","What was real about what you had — what do you want to honour?","Where are you now with all of it?","What does moving forward look like for you?"],
     extendedPrompts:["What did you love about them that you'll always carry?","What did the relationship teach you about yourself?","What do you want them to know without it being complicated?","What does closure mean to you?"],
     defaultTempo:"Slow",
   },
-
-  // ══ UNIVERSAL OCCASION OVERRIDES ════════════════════════════════════════
-
   "*|memorial": {
     prompts:["What's the memory of them you hold closest?","What did they give to the people around them?","What would you say if you had one more moment?","How do you want this song to feel?"],
     extendedPrompts:["What's something they always said that you still hear?","What do you miss most?","How do they live on in the people who loved them?","What do you want the world to know about who they were?"],
@@ -494,14 +428,11 @@ moods: {
     extendedPrompts:["What's a memory that captures everything about your relationship?","What do you hope they carry with them?","What will you miss?","What are you most proud of about them?"],
     defaultTempo:"Medium",
   },
-
-  // ══ DEFAULT ══════════════════════════════════════════════════════════════
-
   "default": {
     prompts:["Who is this person and what makes them genuinely special?","What is your most cherished memory with them?","What do you want them to feel when they hear this song?","What are your wishes for their future?"],
     extendedPrompts:["Is there a place that's important in your story together?","What's a phrase, word, or saying that represents them?","How has knowing them changed you?","What would you say if you knew they were listening right now?","Describe them in exactly 3 words.","What do others not see about them that you do?"],
     defaultTempo:"Medium",
   },
 },
- 
+
 };
