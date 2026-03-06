@@ -300,14 +300,23 @@
   .dev-badge { position:fixed; bottom:16px; right:16px; background:#111; border:1px solid var(--border); border-radius:8px; padding:6px 10px; font-size:10px; color:var(--muted); z-index:100; font-family:'Space Mono',monospace; }
   .dev-badge strong { color:var(--accent-text); }
 
-  /* TRUST PERKS */
-  .trust-perks { display:flex; flex-direction:column; gap:10px; margin-top:20px; }
-  .trust-perk { display:flex; align-items:flex-start; gap:14px; background:var(--card); border:1.5px solid var(--border); border-left:none; border-radius:var(--radius); padding:14px 16px 14px 20px; position:relative; overflow:hidden; }
-  .trust-perk::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(232,84,122,0.07),rgba(196,47,168,0.03)); pointer-events:none; }
-  .trust-perk::after { content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--accent-grad); border-radius:99px 0 0 99px; }
-  .trust-perk-icon { font-size:22px; flex-shrink:0; margin-top:1px; }
-  .trust-perk-title { font-size:13px; font-weight:600; color:var(--cream); margin-bottom:3px; }
-  .trust-perk-sub { font-size:12px; color:var(--muted); line-height:1.5; }
+  /* TRUST PERKS — floating pill blobs */
+  .trust-perks { display:flex; flex-direction:row; gap:10px; margin-bottom:24px; }
+  .trust-perk { flex:1; display:flex; flex-direction:column; align-items:center; text-align:center; gap:8px;
+    background:rgba(232,84,122,0.07);
+    border:1px solid rgba(232,84,122,0.18);
+    border-radius:18px;
+    padding:16px 14px 14px;
+    position:relative; overflow:hidden;
+    box-shadow:0 2px 20px rgba(196,47,168,0.08);
+  }
+  .trust-perk::before { content:''; position:absolute; inset:0;
+    background:radial-gradient(ellipse 80% 60% at 50% 0%, rgba(232,84,122,0.10) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .trust-perk-icon { font-size:26px; line-height:1; }
+  .trust-perk-title { font-size:12px; font-weight:600; color:var(--cream); line-height:1.35; letter-spacing:-0.01em; }
+  .trust-perk-sub { font-size:11px; color:var(--muted); line-height:1.45; display:none; }
 
   /* MOBILE IMPROVEMENTS */
   @media(max-width:600px) {
@@ -398,9 +407,23 @@
     </div>
   </div>
 
-  <!-- STEP 2: OCCASION -->
+  <!-- STEP 2: GENRE -->
   <div class="step" id="step-2">
     <div class="step-eyebrow">Step 3 of 7</div>
+    <h2 class="step-title">What should it sound like?</h2>
+    <p class="step-hint">Pick a genre — press ▶ to hear an example, then click the card to select it.</p>
+    <div class="genre-grid" id="genre-grid"></div>
+    <div class="err-msg" id="err-2">Please choose a genre to continue.</div>
+    <div class="nav-row">
+      <button class="btn-back" onclick="prevStep(2)">Back</button>
+      <button class="btn-next" onclick="nextStep(2)">Continue <svg viewBox="0 0 16 16" fill="none" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+      <button class="btn-done" id="btn-done-2" onclick="goToStep(6)">Done — Back to Summary</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: OCCASION -->
+  <div class="step" id="step-3">
+    <div class="step-eyebrow">Step 4 of 7</div>
     <h2 class="step-title">Is there an occasion?</h2>
     <p class="step-hint">Choose one if there's something to celebrate — or skip straight to "just because".</p>
 
@@ -423,17 +446,17 @@
       </div>
     </div>
 
-    <div class="err-msg" id="err-2">Please choose an occasion (or "just because") to continue.</div>
+    <div class="err-msg" id="err-3">Please choose an occasion (or "just because") to continue.</div>
     <div class="nav-row">
-      <button class="btn-back" onclick="prevStep(2)">Back</button>
-      <button class="btn-next" onclick="nextStep(2)">Continue <svg viewBox="0 0 16 16" fill="none" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
-      <button class="btn-done" id="btn-done-2" onclick="goToStep(6)">Done — Back to Summary</button>
+      <button class="btn-back" onclick="prevStep(3)">Back</button>
+      <button class="btn-next" onclick="nextStep(3)">Continue <svg viewBox="0 0 16 16" fill="none" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+      <button class="btn-done" id="btn-done-3" onclick="goToStep(6)">Done — Back to Summary</button>
     </div>
   </div>
 
-  <!-- STEP 3: VIBE / MOOD -->
-  <div class="step" id="step-3">
-    <div class="step-eyebrow">Step 4 of 7</div>
+  <!-- STEP 4: VIBE / MOOD -->
+  <div class="step" id="step-4">
+    <div class="step-eyebrow">Step 5 of 7</div>
     <h2 class="step-title">How should it feel?</h2>
     <p class="step-hint">Pick the mood that best fits what you're going for.</p>
     <div class="vibe-grid" id="vibe-grid"></div>
@@ -450,21 +473,7 @@
       <div class="toggle-switch" id="toggle-switch"></div>
     </div>
 
-    <div class="err-msg" id="err-3">Please choose a mood to continue.</div>
-    <div class="nav-row">
-      <button class="btn-back" onclick="prevStep(3)">Back</button>
-      <button class="btn-next" onclick="nextStep(3)">Continue <svg viewBox="0 0 16 16" fill="none" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
-      <button class="btn-done" id="btn-done-3" onclick="goToStep(6)">Done — Back to Summary</button>
-    </div>
-  </div>
-
-  <!-- STEP 4: GENRE -->
-  <div class="step" id="step-4">
-    <div class="step-eyebrow">Step 5 of 7</div>
-    <h2 class="step-title">What should it sound like?</h2>
-    <p class="step-hint">Pick a genre — press ▶ to hear an example, then click the card to select it.</p>
-    <div class="genre-grid" id="genre-grid"></div>
-    <div class="err-msg" id="err-4">Please choose a genre to continue.</div>
+    <div class="err-msg" id="err-4">Please choose a mood to continue.</div>
     <div class="nav-row">
       <button class="btn-back" onclick="prevStep(4)">Back</button>
       <button class="btn-next" onclick="nextStep(4)">Continue <svg viewBox="0 0 16 16" fill="none" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
@@ -550,6 +559,17 @@
     <h2 class="step-title">You're so close!</h2>
     <p class="step-hint">Here is what's included with your order today:</p>
 
+    <div class="trust-perks">
+      <div class="trust-perk">
+        <span class="trust-perk-icon">🔄</span>
+        <div class="trust-perk-title">Full refund if undelivered in 48h</div>
+      </div>
+      <div class="trust-perk">
+        <span class="trust-perk-icon">🎁</span>
+        <div class="trust-perk-title">Free song for a reaction video</div>
+      </div>
+    </div>
+
     <div class="package-card">
       <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=400&auto=format&fit=crop" class="package-img" alt="Song Page">
       <div class="package-content">
@@ -602,23 +622,6 @@
 
     <button class="btn-submit" id="btn-pay" onclick="submitForm()">Pay & Place Order →</button>
     <p class="submit-note">PayPal &amp; Klarna accepted · Secure Checkout</p>
-
-    <div class="trust-perks">
-      <div class="trust-perk">
-        <span class="trust-perk-icon">🔄</span>
-        <div>
-          <div class="trust-perk-title">Full refund if undelivered in 48h</div>
-          <div class="trust-perk-sub">Your song is guaranteed — or your money back.</div>
-        </div>
-      </div>
-      <div class="trust-perk">
-        <span class="trust-perk-icon">🎁</span>
-        <div>
-          <div class="trust-perk-title">Free song for a reaction video</div>
-          <div class="trust-perk-sub">Share their reaction with us & we'll gift your next one.</div>
-        </div>
-      </div>
-    </div>
 
     <div class="nav-row" style="margin-top:20px;">
       <button class="btn-back" style="flex:1;" onclick="prevStep(7)">← Review Details</button>
@@ -1080,9 +1083,9 @@ function renderSummary() {
     rows = [
       { key: "Language",  val: lang ? `${lang.flag} ${lang.name}` : "—", step: 0 },
       { key: "For",       val: person?.label || "—", step: 1 },
-      { key: "Occasion",  val: occLabel, step: 2 },
-      { key: "Mood",      val: moodLabel, step: 3 },
-      { key: "Genre",     val: genreObj ? `${genreObj.icon} ${genreObj.name}` : "—", step: 4 },
+      { key: "Genre",     val: genreObj ? `${genreObj.icon} ${genreObj.name}` : "—", step: 2 },
+      { key: "Occasion",  val: occLabel, step: 3 },
+      { key: "Mood",      val: moodLabel, step: 4 },
       { key: "Main name", val: mainName + (STATE.nameMention ? " (mentioned in lyrics)" : " (not mentioned)"), step: 5 },
       { key: "Story",     val: story ? story.slice(0, 160) + (story.length > 160 ? "…" : "") : "—", step: 5 },
     ];
@@ -1128,7 +1131,7 @@ function nextStep(from) {
     STATE.namesField = document.getElementById("opt-names")?.value || "";
     STATE.otherDetails = document.getElementById("opt-other-details")?.value || "";
   }
-  if (from === 4) stopAudio(currentGenreId);
+  if (from === 2) stopAudio(currentGenreId);
 
   // If editing from summary, jump back to summary
   if (STATE.editingFromSummary) {
@@ -1148,7 +1151,7 @@ function nextStep(from) {
 
 function prevStep(current) {
   STATE.editingFromSummary = false;
-  if (current === 4) stopAudio(currentGenreId);
+  if (current === 2) stopAudio(currentGenreId);
   if (current === "own-lyrics") { goToStep(0); return; }
   goToStep(current - 1);
 }
@@ -1162,9 +1165,9 @@ function goToStep(n) {
 
   if (n === 0) renderLanguages();
   if (n === 1) renderPersons();
-  if (n === 2) renderOccasions();
-  if (n === 3) renderVibes();
-  if (n === 4) renderGenres();
+  if (n === 2) renderGenres();
+  if (n === 3) renderOccasions();
+  if (n === 4) renderVibes();
   if (n === 5) renderStoryStep();
   if (n === 6) renderSummary();
 
@@ -1201,9 +1204,9 @@ function validate(step) {
   hideErr(`err-${step}`);
   if (step === 0 && !STATE.language && !STATE.hasLyrics) { showErr("err-0"); return false; }
   if (step === 1 && !STATE.person) { showErr("err-1"); return false; }
-  if (step === 2 && !STATE.occasion) { showErr("err-2"); return false; }
-  if (step === 3 && STATE.mood === null) { showErr("err-3"); return false; }
-  if (step === 4 && !STATE.genre) { showErr("err-4"); return false; }
+  if (step === 2 && !STATE.genre) { showErr("err-2"); return false; }
+  if (step === 3 && !STATE.occasion) { showErr("err-3"); return false; }
+  if (step === 4 && STATE.mood === null) { showErr("err-4"); return false; }
   if (step === 5 && getStoryText().length < 80) { showErr("err-5"); return false; }
   return true;
 }
