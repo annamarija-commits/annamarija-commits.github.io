@@ -334,6 +334,30 @@
     .step-title { font-size:24px; }
     .step-hint { font-size:14px; }
   }
+  /* RECIPIENT NAME / PRONUNCIATION (Step 1) */
+  .recipient-wrap { background:#1c1826; border:1.5px solid #342e42; border-radius:var(--radius); padding:18px 20px; margin-bottom:24px; }
+  .recipient-row { display:flex; gap:14px; }
+  .recipient-field { flex:1; }
+  .recipient-label { display:block; font-size:11px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:#9a88b8; margin-bottom:7px; }
+  .recipient-opt { font-size:10px; text-transform:none; letter-spacing:0; color:#6a6080; font-weight:400; }
+  .recipient-input { width:100%; background:#15101e; border:1.5px solid #342e42; border-radius:8px; padding:11px 14px; color:#f0eef4; font-family:'Bricolage Grotesque',sans-serif; font-size:14px; font-weight:300; outline:none; transition:border-color 0.2s; -webkit-appearance:none; appearance:none; }
+  .recipient-input:focus { border-color:var(--accent-border); }
+  .recipient-input::placeholder { color:#4e4060; }
+  .recipient-hint { font-size:12px; color:#6a6080; margin-top:12px; line-height:1.55; }
+  .recipient-role-label { font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:#7a7090; margin-bottom:14px; }
+  @media(max-width:500px) { .recipient-row { flex-direction:column; } }
+
+  /* Kill browser autofill white flash */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus {
+    -webkit-box-shadow:0 0 0px 1000px #15101e inset !important;
+    -webkit-text-fill-color:#f0eef4 !important;
+    caret-color:#f0eef4;
+    border-color:#342e42 !important;
+    transition:background-color 5000s ease-in-out 0s;
+  }
+
 </style>
 </head>
 <body>
@@ -393,21 +417,37 @@
     <div class="nav-row">
       <button class="btn-back" onclick="goToStep(0)">Back</button>
       <button class="btn-next" onclick="nextStepOwnLyrics()">Continue <svg viewBox="0 0 16 16" fill="none" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
-      <button class="btn-done" id="btn-done-own-lyrics" onclick="goToStep(6)">Done — Back to Summary</button>
+      <button class="btn-done" id="btn-done-own-lyrics" onclick="goToStep(5)">Done — Back to Summary</button>
     </div>
   </div>
 
   <!-- STEP 1: FOR WHOM -->
   <div class="step" id="step-1">
-    <div class="step-eyebrow">Step 2 of 7</div>
+    <div class="step-eyebrow">Step 2 of 6</div>
     <h2 class="step-title">Who is this song for?</h2>
-    <p class="step-hint">Choose the person who will receive this gift.</p>
+    <p class="step-hint">Tell us about the person before picking their role.</p>
+
+    <div class="recipient-wrap">
+      <div class="recipient-row">
+        <div class="recipient-field">
+          <label class="recipient-label">Their name</label>
+          <input type="text" id="recipient-name" class="recipient-input" placeholder="e.g. Sofia, Alex, little Mia…" oninput="STATE.mainName=this.value" autocomplete="off">
+        </div>
+        <div class="recipient-field">
+          <label class="recipient-label">How to pronounce it <span class="recipient-opt">(optional)</span></label>
+          <input type="text" id="recipient-pronounce" class="recipient-input" placeholder='e.g. "so-FEE-ah", "AY-lex"' oninput="STATE.namePronunciation=this.value" autocomplete="off">
+        </div>
+      </div>
+      <p class="recipient-hint">Especially helpful for unique or non-English names — the singer will use this.</p>
+    </div>
+
+    <p class="recipient-role-label">Now, what's their relationship to you?</p>
     <div class="tile-grid" id="person-grid"></div>
     <div class="err-msg" id="err-1">Please choose a person to continue.</div>
     <div class="nav-row">
       <button class="btn-back" onclick="prevStep(1)">Back</button>
       <button class="btn-next" onclick="nextStep(1)">Continue <svg viewBox="0 0 16 16" fill="none" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
-      <button class="btn-done" id="btn-done-1" onclick="goToStep(6)">Done — Back to Summary</button>
+      <button class="btn-done" id="btn-done-1" onclick="goToStep(5)">Done — Back to Summary</button>
     </div>
   </div>
 
@@ -440,67 +480,29 @@
     <div class="nav-row">
       <button class="btn-back" onclick="prevStep(2)">Back</button>
       <button class="btn-next" onclick="nextStep(2)">Continue <svg viewBox="0 0 16 16" fill="none" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
-      <button class="btn-done" id="btn-done-2" onclick="goToStep(6)">Done — Back to Summary</button>
+      <button class="btn-done" id="btn-done-2" onclick="goToStep(5)">Done — Back to Summary</button>
     </div>
   </div>
 
-  <!-- STEP 3: VIBE / MOOD -->
+  <!-- STEP 3: GENRE -->
   <div class="step" id="step-3">
-    <div class="step-eyebrow">Step 4 of 7</div>
-    <h2 class="step-title">How should it feel?</h2>
-    <p class="step-hint">Pick the mood that best fits what you're going for.</p>
-    <div class="vibe-grid" id="vibe-grid"></div>
-
-    <div id="mood-other-box" style="display:none;margin-top:10px;">
-      <textarea id="mood-other-input" placeholder="Describe the mood in your own words…" style="min-height:72px;" oninput="STATE.moodOtherText=this.value"></textarea>
-    </div>
-
-    <div class="toggle-row" onclick="toggleOccasionMention()" id="occasion-toggle-row" style="display:none;">
-      <div>
-        <div class="toggle-label" id="occasion-toggle-label">Mention the occasion in the song?</div>
-        <div class="toggle-sub">e.g. "Happy Birthday" or "Congratulations"</div>
-      </div>
-      <div class="toggle-switch" id="toggle-switch"></div>
-    </div>
-
-    <div class="err-msg" id="err-3">Please choose a mood to continue.</div>
-    <div class="nav-row">
-      <button class="btn-back" onclick="prevStep(3)">Back</button>
-      <button class="btn-next" onclick="nextStep(3)">Continue <svg viewBox="0 0 16 16" fill="none" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
-      <button class="btn-done" id="btn-done-3" onclick="goToStep(6)">Done — Back to Summary</button>
-    </div>
-  </div>
-
-  <!-- STEP 4: GENRE -->
-  <div class="step" id="step-4">
-    <div class="step-eyebrow">Step 5 of 7</div>
+    <div class="step-eyebrow">Step 4 of 6</div>
     <h2 class="step-title">What should it sound like?</h2>
     <p class="step-hint">Pick a genre — press ▶ to hear an example, then click the card to select it.</p>
     <div class="genre-grid" id="genre-grid"></div>
-    <div class="err-msg" id="err-4">Please choose a genre to continue.</div>
+    <div class="err-msg" id="err-3">Please choose a genre to continue.</div>
     <div class="nav-row">
-      <button class="btn-back" onclick="prevStep(4)">Back</button>
-      <button class="btn-next" onclick="nextStep(4)">Continue <svg viewBox="0 0 16 16" fill="none" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
-      <button class="btn-done" id="btn-done-4" onclick="goToStep(6)">Done — Back to Summary</button>
+      <button class="btn-back" onclick="prevStep(3)">Back</button>
+      <button class="btn-next" onclick="nextStep(3)">Continue <svg viewBox="0 0 16 16" fill="none" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+      <button class="btn-done" id="btn-done-3" onclick="goToStep(5)">Done — Back to Summary</button>
     </div>
   </div>
 
-  <!-- STEP 5: STORY -->
-  <div class="step" id="step-5">
-    <div class="step-eyebrow">Step 6 of 7</div>
+  <!-- STEP 4: STORY -->
+  <div class="step" id="step-4">
+    <div class="step-eyebrow">Step 5 of 6</div>
     <h2 class="step-title">Tell us your story</h2>
     <p class="step-hint">This is what the songwriter will use. The more you share, the better your song.</p>
-
-    <!-- Main character name + mention toggle -->
-    <div class="story-name-wrap">
-      <div class="story-name-label">What's the main person's name?</div>
-      <div class="story-name-sub">The songwriter will weave it into the lyrics.</div>
-      <div class="story-name-row">
-        <input type="text" id="main-name" placeholder="e.g. Sofia, Alex, little Mia…">
-        <div class="toggle-switch" id="name-mention-switch" style="cursor:pointer;" onclick="toggleNameMention()" title="Mention name in song"></div>
-      </div>
-      <div style="font-size:11px;color:#8a8098;margin-top:6px;" id="name-mention-label">Name will be mentioned in the song</div>
-    </div>
 
     <div class="story-mode-tabs">
       <button class="story-mode-tab active" id="tab-prompted" onclick="setStoryMode('prompted')">💬 Answer prompts</button>
@@ -524,41 +526,28 @@
 
     <div class="char-count" id="char-count">0 / 80 minimum</div>
 
-    <!-- Extra details below story field -->
-    <div class="soft-details-wrap">
-      <div class="soft-details-label">Extra details <span style="font-size:10px;text-transform:none;letter-spacing:0;color:#8a8098;">(optional)</span></div>
-      <div class="detail-input-wrap">
-        <label>Other names to mention</label>
-        <input type="text" class="detail-input" id="opt-names" placeholder="e.g. their mum Sarah, best friend Tom…">
-      </div>
-      <div class="detail-input-wrap">
-        <label>Dates, places, or other details</label>
-        <input type="text" class="detail-input" id="opt-other-details" placeholder="e.g. 14th Feb · Munich · their first apartment">
-      </div>
-    </div>
-
-    <div class="err-msg" id="err-5">Please add a bit more — the songwriter needs at least 80 characters to work with.</div>
+    <div class="err-msg" id="err-4">Please add a bit more — the songwriter needs at least 80 characters to work with.</div>
     <div class="nav-row">
-      <button class="btn-back" onclick="prevStep(5)">Back</button>
-      <button class="btn-next" onclick="nextStep(5)">Continue <svg viewBox="0 0 16 16" fill="none" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
-      <button class="btn-done" id="btn-done-5" onclick="goToStep(6)">Done — Back to Summary</button>
+      <button class="btn-back" onclick="prevStep(4)">Back</button>
+      <button class="btn-next" onclick="nextStep(4)">Continue <svg viewBox="0 0 16 16" fill="none" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+      <button class="btn-done" id="btn-done-4" onclick="goToStep(5)">Done — Back to Summary</button>
     </div>
   </div>
 
-  <!-- STEP 6: SUMMARY -->
-  <div class="step" id="step-6">
-    <div class="step-eyebrow">Step 7 of 7</div>
+  <!-- STEP 5: SUMMARY -->
+  <div class="step" id="step-5">
+    <div class="step-eyebrow">Step 6 of 6</div>
     <h2 class="step-title">Review your order</h2>
     <p class="step-hint">Everything look right? Use the edit buttons to make changes.</p>
     <div class="summary-card" id="summary-card"></div>
     <div class="nav-row" style="margin-top:20px;">
-      <button class="btn-back" onclick="prevStep(6)">Back</button>
-      <button class="btn-next" onclick="nextStep(6)">Continue <svg viewBox="0 0 16 16" fill="none" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+      <button class="btn-back" onclick="prevStep(5)">Back</button>
+      <button class="btn-next" onclick="nextStep(5)">Continue <svg viewBox="0 0 16 16" fill="none" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
     </div>
   </div>
 
-  <!-- STEP 7: PACKAGE -->
-  <div class="step" id="step-7">
+  <!-- STEP 6: PACKAGE -->
+  <div class="step" id="step-6">
     <div class="step-eyebrow">The package</div>
     <h2 class="step-title">You're so close!</h2>
     <p class="step-hint">Here is what's included with your order today:</p>
@@ -634,7 +623,7 @@
     </div>
 
     <div class="nav-row" style="margin-top:20px;">
-      <button class="btn-back" style="flex:1;" onclick="prevStep(7)">← Review Details</button>
+      <button class="btn-back" style="flex:1;" onclick="prevStep(6)">← Review Details</button>
     </div>
   </div>
 
@@ -655,14 +644,9 @@ const STATE = {
   ownLyricsText: "",
   language: null, person: null, genre: null, occasion: null,
   occasionOtherText: "",
-  mood: null,
-  occasionMention: true,
   mainName: "",
-  nameMention: true,
-  namesField: "",
-  otherDetails: "",
+  namePronunciation: "",
   story: "",
-  // editing from summary
   editingFromSummary: false,
 };
 
@@ -703,17 +687,15 @@ function showDoneBtn(stepId) {
    ═══════════════════════════════════════════════════ */
 function renderLanguages() {
   const isOwnLyrics = STATE.hasLyrics;
-  const totalSteps = isOwnLyrics ? 5 : 7;
+  const totalSteps = isOwnLyrics ? 4 : 6;
 
-  // Update eyebrow labels on all steps to reflect real step count
   const eyebrows = {
     0: isOwnLyrics ? null : `Step 1 of ${totalSteps}`,
     1: `Step ${isOwnLyrics ? 1 : 2} of ${totalSteps}`,
     2: `Step ${isOwnLyrics ? 2 : 3} of ${totalSteps}`,
     3: `Step ${isOwnLyrics ? 3 : 4} of ${totalSteps}`,
     4: `Step ${isOwnLyrics ? 4 : 5} of ${totalSteps}`,
-    5: `Step ${isOwnLyrics ? 5 : 6} of ${totalSteps}`,
-    6: `Step ${isOwnLyrics ? 5 : 7} of ${totalSteps}`,
+    5: `Step ${isOwnLyrics ? 4 : 6} of ${totalSteps}`,
   };
   Object.entries(eyebrows).forEach(([s, label]) => {
     const el = document.querySelector(`#step-${s} .step-eyebrow`);
@@ -769,13 +751,19 @@ function nextStepOwnLyrics() {
   const text = box ? box.value.trim() : "";
   if (text.length < 20) { showErr("err-own-lyrics"); return; }
   STATE.ownLyricsText = text;
-  goToStep(7); // jump to summary
+  goToStep(5); // jump to summary
 }
 
 /* ═══════════════════════════════════════════════════
    RENDER: PERSONS (Step 1)
    ═══════════════════════════════════════════════════ */
 function renderPersons() {
+  // Restore saved values
+  const nameEl = document.getElementById("recipient-name");
+  const pronounceEl = document.getElementById("recipient-pronounce");
+  if (nameEl) nameEl.value = STATE.mainName || "";
+  if (pronounceEl) pronounceEl.value = STATE.namePronunciation || "";
+
   document.getElementById("person-grid").innerHTML = DATA.persons.map(p => `
     <div class="tile ${STATE.person === p.id ? 'selected' : ''}" onclick="selectPerson('${p.id}')">
       ${svgCheck('tile-check')}
@@ -785,12 +773,14 @@ function renderPersons() {
     </div>`).join("");
 }
 function selectPerson(id) {
-  STATE.person = id; STATE.occasion = null; STATE.mood = null; STATE.angle = null; STATE.tempo = null;
+  STATE.person = id; STATE.occasion = null;
+  STATE.mainName = document.getElementById("recipient-name")?.value || "";
+  STATE.namePronunciation = document.getElementById("recipient-pronounce")?.value || "";
   renderPersons(); hideErr("err-1");
 }
 
 /* ═══════════════════════════════════════════════════
-   RENDER: GENRE (Step 2)
+   RENDER: GENRE (Step 3)
    ═══════════════════════════════════════════════════ */
 function renderGenres() {
   document.getElementById("genre-grid").innerHTML = DATA.genres.map(g => `
@@ -818,7 +808,7 @@ function renderGenres() {
 function selectGenre(id) {
   STATE.genre = id;
   document.querySelectorAll(".genre-card").forEach(c => c.classList.toggle("selected", c.id === `gcard-${id}`));
-  hideErr("err-2");
+  hideErr("err-3");
 }
 
 /* Audio player */
@@ -906,73 +896,15 @@ function renderOccasions() {
   if (jb) jb.classList.toggle("selected", STATE.occasion === "justbecause");
 }
 function selectOccasion(id) {
-  STATE.occasion = id; STATE.mood = null;
-  renderOccasions(); renderVibes(); hideErr("err-3");
+  STATE.occasion = id;
+  renderOccasions(); hideErr("err-2");
 }
+
 
 /* ═══════════════════════════════════════════════════
-   RENDER: MOOD (Step 4)
-   ═══════════════════════════════════════════════════ */
-function getMoods() {
-  const k1 = `${STATE.person}|${STATE.occasion}`, k2 = `*|${STATE.occasion}`;
-  return DATA.moods[k1] || DATA.moods[k2] || DATA.moods["default"];
-}
-function renderVibes() {
-  const moods = getMoods();
-  document.getElementById("vibe-grid").innerHTML = moods.map((m, i) => `
-    <div class="vibe-tile ${STATE.mood === i ? 'selected' : ''}" onclick="selectMood(${i})">
-      <span class="vibe-name">${m}</span>
-    </div>`).join("") +
-    `<div class="vibe-tile ${STATE.mood === 'other' ? 'selected' : ''}" onclick="selectMood('other')">
-      <span class="vibe-name">✏️ Something else — I'll describe it</span>
-    </div>`;
-
-  const ob = document.getElementById("mood-other-box");
-  if (ob) ob.style.display = STATE.mood === "other" ? "block" : "none";
-
-  const tog = document.getElementById("occasion-toggle-row");
-  if (STATE.occasion && STATE.occasion !== "justbecause" && STATE.occasion !== "other") {
-    const occ = DATA.occasions.find(o => o.id === STATE.occasion);
-    if (occ) document.getElementById("occasion-toggle-label").textContent = `Mention "${occ.label}" in the song?`;
-    document.getElementById("toggle-switch").className = "toggle-switch" + (STATE.occasionMention ? " on" : "");
-    tog.style.display = "flex";
-  } else {
-    tog.style.display = "none";
-  }
-}
-function selectMood(i) { STATE.mood = i; renderVibes(); hideErr("err-4"); }
-function toggleOccasionMention() {
-  STATE.occasionMention = !STATE.occasionMention;
-  document.getElementById("toggle-switch").className = "toggle-switch" + (STATE.occasionMention ? " on" : "");
-}
-
-/* ═══════════════════════════════════════════════════
-   NAME MENTION TOGGLE (Step 5)
-   ═══════════════════════════════════════════════════ */
-function toggleNameMention() {
-  STATE.nameMention = !STATE.nameMention;
-  document.getElementById("name-mention-switch").className = "toggle-switch" + (STATE.nameMention ? " on" : "");
-  document.getElementById("name-mention-label").textContent = STATE.nameMention
-    ? "Name will be mentioned in the song"
-    : "Name will NOT be mentioned in the song";
-}
-
-/* ═══════════════════════════════════════════════════
-   RENDER: STORY (Step 5)
+   RENDER: STORY (Step 4)
    ═══════════════════════════════════════════════════ */
 function renderStoryStep() {
-  const mainNameEl = document.getElementById("main-name");
-  const namesEl = document.getElementById("opt-names");
-  const detailsEl = document.getElementById("opt-other-details");
-  if (mainNameEl) mainNameEl.value = STATE.mainName || "";
-  if (namesEl) namesEl.value = STATE.namesField || "";
-  if (detailsEl) detailsEl.value = STATE.otherDetails || "";
-
-  document.getElementById("name-mention-switch").className = "toggle-switch" + (STATE.nameMention ? " on" : "");
-  document.getElementById("name-mention-label").textContent = STATE.nameMention
-    ? "Name will be mentioned in the song"
-    : "Name will NOT be mentioned in the song";
-
   const ctx = STATE.person + "|" + STATE.occasion;
   if (ctx !== _lastStoryContext) {
     activePrompts = []; promptAnswers = {};
@@ -1061,7 +993,7 @@ function updateCharCount() {
 }
 
 /* ═══════════════════════════════════════════════════
-   RENDER: SUMMARY (Step 6)
+   RENDER: SUMMARY (Step 5)
    ═══════════════════════════════════════════════════ */
 function renderSummary() {
   const lang = DATA.languages.find(l => l.id === STATE.language);
@@ -1073,13 +1005,8 @@ function renderSummary() {
   else if (STATE.occasion === "other") occLabel = "Other: " + (STATE.occasionOtherText || "—");
   else occLabel = DATA.occasions.find(o => o.id === STATE.occasion)?.label || "—";
 
-  const moods = getMoods();
-  let moodLabel = "—";
-  if (STATE.mood === "other") moodLabel = "Other: " + (document.getElementById("mood-other-input")?.value || "");
-  else if (STATE.mood !== null && moods[STATE.mood]) moodLabel = moods[STATE.mood];
-
   const story = STATE.story;
-  const mainName = STATE.mainName || "—";
+  const nameVal = (STATE.mainName || "—") + (STATE.namePronunciation ? ` · pronounced "${STATE.namePronunciation}"` : "");
 
   let rows = [];
   if (STATE.hasLyrics) {
@@ -1087,17 +1014,16 @@ function renderSummary() {
       { key: "Language",  val: lang ? `${lang.flag} ${lang.name}` : "—", step: 0 },
       { key: "Lyrics",    val: STATE.ownLyricsText ? STATE.ownLyricsText.slice(0, 120) + (STATE.ownLyricsText.length > 120 ? "…" : "") : "—", step: "own-lyrics" },
       { key: "For",       val: person?.label || "—", step: 1 },
-      { key: "Genre",     val: genreObj ? `${genreObj.icon} ${genreObj.name}` : "—", step: 2 },
+      { key: "Genre",     val: genreObj ? `${genreObj.icon} ${genreObj.name}` : "—", step: 3 },
     ];
   } else {
     rows = [
       { key: "Language",  val: lang ? `${lang.flag} ${lang.name}` : "—", step: 0 },
+      { key: "Recipient", val: nameVal, step: 1 },
       { key: "For",       val: person?.label || "—", step: 1 },
       { key: "Occasion",  val: occLabel, step: 2 },
-      { key: "Mood",      val: moodLabel, step: 3 },
-      { key: "Genre",     val: genreObj ? `${genreObj.icon} ${genreObj.name}` : "—", step: 4 },
-      { key: "Main name", val: mainName + (STATE.nameMention ? " (mentioned in lyrics)" : " (not mentioned)"), step: 5 },
-      { key: "Story",     val: story ? story.slice(0, 160) + (story.length > 160 ? "…" : "") : "—", step: 5 },
+      { key: "Genre",     val: genreObj ? `${genreObj.icon} ${genreObj.name}` : "—", step: 3 },
+      { key: "Story",     val: story ? story.slice(0, 160) + (story.length > 160 ? "…" : "") : "—", step: 4 },
     ];
   }
 
@@ -1111,20 +1037,16 @@ function renderSummary() {
 }
 function editFromSummary(step) {
   STATE.editingFromSummary = true;
-  if (step === "own-lyrics") {
-    goToStep("own-lyrics");
-  } else {
-    goToStep(parseInt(step));
-  }
+  if (step === "own-lyrics") goToStep("own-lyrics");
+  else goToStep(parseInt(step));
 }
 
 /* ═══════════════════════════════════════════════════
    NAVIGATION
    ═══════════════════════════════════════════════════ */
-const TOTAL_STEPS = 7;
+const TOTAL_STEPS = 6;
 
 function updateProgressBarSegments(total) {
-  // For single-bar mode, just re-trigger progress update at current step
   const n = typeof STATE.step === "number" ? STATE.step : 0;
   const pct = total > 0 ? Math.round((n / total) * 100) : 0;
   const fill = document.getElementById("prog-bar-fill");
@@ -1134,73 +1056,53 @@ function updateProgressBarSegments(total) {
 function nextStep(from) {
   if (!validate(from)) return;
 
-  // Save fields before moving
-  if (from === 5) {
-    STATE.story = getStoryText();
-    STATE.mainName = document.getElementById("main-name")?.value || "";
-    STATE.namesField = document.getElementById("opt-names")?.value || "";
-    STATE.otherDetails = document.getElementById("opt-other-details")?.value || "";
+  // Save name fields when leaving step 1
+  if (from === 1) {
+    STATE.mainName = document.getElementById("recipient-name")?.value || "";
+    STATE.namePronunciation = document.getElementById("recipient-pronounce")?.value || "";
   }
-  if (from === 4) stopAudio(currentGenreId);
+  // Save story when leaving step 4
+  if (from === 4) STATE.story = getStoryText();
+  if (from === 3) stopAudio(currentGenreId);
 
-  // If editing from summary, jump back to summary
   if (STATE.editingFromSummary) {
     STATE.editingFromSummary = false;
-    goToStep(6);
+    goToStep(5);
     return;
   }
-
-  // If has own lyrics and on language step → go to own-lyrics page
-  if (from === 0 && STATE.hasLyrics) {
-    goToStep("own-lyrics");
-    return;
-  }
-
+  if (from === 0 && STATE.hasLyrics) { goToStep("own-lyrics"); return; }
   goToStep(from + 1);
 }
 
 function prevStep(current) {
   STATE.editingFromSummary = false;
-  if (current === 4) stopAudio(currentGenreId);
+  if (current === 3) stopAudio(currentGenreId);
   if (current === "own-lyrics") { goToStep(0); return; }
   goToStep(current - 1);
 }
 
 function goToStep(n) {
-  // Hide current step
   const curEl = document.getElementById(STATE.step === "own-lyrics" ? "step-own-lyrics" : `step-${STATE.step}`);
   if (curEl) curEl.classList.remove("active");
-
   STATE.step = n;
-
   if (n === 0) renderLanguages();
   if (n === 1) renderPersons();
   if (n === 2) renderOccasions();
-  if (n === 3) renderVibes();
-  if (n === 4) renderGenres();
-  if (n === 5) renderStoryStep();
-  if (n === 6) renderSummary();
-
+  if (n === 3) renderGenres();
+  if (n === 4) renderStoryStep();
+  if (n === 5) renderSummary();
   const elId = n === "own-lyrics" ? "step-own-lyrics" : `step-${n}`;
   const el = document.getElementById(elId);
-  if (el) {
-    el.classList.add("active");
-    el.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-
-  // Update done buttons visibility
+  if (el) { el.classList.add("active"); el.scrollIntoView({ behavior: "smooth", block: "start" }); }
   showDoneBtn(n);
-
-  // Update progress bar (numeric steps only)
   if (typeof n === "number") updateProgressBar(n);
 }
 
 function updateProgressBar(n) {
-  const total = STATE.hasLyrics ? 5 : TOTAL_STEPS;
+  const total = STATE.hasLyrics ? 4 : TOTAL_STEPS;
   const pct = total > 0 ? Math.round((n / total) * 100) : 0;
   const fill = document.getElementById("prog-bar-fill");
   if (fill) fill.style.width = pct + "%";
-  // keep legacy segment classes for any other code that reads them
   for (let i = 0; i < TOTAL_STEPS; i++) {
     const el = document.getElementById(`pb-${i}`);
     if (el) el.className = "prog-step" + (i < n ? " done" : i === n ? " active" : "");
@@ -1215,9 +1117,8 @@ function validate(step) {
   if (step === 0 && !STATE.language && !STATE.hasLyrics) { showErr("err-0"); return false; }
   if (step === 1 && !STATE.person) { showErr("err-1"); return false; }
   if (step === 2 && !STATE.occasion) { showErr("err-2"); return false; }
-  if (step === 3 && STATE.mood === null) { showErr("err-3"); return false; }
-  if (step === 4 && !STATE.genre) { showErr("err-4"); return false; }
-  if (step === 5 && getStoryText().length < 80) { showErr("err-5"); return false; }
+  if (step === 3 && !STATE.genre) { showErr("err-3"); return false; }
+  if (step === 4 && getStoryText().length < 80) { showErr("err-4"); return false; }
   return true;
 }
 function showErr(id) { document.getElementById(id)?.classList.add("show"); }
