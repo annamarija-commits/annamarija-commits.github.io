@@ -315,19 +315,19 @@
 
   /* TRUST PERKS — floating blobs */
   .trust-perks { display:flex; gap:10px; margin-top:24px; flex-wrap:wrap; }
-  .trust-perk { flex:1; min-width:160px; display:flex; align-items:center; gap:10px;
+  .trust-perk { flex:1; min-width:180px;
     background:rgba(255,255,255,0.04);
     border:1px solid rgba(255,255,255,0.08);
-    border-radius:99px;
-    padding:10px 16px 10px 12px;
+    border-radius:18px;
+    padding:14px 18px;
     backdrop-filter:blur(12px);
     -webkit-backdrop-filter:blur(12px);
     transition:background 0.2s, border-color 0.2s;
   }
-  .trust-perk:hover { background:rgba(255,255,255,0.06); border-color:rgba(232,84,122,0.25); }
-  .trust-perk-icon { font-size:16px; flex-shrink:0; opacity:0.85; }
-  .trust-perk-title { font-size:12px; font-weight:500; color:#c0b8d8; line-height:1.4; }
-  .trust-perk-sub { display:none; }
+  .trust-perk:hover { background:rgba(255,255,255,0.06); border-color:rgba(232,84,122,0.22); }
+  .trust-perk-icon { display:none; }
+  .trust-perk-title { font-size:12px; font-weight:600; color:#d0c8e8; line-height:1.4; margin-bottom:4px; display:block; }
+  .trust-perk-sub { display:block; font-size:11px; color:#7a7090; line-height:1.55; }
 
   /* MOBILE IMPROVEMENTS */
   @media(max-width:600px) {
@@ -626,12 +626,12 @@
 
     <div class="trust-perks">
       <div class="trust-perk">
-        <span class="trust-perk-icon">🔄</span>
         <span class="trust-perk-title">Full refund if undelivered in 48h</span>
+        <span class="trust-perk-sub">Your song is guaranteed — or your money back, no questions asked.</span>
       </div>
       <div class="trust-perk">
-        <span class="trust-perk-icon">🎁</span>
         <span class="trust-perk-title">Free song for a reaction video</span>
+        <span class="trust-perk-sub">Share their reaction with us and we'll gift your next one free.</span>
       </div>
     </div>
 
