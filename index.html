@@ -1311,6 +1311,9 @@ function selectPerson(id) {
 /* ═══════════════════════════════════════════════════
    RENDER: GENRE (Step 3)
    ═══════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════
+   RENDER: GENRE (Step 3)
+   ═══════════════════════════════════════════════════ */
 function renderGenres() {
   document.getElementById("genre-grid").innerHTML = CUSTOM_GENRES.map(g => {
     // Fallback data handlers
@@ -1341,6 +1344,29 @@ function renderGenres() {
       </div>
     `;
   }).join("");
+}
+
+function selectGenre(id) {
+  STATE.genre = id;
+  document.querySelectorAll(".genre-card").forEach(c => c.classList.toggle("selected", c.id === `gcard-${id}`));
+  hideErr("err-3");
+}
+
+/* Audio player */
+function togglePlay(gid, src) {
+  if (!src) return; // Ignore if missing audio
+  if (currentAudio && currentGenreId !== gid) stopAudio(currentGenreId);
+  if (currentAudio && currentGenreId === gid) {
+    currentAudio.paused ? (currentAudio.play(), tickProgress(gid), setPlayIcon(gid, true))
+                        : (currentAudio.pause(), setPlayIcon(gid, false));
+    return;
+  }
+  currentAudio = new Audio(src);
+  currentGenreId = gid;
+  currentAudio.play().catch(() => simulateProgress(gid));
+  currentAudio.addEventListener("timeupdate", () => drawProgress(gid));
+  currentAudio.addEventListener("ended", () => { setPlayIcon(gid, false); drawProgress(gid, true); });
+  tickProgress(gid); setPlayIcon(gid, true);
 }
 function selectGenre(id) {
   STATE.genre = id;
