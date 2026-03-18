@@ -1311,12 +1311,6 @@ function selectPerson(id) {
 /* ═══════════════════════════════════════════════════
    RENDER: GENRE (Step 3)
    ═══════════════════════════════════════════════════ */
-/* ═══════════════════════════════════════════════════
-   RENDER: GENRE (Step 3)
-   ═══════════════════════════════════════════════════ */
-/* ═══════════════════════════════════════════════════
-   RENDER: GENRE (Step 3)
-   ═══════════════════════════════════════════════════ */
 function renderGenres() {
   document.getElementById("genre-grid").innerHTML = CUSTOM_GENRES.map(g => {
     // Fallback data handlers
@@ -1325,20 +1319,7 @@ function renderGenres() {
     const desc = g.desc || "No description available.";
     const bg = g.bg || "linear-gradient(160deg, #161220, #0a0810)";
     const img = g.img || "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><rect width='200' height='200' fill='%23161220'/></svg>";
-    
-    // --- NEW SMART AUDIO SELECTION LOGIC ---
-    let audioSrc = "";
-    if (g.audio) {
-      // If they chose "both", default the preview to English
-      const targetLang = STATE.language === "both" ? "en" : STATE.language;
-      
-      // 1. Try to find the exact language they chose
-      // 2. If it doesn't exist, fall back to English
-      // 3. If English doesn't exist, just play whatever is available first
-      audioSrc = g.audio[targetLang] || g.audio["en"] || Object.values(g.audio)[0] || "";
-    }
-    // ---------------------------------------
-
+    const audioSrc = (g.audio && Object.values(g.audio)[0]) || ""; 
     const disablePlay = !audioSrc ? 'disabled' : '';
 
     return `
@@ -1362,7 +1343,8 @@ function renderGenres() {
   }).join("");
 }
 
-function selectGenre(id) {
+
+ function selectGenre(id) {
   STATE.genre = id;
   document.querySelectorAll(".genre-card").forEach(c => c.classList.toggle("selected", c.id === `gcard-${id}`));
   hideErr("err-3");
@@ -1384,27 +1366,10 @@ function togglePlay(gid, src) {
   currentAudio.addEventListener("ended", () => { setPlayIcon(gid, false); drawProgress(gid, true); });
   tickProgress(gid); setPlayIcon(gid, true);
 }
-function selectGenre(id) {
-  STATE.genre = id;
-  document.querySelectorAll(".genre-card").forEach(c => c.classList.toggle("selected", c.id === `gcard-${id}`));
-  hideErr("err-3");
-}
-/* Audio player */
-function togglePlay(gid, src) {
-  if (!src) return; // Ignore if missing audio
-  if (currentAudio && currentGenreId !== gid) stopAudio(currentGenreId);
-  if (currentAudio && currentGenreId === gid) {
-    currentAudio.paused ? (currentAudio.play(), tickProgress(gid), setPlayIcon(gid, true))
-                        : (currentAudio.pause(), setPlayIcon(gid, false));
-    return;
-  }
-  currentAudio = new Audio(src);
-  currentGenreId = gid;
-  currentAudio.play().catch(() => simulateProgress(gid));
-  currentAudio.addEventListener("timeupdate", () => drawProgress(gid));
-  currentAudio.addEventListener("ended", () => { setPlayIcon(gid, false); drawProgress(gid, true); });
-  tickProgress(gid); setPlayIcon(gid, true);
-}
+
+
+
+ 
 function stopAudio(gid) {
   animTimers.forEach(t => { clearTimeout(t); cancelAnimationFrame(t); });
   animTimers = [];
