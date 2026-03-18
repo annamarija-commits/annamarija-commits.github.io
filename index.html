@@ -1422,6 +1422,110 @@ function editFromSummary(step) {
 }
 
 /* ═══════════════════════════════════════════════════
+   RENDER: Thank you (Step 7)
+   ═══════════════════════════════════════════════════ */
+<div class="step" id="step-thankyou">
+  <div style="text-align:center; padding: 40px 0;">
+    <div style="font-size:64px; margin-bottom:24px;">🎵</div>
+    <div class="step-eyebrow" style="justify-content:center;">Order confirmed</div>
+    <h2 class="step-title" style="text-align:center; font-size:clamp(26px,4vw,36px);">
+      Your song is on its way.
+    </h2>
+    <p class="step-hint" style="text-align:center; max-width:420px; margin:0 auto 32px;">
+      We've received everything we need. Your custom song will be ready within 48 hours — 
+      check your email for confirmation.
+    </p>
+
+    <div style="
+      background:var(--surface-2);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:24px;
+      margin-bottom:32px;
+      text-align:left;
+    ">
+      <div style="font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--text-muted); margin-bottom:16px;">
+        What happens next
+      </div>
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <div style="display:flex; gap:14px; align-items:flex-start;">
+          <div style="
+            width:28px; height:28px; border-radius:50%;
+            background:var(--accent-dim);
+            border:1px solid var(--accent-border);
+            display:flex; align-items:center; justify-content:center;
+            flex-shrink:0; font-size:12px; color:var(--accent-text); font-weight:700;
+          ">1</div>
+          <div>
+            <div style="font-size:14px; font-weight:600; color:var(--cream); margin-bottom:3px;">Our songwriter gets to work</div>
+            <div style="font-size:12px; color:var(--text-muted);">Your story is handed to a songwriter who specialises in your chosen genre.</div>
+          </div>
+        </div>
+        <div style="display:flex; gap:14px; align-items:flex-start;">
+          <div style="
+            width:28px; height:28px; border-radius:50%;
+            background:var(--accent-dim);
+            border:1px solid var(--accent-border);
+            display:flex; align-items:center; justify-content:center;
+            flex-shrink:0; font-size:12px; color:var(--accent-text); font-weight:700;
+          ">2</div>
+          <div>
+            <div style="font-size:14px; font-weight:600; color:var(--cream); margin-bottom:3px;">Song is produced & mixed</div>
+            <div style="font-size:12px; color:var(--text-muted);">Recorded, produced, and mixed to studio quality — WAV and MP3.</div>
+          </div>
+        </div>
+        <div style="display:flex; gap:14px; align-items:flex-start;">
+          <div style="
+            width:28px; height:28px; border-radius:50%;
+            background:var(--accent-dim);
+            border:1px solid var(--accent-border);
+            display:flex; align-items:center; justify-content:center;
+            flex-shrink:0; font-size:12px; color:var(--accent-text); font-weight:700;
+          ">3</div>
+          <div>
+            <div style="font-size:14px; font-weight:600; color:var(--cream); margin-bottom:3px;">Delivered within 48 hours</div>
+            <div style="font-size:12px; color:var(--text-muted);">You'll receive a private song page link by email. Ready to share or download.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="
+      background:rgba(232,84,122,0.06);
+      border:1px solid var(--accent-border);
+      border-radius:var(--radius);
+      padding:16px 20px;
+      display:flex; align-items:center; gap:14px;
+      margin-bottom:32px; text-align:left;
+    ">
+      <span style="font-size:28px;">📧</span>
+      <div>
+        <div style="font-size:13px; font-weight:600; color:var(--cream); margin-bottom:3px;">Check your inbox</div>
+        <div style="font-size:12px; color:var(--text-muted);">A confirmation with your order ID has been sent to your email address.</div>
+      </div>
+    </div>
+
+    <div id="thankyou-order-id" style="
+      font-family:'Space Mono',monospace;
+      font-size:11px; color:var(--text-muted);
+      margin-bottom:32px;
+    "></div>
+
+    <a href="https://yourwebsite.com" style="
+      display:inline-flex; align-items:center; gap:8px;
+      background:var(--surface-2);
+      border:1px solid var(--border);
+      border-radius:var(--radius-sm);
+      padding:13px 24px;
+      color:var(--text-muted);
+      font-family:'Bricolage Grotesque',sans-serif;
+      font-size:14px; text-decoration:none;
+      transition:border-color 0.2s, color 0.2s;
+    ">← Back to Orphsody</a>
+  </div>
+</div>
+
+/* ═══════════════════════════════════════════════════
    NAVIGATION
    ═══════════════════════════════════════════════════ */
 const TOTAL_STEPS = 6;
