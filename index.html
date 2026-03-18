@@ -1581,6 +1581,13 @@ function goToStep(n) {
   if (el) { el.classList.add("active"); el.scrollIntoView({ behavior: "smooth", block: "start" }); }
   showDoneBtn(n);
   if (typeof n === "number") updateProgressBar(n);
+ if (n === "thankyou") {
+  const el = document.getElementById("step-thankyou");
+  if (el) { el.classList.add("active"); }
+  // hide progress bar
+  document.querySelector(".progress-wrap").style.display = "none";
+  return;
+}
 }
 
 function updateProgressBar(n) {
