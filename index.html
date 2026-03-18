@@ -1531,8 +1531,12 @@ async function submitForm() {
   const key = (hasLyrics ? "1" : "0") + (hasQR ? "1" : "0");
   const stripeUrl = STRIPE_LINKS[key];
 
+ // Generate order ID
+ const orderId = "ORD-" + Math.random().toString(36).substring(2, 8).toUpperCase();
+
   // Build order data to send to Formspree
   const orderData = {
+   order_id: orderId,
     language: STATE.language,
     person: STATE.person,
     recipient_name: STATE.mainName,
@@ -1552,6 +1556,9 @@ async function submitForm() {
     submitted_at: new Date().toISOString(),
   };
 
+ // Append to Stripe URL
+window.location.href = stripeUrl + "?client_reference_id=" + orderId;
+
   try {
     await fetch("https://formspree.io/f/xdalrokn", {
       method: "POST",
@@ -1566,6 +1573,8 @@ async function submitForm() {
 
   // Redirect to Stripe
   window.location.href = stripeUrl;
+
+ 
 }
 
 /* INIT */
