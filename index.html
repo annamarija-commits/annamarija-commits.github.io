@@ -1565,29 +1565,30 @@ function prevStep(current) {
   if (current === "own-lyrics") { goToStep(0); return; }
   goToStep(current - 1);
 }
-
 function goToStep(n) {
   const curEl = document.getElementById(STATE.step === "own-lyrics" ? "step-own-lyrics" : `step-${STATE.step}`);
   if (curEl) curEl.classList.remove("active");
   STATE.step = n;
+
+  if (n === "thankyou") {
+    const thankyouEl = document.getElementById("step-thankyou");
+    if (thankyouEl) thankyouEl.classList.add("active");
+    document.querySelector(".progress-wrap").style.display = "none";
+    return;
+  }
+
   if (n === 0) renderLanguages();
   if (n === 1) renderPersons();
   if (n === 2) renderOccasions();
   if (n === 3) renderGenres();
   if (n === 4) renderStoryStep();
   if (n === 5) renderSummary();
+
   const elId = n === "own-lyrics" ? "step-own-lyrics" : `step-${n}`;
   const el = document.getElementById(elId);
   if (el) { el.classList.add("active"); el.scrollIntoView({ behavior: "smooth", block: "start" }); }
   showDoneBtn(n);
   if (typeof n === "number") updateProgressBar(n);
- if (n === "thankyou") {
-  const el = document.getElementById("step-thankyou");
-  if (el) { el.classList.add("active"); }
-  // hide progress bar
-  document.querySelector(".progress-wrap").style.display = "none";
-  return;
-}
 }
 
 function updateProgressBar(n) {
