@@ -943,9 +943,9 @@
     <div class="addon-card" onclick="toggleAddon(this, 10)">
       <div class="addon-left">
         <div class="addon-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <span class="addon-name">Beautiful Lyrics Sheet (PDF)</span>
+        <span class="addon-name">Original Lyrics Sheet (PDF)</span>
       </div>
-      <span class="addon-price">+ $10</span>
+      <span class="addon-price">+ €11</span>
     </div>
 
     <div class="addon-card" onclick="toggleAddon(this, 5)">
@@ -953,25 +953,25 @@
         <div class="addon-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
         <span class="addon-name">Personalised QR Code</span>
       </div>
-      <span class="addon-price">+ $5</span>
+      <span class="addon-price">+ €5</span>
     </div>
 
     <div class="price-summary" id="price-summary">
       <div class="price-row">
         <span class="price-label">Custom Song</span>
-        <span class="price-value">$60.00</span>
+        <span class="price-value">€14.00</span>
       </div>
       <div class="price-row" id="price-row-addon1" style="display:none;">
-        <span class="price-label">Beautiful Lyrics Sheet</span>
-        <span class="price-value">$10.00</span>
+        <span class="price-label">Original Lyrics Sheet</span>
+        <span class="price-value">€11.00</span>
       </div>
       <div class="price-row" id="price-row-addon2" style="display:none;">
         <span class="price-label">Personalised QR Code</span>
-        <span class="price-value">$5.00</span>
+        <span class="price-value">€5.00</span>
       </div>
       <div class="price-row total">
         <span class="price-label">Total</span>
-        <span class="price-value" id="total-price">$60.00</span>
+        <span class="price-value" id="total-price">€14.00</span>
       </div>
     </div>
 
@@ -1508,35 +1508,64 @@ function hideErr(id) { document.getElementById(id)?.classList.remove("show"); }
 /* ═══════════════════════════════════════════════════
    SUBMIT
    ═══════════════════════════════════════════════════ */
-function submitForm() {
-  console.log("ORDER:", JSON.stringify(STATE, null, 2));
-  alert("🎵 Order placed! (Demo mode)\n\nOpen the browser console to see the full STATE object.");
-}
-function toggleAddon(el, price) { 
-  el.classList.toggle("selected"); 
-  updatePriceSummary();
-}
+const STRIPE_LINKS = {
+  "00": "https://buy.stripe.com/LINK_60",   // no addons
+  "01": "https://buy.stripe.com/LINK_65",   // QR only
+  "10": "https://buy.stripe.com/LINK_70",   // lyrics only  
+  "11": "https://buy.stripe.com/LINK_75",   // both
+};
 
-function updatePriceSummary() {
-  const addons = document.querySelectorAll('.addon-card');
-  let total = 60; // Base price
-  
-  addons.forEach((addon, idx) => {
-    const isSelected = addon.classList.contains('selected');
-    const priceRow = document.getElementById(`price-row-addon${idx + 1}`);
-    
-    if (priceRow) {
-      priceRow.style.display = isSelected ? 'flex' : 'none';
-    }
-    
-    if (isSelected) {
-      const priceText = addon.querySelector('.addon-price').textContent;
-      const addonPrice = parseInt(priceText.replace(/[^0-9]/g, ''));
-      total += addonPrice;
-    }
+async function submitForm() {
+  const btn = document.getElementById("btn-pay");
+  btn.textContent = "Processing...";
+  btn.disabled = true;
+
+  // Figure out which addons are selected
+  const addons = document.querySelectorAll(".addon-card.selected");
+  let hasLyrics = false, hasQR = false;
+  addons.forEach(a => {
+    if (a.querySelector(".addon-name").textContent.includes("Lyrics")) hasLyrics = true;
+    if (a.querySelector(".addon-name").textContent.includes("QR")) hasQR = true;
   });
-  
-  document.getElementById('total-price').textContent = `$${total}.00`;
+
+  const key = (hasLyrics ? "1" : "0") + (hasQR ? "1" : "0");
+  const stripeUrl = STRIPE_LINKS[key];
+
+  // Build order data to send to Formspree
+  const orderData = {
+    language: STATE.language,
+    person: STATE.person,
+    recipient_name: STATE.mainName,
+    name_pronunciation: STATE.namePronunciation,
+    name_mention: STATE.nameMention,
+    occasion: STATE.occasion,
+    occasion_other: STATE.occasionOtherText,
+    genre: STATE.genre,
+    story: STATE.story,
+    own_lyrics: STATE.hasLyrics,
+    own_lyrics_text: STATE.ownLyricsText,
+    addons: {
+      lyrics_sheet: hasLyrics,
+      qr_code: hasQR,
+    },
+    total: hasLyrics && hasQR ? "€30" : hasLyrics ? "€25" : hasQR ? "€19" : "€14",
+    submitted_at: new Date().toISOString(),
+  };
+
+  try {
+    await fetch("https://formspree.io/f/xdalrokn", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(orderData),
+    });
+  } catch (e) {
+    console.error("Formspree error:", e);
+    // Still redirect to Stripe even if Formspree fails
+    // You don't want to block a payment over a logging issue
+  }
+
+  // Redirect to Stripe
+  window.location.href = stripeUrl;
 }
 
 /* INIT */
