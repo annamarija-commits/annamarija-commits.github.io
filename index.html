@@ -242,57 +242,33 @@
     transition:transform 0.4s var(--ease);
     filter:brightness(0.85) saturate(1.05);
   }
-  .genre-overlay {
+.genre-overlay {
     position:absolute; inset:0;
-    background:linear-gradient(to bottom, transparent 25%, rgba(8,6,16,0.6) 60%, rgba(8,6,16,0.98) 100%);
+    /* A smooth gradient that gets nice and dark at the bottom for text contrast */
+    background:linear-gradient(to bottom, rgba(8,6,16,0) 30%, rgba(8,6,16,0.6) 60%, rgba(8,6,16,0.98) 100%);
     pointer-events:none; z-index:1;
   }
-  .genre-card:hover { transform:translateY(-2px) scale(1.02); border-color:rgba(232,84,122,0.35); box-shadow:0 10px 32px rgba(0,0,0,0.55); }
-  .genre-card:hover .genre-img { transform:scale(1.05); filter:brightness(0.95) saturate(1.1); }
-  .genre-card.selected { border-color:rgba(232,84,122,0.8); box-shadow:0 0 0 1px rgba(232,84,122,0.25), 0 10px 32px rgba(196,47,168,0.25); }
-  .genre-card.selected::after { content:''; position:absolute; inset:0; border-radius:13px; background:rgba(232,84,122,0.07); pointer-events:none; z-index:2; }
-  
-  .genre-check {
-    position:absolute; top:9px; right:9px; z-index:10;
-    width:22px; height:22px; border-radius:50%;
-    background:var(--accent-grad);
-    display:flex; align-items:center; justify-content:center;
-    opacity:0; transform:scale(0.4);
-    transition:opacity 0.2s, transform 0.25s var(--ease);
-    box-shadow:0 2px 10px rgba(196,47,168,0.5);
+
+  /* Play Button positioned top-left */
+  .genre-play-top {
+    position: absolute; top: 10px; left: 10px; z-index: 10;
   }
-  .genre-card.selected .genre-check { opacity:1; transform:scale(1); }
-  .genre-check svg { width:10px; height:10px; stroke:#fff; fill:none; stroke-width:2.5; }
-
-  .genre-langs { position:absolute; top:9px; left:9px; display:flex; gap:4px; z-index:10; }
-  .lang-pill {
-    background:rgba(0,0,0,0.6); backdrop-filter:blur(8px);
-    border:1px solid rgba(255,255,255,0.1); border-radius:99px;
-    padding:2px 7px; font-size:9px; font-weight:700;
-    color:rgba(255,255,255,0.7); font-family:'Space Mono',monospace; letter-spacing:0.05em;
-  }
-
-  .genre-content { position:absolute; bottom:0; left:0; right:0; padding:10px 11px 11px; z-index:5; }
-  .genre-name { font-size:14px; font-weight:700; color:var(--cream); display:block; margin-bottom:2px; letter-spacing:-0.02em; line-height:1.2; }
-  .genre-desc { font-size:11px; color:rgba(200,188,216,0.7); line-height:1.35; display:block; margin-bottom:10px; }
-
-  /* mini player */
-  .genre-player { display:flex; align-items:center; gap:8px; }
   .play-btn {
-    width:28px; height:28px; border-radius:50%; flex-shrink:0;
-    background:rgba(255,255,255,0.07); border:1.5px solid rgba(232,84,122,0.5);
-    display:flex; align-items:center; justify-content:center;
-    cursor:pointer; transition:background 0.15s, transform 0.15s, border-color 0.15s;
+    width: 32px; height: 32px; border-radius: 50%;
+    background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(4px);
+    border: 1.5px solid rgba(232,84,122,0.6);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: background 0.15s, transform 0.15s, border-color 0.15s;
   }
-  .play-btn:hover:not(:disabled) { background:rgba(232,84,122,0.2); border-color:#e8547a; transform:scale(1.1); }
-  .play-btn.playing { background:rgba(232,84,122,0.22); border-color:#e8547a; }
-  .play-btn:disabled { opacity:0.4; cursor:not-allowed; border-color:rgba(255,255,255,0.2); }
-  .play-btn svg { width:10px; height:10px; fill:#f07090; }
-  .player-info { flex:1; min-width:0; }
-  .player-track { font-size:9px; color:rgba(200,188,216,0.5); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-bottom:4px; font-family:'Space Mono',monospace; }
-  .player-bar { height:2px; background:rgba(255,255,255,0.1); border-radius:99px; overflow:hidden; }
-  .player-fill { height:100%; background:var(--accent-grad); border-radius:99px; width:0%; transition:width 0.1s linear; }
-  .player-time { font-size:9px; color:rgba(200,188,216,0.4); font-family:'Space Mono',monospace; white-space:nowrap; flex-shrink:0; }
+  .play-btn:hover:not(:disabled) { background: rgba(232,84,122,0.4); border-color: #e8547a; transform: scale(1.1); }
+  .play-btn.playing { background: rgba(232,84,122,0.6); border-color: #e8547a; }
+  .play-btn:disabled { opacity: 0.4; cursor: not-allowed; border-color: rgba(255,255,255,0.2); }
+  .play-btn svg { width: 12px; height: 12px; fill: #fff; } /* White icon for pop */
+
+  /* Text Content at the bottom */
+  .genre-content { position:absolute; bottom:0; left:0; right:0; padding:12px 14px 14px; z-index:5; }
+  .genre-name { font-size:15px; font-weight:700; color:var(--cream); display:block; margin-bottom:4px; letter-spacing:-0.02em; line-height:1.2; }
+  .genre-desc { font-size:11px; color:rgba(200,188,216,0.8); line-height:1.4; display:block; }
 
   /* ── OCCASION ── */
   .occasion-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:16px; }
@@ -1332,6 +1308,9 @@ function selectPerson(id) {
 /* ═══════════════════════════════════════════════════
    RENDER: GENRE (Step 3)
    ═══════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════
+   RENDER: GENRE (Step 3)
+   ═══════════════════════════════════════════════════ */
 function renderGenres() {
   document.getElementById("genre-grid").innerHTML = CUSTOM_GENRES.map(g => {
     // Fallback data handlers
@@ -1340,7 +1319,6 @@ function renderGenres() {
     const desc = g.desc || "No description available.";
     const bg = g.bg || "linear-gradient(160deg, #161220, #0a0810)";
     const img = g.img || "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><rect width='200' height='200' fill='%23161220'/></svg>";
-    const langs = g.langs && g.langs.length ? g.langs : ["--"];
     const audioSrc = (g.audio && Object.values(g.audio)[0]) || ""; 
     const disablePlay = !audioSrc ? 'disabled' : '';
 
@@ -1349,21 +1327,16 @@ function renderGenres() {
         <div style="position:absolute;inset:0;background:${bg};"></div>
         <img class="genre-img" src="${img}" alt="${name}" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'200\\' height=\\'200\\'><rect width=\\'200\\' height=\\'200\\' fill=\\'%232a1a2a\\'/></svg>'">
         <div class="genre-overlay"></div>
-        <div class="genre-langs">${langs.map(l => `<span class="lang-pill">${l.toUpperCase()}</span>`).join("")}</div>
+        
+        <button class="play-btn genre-play-top" id="playbtn-${id}" onclick="event.stopPropagation(); togglePlay('${id}','${audioSrc}')" ${disablePlay}>
+          <svg id="playicon-${id}" viewBox="0 0 16 16"><polygon points="4,2 14,8 4,14"/></svg>
+        </button>
+
         <div class="genre-check"><svg viewBox="0 0 12 9"><polyline points="1,4 4,7 11,1"/></svg></div>
+        
         <div class="genre-content">
           <span class="genre-name">${name}</span>
           <span class="genre-desc">${desc}</span>
-          <div class="genre-player" onclick="event.stopPropagation()">
-            <button class="play-btn" id="playbtn-${id}" onclick="togglePlay('${id}','${audioSrc}')" ${disablePlay}>
-              <svg id="playicon-${id}" viewBox="0 0 16 16"><polygon points="4,2 14,8 4,14"/></svg>
-            </button>
-            <div class="player-info">
-              <div class="player-track">${name} Example</div>
-              <div class="player-bar"><div class="player-fill" id="pfill-${id}"></div></div>
-            </div>
-            <div class="player-time" id="ptime-${id}">0:00</div>
-          </div>
         </div>
       </div>
     `;
