@@ -1682,7 +1682,18 @@ window.location.href = stripeUrl + "?client_reference_id=" + orderId;
 }
 
 /* INIT */
-renderLanguages();
+function init() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("success") === "true") {
+    const orderId = params.get("order_id") || "";
+    const el = document.getElementById("thankyou-order-id");
+    if (el && orderId) el.textContent = "Order ID: " + orderId;
+    goToStep("thankyou");
+  } else {
+    renderLanguages();
+  }
+}
+init();
 </script>
 </body>
 </html>
