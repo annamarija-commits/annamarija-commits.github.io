@@ -3,7 +3,6 @@ const DATA = {
   languages: [
     { id:"de",   flag:"🇩🇪", name:"German",  sub:"German lyrics" },
     { id:"en",   flag:"🇬🇧", name:"English", sub:"English lyrics" },
-    { id:"both", flag:"🌍",  name:"Mix",     sub:"German & English" },
   ],
 
  persons: [
