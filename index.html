@@ -1561,7 +1561,7 @@ function updateCharCount() {
 function renderSummary() {
   const lang = DATA.languages.find(l => l.id === STATE.language);
   const person = DATA.persons.find(p => p.id === STATE.person);
-  const genreObj = DATA.genres.find(g => g.id === STATE.genre);
+ const genreObj = CUSTOM_GENRES.find(g => g.id === STATE.genre);
 
   let occLabel = "—";
   if (STATE.occasion === "justbecause") occLabel = "Just because 💛";
