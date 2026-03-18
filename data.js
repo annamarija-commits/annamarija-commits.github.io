@@ -107,20 +107,76 @@ moods: {
   "default":                 ["Feel warm and heartfelt 💛","Make them feel truly seen 🥲","Be uplifting and celebratory 🎉","Be something they'll never forget 🌟"],
 },
 
-  genres: [
-    { id:"acoustic-pop",      icon:"🎸", name:"Acoustic Pop",      desc:"Warm, guitar-forward. Emotional and universally loved.",       track:"Acoustic Pop Example",      src:"audio/acoustic-pop.mp3" },
-    { id:"singer-songwriter", icon:"🎙️", name:"Singer-Songwriter", desc:"Intimate, lyric-driven. Stripped-back and close to the bone.",track:"Singer-Songwriter Example", src:"audio/singer-songwriter.mp3" },
-    { id:"schlager",          icon:"🎶", name:"Schlager",          desc:"Classic German pop. Upbeat, melodic, instantly familiar.",     track:"Schlager Example",          src:"audio/schlager.mp3" },
-    { id:"folk",              icon:"🌿", name:"Folk",              desc:"Acoustic and timeless. Great for nostalgia and tributes.",     track:"Folk Example",              src:"audio/folk.mp3" },
-    { id:"rnb",               icon:"🎷", name:"R&B",               desc:"Smooth, soulful, modern. Emotional but contemporary.",         track:"R&B Example",               src:"audio/rnb.mp3" },
-    { id:"pop",               icon:"✨", name:"Pop",               desc:"Bright and catchy. Big choruses, radio-ready energy.",         track:"Pop Example",               src:"audio/pop.mp3" },
-    { id:"country",           icon:"🤠", name:"Country",           desc:"Storytelling-forward with warmth and twang.",                  track:"Country Example",           src:"audio/country.mp3" },
-    { id:"lullaby",           icon:"🌙", name:"Lullaby",           desc:"Gentle and dreamy. Perfect for babies and young children.",    track:"Lullaby Example",           src:"audio/lullaby.mp3" },
-    { id:"hiphop",            icon:"🎤", name:"Hip-Hop",           desc:"Rhythmic and lyric-dense. Great for funny or hype songs.",     track:"Hip-Hop Example",           src:"audio/hiphop.mp3" },
-    { id:"rock",              icon:"🔥", name:"Rock",              desc:"Electric energy. Emotional ballad or full-on anthem.",         track:"Rock Example",              src:"audio/rock.mp3" },
-  ],
+  const genres = [
+  {
+    id: "trap",
+    name: "Trap",
+    desc: "Heavy 808s and rapid-fire hi-hats. High energy with a gritty, modern bounce.",
+    img: "img/characters/trap.jpg",
+    bg: "linear-gradient(160deg,#2e112d,#170916)",
+    audio: {
+      en: "audio/trap-en.mp3",
+    },
+    langs: ["en"],
+  },
+  {
+    id: "soulful-pop",
+    name: "Soulful Pop",
+    desc: "Intimate, lyric-driven. Stripped-back and close to the bone.",
+    img: "img/characters/soulful-pop.jpg",
+    bg: "linear-gradient(160deg,#3d2a1f,#281c14)",
+    audio: {
+      en: "audio/soulful-pop-en.mp3",
+    },
+    langs: ["en"],
+  },
+  {
+    id: "rock-n-roll",
+    name: "Rock n Roll",
+    desc: "Distorted riffs and rebellious spirit. Raw, electrifying, and timeless.",
+    img: "img/characters/rock-n-roll.jpg",
+    bg: "linear-gradient(160deg,#3d1f1f,#281414)",
+    audio: {
+      en: "audio/rock-n-roll-en.mp3",
+    },
+    langs: ["en"],
+  },
+  {
+    id: "girly-hip-hop",
+    name: "Girly Hip-Hop",
+    desc: "Fierce, unapologetic, and highly danceable. Slick rhymes with serious attitude.",
+    img: "img/characters/girly-hip-hop.jpg",
+    bg: "linear-gradient(160deg,#3d1f36,#281423)",
+    audio: {
+      en: "audio/girly-hip-hop-en.mp3",
+    },
+    langs: ["en"],
+  },
+  {
+    id: "jazz",
+    name: "Jazz",
+    desc: "Sophisticated brass and smooth rhythms. Midnight vibes with a touch of elegance.",
+    img: "img/characters/jazz.jpg",
+    bg: "linear-gradient(160deg,#1f2a3d,#141c28)",
+    audio: {
+      en: "audio/jazz-en.mp3",
+    },
+    langs: ["en"],
+  },
+  {
+    id: "blues",
+    name: "Blues",
+    desc: "Soul-stirring double bass bends and raw storytelling. Deep, authentic, and full of heart.",
+    img: "img/characters/blues.jpg",
+    bg: "linear-gradient(160deg,#1f223d,#141628)",
+    audio: {
+      en: "audio/blues-en.mp3",
+    },
+    langs: ["en"],
+  }
+];
 
-  tempos: ["Slow", "Medium", "Upbeat"],
+  
 
  branches: {
   "partner|anniversary": {
