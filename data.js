@@ -107,7 +107,7 @@ moods: {
   "default":                 ["Feel warm and heartfelt 💛","Make them feel truly seen 🥲","Be uplifting and celebratory 🎉","Be something they'll never forget 🌟"],
 },
 
-  const genres = [
+  genres = [
   {
     id: "trap",
     name: "Trap",
@@ -174,7 +174,7 @@ moods: {
     },
     langs: ["en"],
   }
-];
+],
 
   
 
