@@ -107,77 +107,7 @@ moods: {
   "default":                 ["Feel warm and heartfelt 💛","Make them feel truly seen 🥲","Be uplifting and celebratory 🎉","Be something they'll never forget 🌟"],
 },
 
-  genres = [
-  {
-    id: "trap",
-    name: "Trap",
-    desc: "Heavy 808s and rapid-fire hi-hats. High energy with a gritty, modern bounce.",
-    img: "img/characters/trap.jpg",
-    bg: "linear-gradient(160deg,#2e112d,#170916)",
-    audio: {
-      en: "audio/trap-en.mp3",
-    },
-    langs: ["en"],
-  },
-  {
-    id: "soulful-pop",
-    name: "Soulful Pop",
-    desc: "Intimate, lyric-driven. Stripped-back and close to the bone.",
-    img: "img/characters/soulful-pop.jpg",
-    bg: "linear-gradient(160deg,#3d2a1f,#281c14)",
-    audio: {
-      en: "audio/soulful-pop-en.mp3",
-    },
-    langs: ["en"],
-  },
-  {
-    id: "rock-n-roll",
-    name: "Rock n Roll",
-    desc: "Distorted riffs and rebellious spirit. Raw, electrifying, and timeless.",
-    img: "img/characters/rock-n-roll.jpg",
-    bg: "linear-gradient(160deg,#3d1f1f,#281414)",
-    audio: {
-      en: "audio/rock-n-roll-en.mp3",
-    },
-    langs: ["en"],
-  },
-  {
-    id: "girly-hip-hop",
-    name: "Girly Hip-Hop",
-    desc: "Fierce, unapologetic, and highly danceable. Slick rhymes with serious attitude.",
-    img: "img/characters/girly-hip-hop.jpg",
-    bg: "linear-gradient(160deg,#3d1f36,#281423)",
-    audio: {
-      en: "audio/girly-hip-hop-en.mp3",
-    },
-    langs: ["en"],
-  },
-  {
-    id: "jazz",
-    name: "Jazz",
-    desc: "Sophisticated brass and smooth rhythms. Midnight vibes with a touch of elegance.",
-    img: "img/characters/jazz.jpg",
-    bg: "linear-gradient(160deg,#1f2a3d,#141c28)",
-    audio: {
-      en: "audio/jazz-en.mp3",
-    },
-    langs: ["en"],
-  },
-  {
-    id: "blues",
-    name: "Blues",
-    desc: "Soul-stirring double bass bends and raw storytelling. Deep, authentic, and full of heart.",
-    img: "img/characters/blues.jpg",
-    bg: "linear-gradient(160deg,#1f223d,#141628)",
-    audio: {
-      en: "audio/blues-en.mp3",
-    },
-    langs: ["en"],
-  }
-],
-
-  
-
+ 
  branches: {
   "partner|anniversary": {
     prompts:["How did you meet? Tell the full story.","What was your very first impression of them?","What quirk of theirs do you secretly love?","What promises are you making for the future?"],
