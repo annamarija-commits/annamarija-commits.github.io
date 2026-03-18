@@ -1344,9 +1344,16 @@ function renderGenres() {
 }
 
 
- function selectGenre(id) {
+function selectGenre(id) {
   STATE.genre = id;
-  document.querySelectorAll(".genre-card").forEach(c => c.classList.toggle("selected", c.id === `gcard-${id}`));
+  // Bulletproof class toggling
+  document.querySelectorAll(".genre-card").forEach(c => {
+    if (c.id === `gcard-${id}`) {
+      c.classList.add("selected");
+    } else {
+      c.classList.remove("selected");
+    }
+  });
   hideErr("err-3");
 }
 
@@ -1542,7 +1549,7 @@ function updateCharCount() {
 function renderSummary() {
   const lang = DATA.languages.find(l => l.id === STATE.language);
   const person = DATA.persons.find(p => p.id === STATE.person);
- const genreObj = CUSTOM_GENRES.find(g => g.id === STATE.genre);
+  const genreObj = CUSTOM_GENRES.find(g => g.id === STATE.genre);
 
   let occLabel = "—";
   if (STATE.occasion === "justbecause") occLabel = "Just because 💛";
@@ -1558,7 +1565,8 @@ function renderSummary() {
       { key: "Language",  val: lang ? `${lang.flag} ${lang.name}` : "—", step: 0 },
       { key: "Lyrics",    val: STATE.ownLyricsText ? STATE.ownLyricsText.slice(0, 120) + (STATE.ownLyricsText.length > 120 ? "…" : "") : "—", step: "own-lyrics" },
       { key: "For",       val: person?.label || "—", step: 1 },
-      { key: "Genre",     val: genreObj ? `${genreObj.icon} ${genreObj.name}` : "—", step: 3 },
+      // Fixed: Removed the missing .icon reference
+      { key: "Genre",     val: genreObj ? `${genreObj.name}` : "—", step: 3 },
     ];
   } else {
     rows = [
@@ -1566,7 +1574,8 @@ function renderSummary() {
       { key: "Recipient", val: nameVal, step: 1 },
       { key: "For",       val: person?.label || "—", step: 1 },
       { key: "Occasion",  val: occLabel, step: 2 },
-      { key: "Genre",     val: genreObj ? `${genreObj.icon} ${genreObj.name}` : "—", step: 3 },
+      // Fixed: Removed the missing .icon reference
+      { key: "Genre",     val: genreObj ? `${genreObj.name}` : "—", step: 3 },
       { key: "Story",     val: story ? story.slice(0, 160) + (story.length > 160 ? "…" : "") : "—", step: 4 },
     ];
   }
@@ -1578,11 +1587,6 @@ function renderSummary() {
       <button class="btn-edit-link" onclick="editFromSummary('${item.step}')">Edit</button>
     </div>
   `).join("");
-}
-function editFromSummary(step) {
-  STATE.editingFromSummary = true;
-  if (step === "own-lyrics") goToStep("own-lyrics");
-  else goToStep(parseInt(step));
 }
 
 /* ═══════════════════════════════════════════════════
@@ -1738,6 +1742,33 @@ async function submitForm() {
 
   // ✅ THEN redirect to Stripe
   window.location.href = stripeUrl + "?client_reference_id=" + orderId;
+}
+
+ /* ═══════════════════════════════════════════════════
+   ADD-ONS (Step 6)
+   ═══════════════════════════════════════════════════ */
+function toggleAddon(el, price) {
+  el.classList.toggle("selected");
+  
+  const addons = document.querySelectorAll(".addon-card.selected");
+  let hasLyrics = false, hasQR = false;
+  
+  addons.forEach(a => {
+    if (a.querySelector(".addon-name").textContent.includes("Lyrics")) hasLyrics = true;
+    if (a.querySelector(".addon-name").textContent.includes("QR")) hasQR = true;
+  });
+  
+  const row1 = document.getElementById("price-row-addon1");
+  const row2 = document.getElementById("price-row-addon2");
+  if(row1) row1.style.display = hasLyrics ? "flex" : "none";
+  if(row2) row2.style.display = hasQR ? "flex" : "none";
+  
+  let total = 14;
+  if (hasLyrics) total += 11;
+  if (hasQR) total += 5;
+  
+  const totalEl = document.getElementById("total-price");
+  if(totalEl) totalEl.textContent = "€" + total.toFixed(2);
 }
 
 /* INIT */
