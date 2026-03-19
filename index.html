@@ -167,7 +167,7 @@
     box-shadow:0 2px 8px rgba(196,47,168,0.4);
   }
   .tile-card.selected .check-icon { opacity:1; transform:scale(1); }
-  .check-icon svg, .tile-check svg, .genre-check svg { width:9px; height:9px; fill:none; stroke:#fff; stroke-width:2.5; }
+  .check-icon svg, .tile-check svg, .genre-check svg, .justbecause-check svg { width:9px; height:9px; fill:none; stroke:#fff; stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; }
 
   /* ── OWN LYRICS BUTTON ── */
   .own-lyrics-wrap { margin-top:18px; }
@@ -731,7 +731,7 @@
     gap:3px; background:var(--bg);
   }
   .info-modal-imgs img {
-    width:100%; aspect-ratio:inherit; object-fit:cover;
+    width:100%; aspect-ratio:4/3; object-fit:cover;
     display:block;
   }
   .info-modal-imgs img:first-child:last-child { grid-column:1/-1; }
@@ -874,15 +874,6 @@
         <div class="toggle-switch on" id="name-mention-switch"></div>
       </div>
     </div>
-   <div id="gender-wrap" style="display:none; margin-top:20px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.07);">
-        <label class="recipient-label">Their Pronouns / Gender <span style="color:#e8547a;">*</span></label>
-        <p class="recipient-hint" style="margin-top:0; margin-bottom:12px;">Required for German lyrics to ensure perfect grammar.</p>
-        <div class="pill-row" id="gender-pills">
-          <div class="pill" data-gender="m" onclick="selectGender('m')">He / Him</div>
-          <div class="pill" data-gender="f" onclick="selectGender('f')">She / Her</div>
-          <div class="pill" data-gender="n" onclick="selectGender('n')">They / Them</div>
-        </div>
-      </div>
 
     <p class="recipient-role-label">Now, what's their relationship to you?</p>
     <div class="tile-grid" id="person-grid"></div>
@@ -1396,20 +1387,6 @@ function renderPersons() {
   if (sw) sw.className = "toggle-switch" + (STATE.nameMention ? " on" : "");
   if (sub) sub.textContent = STATE.nameMention ? "Yes — weave it into the lyrics" : "No — keep it nameless";
 
-  // NEW: Show/Hide Gender block if Language is German ('de') or Mix ('both')
-  const genderWrap = document.getElementById("gender-wrap");
-  if (genderWrap) {
-    if (STATE.language === 'de' || STATE.language === 'both') {
-      genderWrap.style.display = "block";
-      document.querySelectorAll("#gender-pills .pill").forEach(p => {
-        p.classList.toggle("selected", p.dataset.gender === STATE.gender);
-      });
-    } else {
-      genderWrap.style.display = "none";
-      STATE.gender = null; // Clear it if they switch back to English
-    }
-  }
-
   document.getElementById("person-grid").innerHTML = DATA.persons.map(p => `
     <div class="tile ${STATE.person === p.id ? 'selected' : ''}" onclick="selectPerson('${p.id}')">
       ${svgCheck('tile-check')}
@@ -1419,12 +1396,6 @@ function renderPersons() {
     </div>`).join("");
 }
 
-// NEW FUNCTION
-function selectGender(g) {
-  STATE.gender = g;
-  renderPersons(); // Redraw to show the selected pill
-  hideErr("err-1");
-}
 function selectPerson(id) {
   STATE.person = id; STATE.occasion = null;
   STATE.mainName = document.getElementById("recipient-name")?.value || "";
@@ -1752,7 +1723,7 @@ function nextStep(from) {
   if (from === 4) STATE.story = getStoryText();
   if (from === 3) stopAudio(currentGenreId);
 
-  if (STATE.editingFromSummary) {
+  if (STATE.editingFromSummary && from !== 5) {
     STATE.editingFromSummary = false;
     goToStep(5);
     return;
@@ -1913,12 +1884,12 @@ const INFO_CONTENT = {
   lyrics: {
     title: "Original Lyrics Sheet (PDF)",
     desc: "A beautifully designed PDF with the full song lyrics, ready to print or share digitally. A keepsake to go alongside the song.",
-    img: "img/lyrics.png"
+    img: "img/preview_lyrics.png"
   },
   qr: {
     title: "Personalised QR Code",
     desc: "A custom QR code that links directly to the song player page. Print it on a card, frame it, or add it to a gift — scan and play instantly.",
-    img: "img/qr.jpeg"
+    img: "img/preview_qr.png"
   }
 };
 
@@ -1928,7 +1899,7 @@ function openInfoModal(type) {
   document.getElementById("info-modal-title").textContent = data.title;
   document.getElementById("info-modal-desc").textContent = data.desc;
   const imgsEl = document.getElementById("info-modal-imgs");
-  imgsEl.innerHTML = `<img src="${data.img}" alt="Example" style="grid-column:1/-1; width:100%; aspect-ratio:inherit; object-fit:cover; display:block;">`;
+  imgsEl.innerHTML = `<img src="${data.img}" alt="Example" style="grid-column:1/-1; width:100%; aspect-ratio:4/3; object-fit:cover; display:block;">`;
   document.getElementById("info-modal-overlay").classList.add("open");
   document.body.style.overflow = "hidden";
 }
