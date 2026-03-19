@@ -731,7 +731,7 @@
     gap:3px; background:var(--bg);
   }
   .info-modal-imgs img {
-    width:100%; aspect-ratio:4/3; object-fit:cover;
+    width:100%; aspect-ratio:inherit; object-fit:cover;
     display:block;
   }
   .info-modal-imgs img:first-child:last-child { grid-column:1/-1; }
@@ -1884,12 +1884,12 @@ const INFO_CONTENT = {
   lyrics: {
     title: "Original Lyrics Sheet (PDF)",
     desc: "A beautifully designed PDF with the full song lyrics, ready to print or share digitally. A keepsake to go alongside the song.",
-    img: "img/preview_lyrics.png"
+    img: "img/plyrics.png"
   },
   qr: {
     title: "Personalised QR Code",
     desc: "A custom QR code that links directly to the song player page. Print it on a card, frame it, or add it to a gift — scan and play instantly.",
-    img: "img/preview_qr.png"
+    img: "img/qr.jpg"
   }
 };
 
@@ -1899,7 +1899,7 @@ function openInfoModal(type) {
   document.getElementById("info-modal-title").textContent = data.title;
   document.getElementById("info-modal-desc").textContent = data.desc;
   const imgsEl = document.getElementById("info-modal-imgs");
-  imgsEl.innerHTML = `<img src="${data.img}" alt="Example" style="grid-column:1/-1; width:100%; aspect-ratio:4/3; object-fit:cover; display:block;">`;
+  imgsEl.innerHTML = `<img src="${data.img}" alt="Example" style="grid-column:1/-1; width:100%; aspect-ratio:inherit; object-fit:cover; display:block;">`;
   document.getElementById("info-modal-overlay").classList.add("open");
   document.body.style.overflow = "hidden";
 }
