@@ -1928,7 +1928,7 @@ function openInfoModal(type) {
   document.getElementById("info-modal-title").textContent = data.title;
   document.getElementById("info-modal-desc").textContent = data.desc;
   const imgsEl = document.getElementById("info-modal-imgs");
-  imgsEl.innerHTML = `<img src="${data.img}" alt="Example" style="grid-column:1/-1; width:100%; aspect-ratio:4/3; object-fit:cover; display:block;">`;
+  imgsEl.innerHTML = `<img src="${data.img}" alt="Example" style="grid-column:1/-1; width:100%; aspect-ratio:inherit; object-fit:cover; display:block;">`;
   document.getElementById("info-modal-overlay").classList.add("open");
   document.body.style.overflow = "hidden";
 }
