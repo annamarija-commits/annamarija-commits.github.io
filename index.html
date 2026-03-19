@@ -820,6 +820,15 @@
         <div class="toggle-switch on" id="name-mention-switch"></div>
       </div>
     </div>
+   <div id="gender-wrap" style="display:none; margin-top:20px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.07);">
+        <label class="recipient-label">Their Pronouns / Gender <span style="color:#e8547a;">*</span></label>
+        <p class="recipient-hint" style="margin-top:0; margin-bottom:12px;">Required for German lyrics to ensure perfect grammar.</p>
+        <div class="pill-row" id="gender-pills">
+          <div class="pill" data-gender="m" onclick="selectGender('m')">He / Him</div>
+          <div class="pill" data-gender="f" onclick="selectGender('f')">She / Her</div>
+          <div class="pill" data-gender="n" onclick="selectGender('n')">They / Them</div>
+        </div>
+      </div>
 
     <p class="recipient-role-label">Now, what's their relationship to you?</p>
     <div class="tile-grid" id="person-grid"></div>
@@ -1123,6 +1132,7 @@ const STATE = {
   nameMention: true,
   story: "",
   editingFromSummary: false,
+  gender: null, // NEW!
 };
 
 let _lastStoryContext = "";
@@ -1133,6 +1143,7 @@ let promptAnswers = {};
 let currentAudio = null;
 let currentGenreId = null;
 let animTimers = [];
+ 
 
  const CUSTOM_GENRES = [
   {
@@ -1309,6 +1320,20 @@ function renderPersons() {
   if (sw) sw.className = "toggle-switch" + (STATE.nameMention ? " on" : "");
   if (sub) sub.textContent = STATE.nameMention ? "Yes — weave it into the lyrics" : "No — keep it nameless";
 
+  // NEW: Show/Hide Gender block if Language is German ('de') or Mix ('both')
+  const genderWrap = document.getElementById("gender-wrap");
+  if (genderWrap) {
+    if (STATE.language === 'de' || STATE.language === 'both') {
+      genderWrap.style.display = "block";
+      document.querySelectorAll("#gender-pills .pill").forEach(p => {
+        p.classList.toggle("selected", p.dataset.gender === STATE.gender);
+      });
+    } else {
+      genderWrap.style.display = "none";
+      STATE.gender = null; // Clear it if they switch back to English
+    }
+  }
+
   document.getElementById("person-grid").innerHTML = DATA.persons.map(p => `
     <div class="tile ${STATE.person === p.id ? 'selected' : ''}" onclick="selectPerson('${p.id}')">
       ${svgCheck('tile-check')}
@@ -1317,6 +1342,13 @@ function renderPersons() {
       <span class="tile-sub">${p.sub}</span>
     </div>`).join("");
 }
+
+// NEW FUNCTION
+function selectGender(g) {
+  STATE.gender = g;
+  renderPersons(); // Redraw to show the selected pill
+  hideErr("err-1");
+}
 function selectPerson(id) {
   STATE.person = id; STATE.occasion = null;
   STATE.mainName = document.getElementById("recipient-name")?.value || "";
@@ -1324,9 +1356,7 @@ function selectPerson(id) {
   renderPersons(); hideErr("err-1");
 }
 
-/* ═══════════════════════════════════════════════════
-   RENDER: GENRE (Step 3)
-   ═══════════════════════════════════════════════════ */
+
 /* ═══════════════════════════════════════════════════
    RENDER: GENRE (Step 3)
    ═══════════════════════════════════════════════════ */
@@ -1736,6 +1766,7 @@ async function submitForm() {
     person: STATE.person,
     recipient_name: STATE.mainName,
     name_pronunciation: STATE.namePronunciation,
+    recipient_gender: STATE.gender,
     name_mention: STATE.nameMention,
     occasion: STATE.occasion,
     occasion_other: STATE.occasionOtherText,
