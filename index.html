@@ -735,7 +735,6 @@
     display:block;
   }
   .info-modal-imgs img:first-child:last-child { grid-column:1/-1; }
-  .info-modal-imgs img:nth-child(3) { grid-column:1/-1; }
   .info-modal-body { padding:18px 20px 20px; }
   .info-modal-title { font-size:16px; font-weight:700; color:var(--cream); margin-bottom:6px; }
   .info-modal-desc { font-size:13px; color:#9a90aa; line-height:1.6; }
@@ -1015,11 +1014,7 @@
     <div class="package-card">
       <img src="img/player.png" class="package-img" alt="Song Page">
       <div class="package-content">
-        <div class="package-title">⭐ Your Own Song Player
-          <button class="info-btn" onclick="openInfoModal('player')" title="See example">
-            <svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"><circle cx="5" cy="5" r="4.5" stroke="currentColor" stroke-width="1" fill="none"/><text x="5" y="7.5" text-anchor="middle" font-size="6" font-family="sans-serif" fill="currentColor" font-weight="700">i</text></svg>
-          </button>
-        </div>
+        <div class="package-title">⭐ Your Own Song Player</div>
         <ul class="package-list">
           <li>2:30-4:30 min one-of-a-kind song</li>
           <li>Studio quality</li>
@@ -1724,6 +1719,15 @@ function renderSummary() {
    ═══════════════════════════════════════════════════ */
 
 /* ═══════════════════════════════════════════════════
+   EDIT FROM SUMMARY
+   ═══════════════════════════════════════════════════ */
+function editFromSummary(stepStr) {
+  const step = stepStr === "own-lyrics" ? "own-lyrics" : parseInt(stepStr);
+  STATE.editingFromSummary = true;
+  goToStep(step);
+}
+
+/* ═══════════════════════════════════════════════════
    NAVIGATION
    ═══════════════════════════════════════════════════ */
 const TOTAL_STEPS = 6;
@@ -1906,20 +1910,15 @@ function toggleAddon(el, price) {
    INFO MODAL
    ═══════════════════════════════════════════════════ */
 const INFO_CONTENT = {
-  player: {
-    title: "Your Own Song Player",
-    desc: "A beautiful, shareable page with your custom song. Includes a built-in audio player, customisable title and cover photo, and a downloadable MP3.",
-    imgs: ["img/preview_player_1.png", "img/preview_player_2.png", "img/preview_player_3.png"]
-  },
   lyrics: {
     title: "Original Lyrics Sheet (PDF)",
     desc: "A beautifully designed PDF with the full song lyrics, ready to print or share digitally. A keepsake to go alongside the song.",
-    imgs: ["img/preview_lyrics_1.png", "img/preview_lyrics_2.png", "img/preview_lyrics_3.png"]
+    img: "img/preview_lyrics.png"
   },
   qr: {
     title: "Personalised QR Code",
     desc: "A custom QR code that links directly to the song player page. Print it on a card, frame it, or add it to a gift — scan and play instantly.",
-    imgs: ["img/preview_qr_1.png", "img/preview_qr_2.png", "img/preview_qr_3.png"]
+    img: "img/preview_qr.png"
   }
 };
 
@@ -1929,16 +1928,7 @@ function openInfoModal(type) {
   document.getElementById("info-modal-title").textContent = data.title;
   document.getElementById("info-modal-desc").textContent = data.desc;
   const imgsEl = document.getElementById("info-modal-imgs");
-  imgsEl.innerHTML = data.imgs.map((src, i) => {
-    const gradients = [
-      "linear-gradient(135deg,#1e1928 0%,#2d1f3a 100%)",
-      "linear-gradient(135deg,#261830 0%,#1a1228 100%)",
-      "linear-gradient(135deg,#1a1530 0%,#241d38 100%)"
-    ];
-    return `<img src="${src}" alt="Example ${i+1}" style="background:${gradients[i%3]}" onerror="this.src=''; this.style.background='${gradients[i%3]}'; this.style.minHeight='120px';">`;
-  }).join("") + `
-    <div style="grid-column:1/-1; padding:0 20px 14px; text-align:center; font-size:11px; color:var(--text-muted); letter-spacing:.08em; text-transform:uppercase;">Example preview</div>
-  `;
+  imgsEl.innerHTML = `<img src="${data.img}" alt="Example" style="grid-column:1/-1; width:100%; aspect-ratio:4/3; object-fit:cover; display:block;">`;
   document.getElementById("info-modal-overlay").classList.add("open");
   document.body.style.overflow = "hidden";
 }
