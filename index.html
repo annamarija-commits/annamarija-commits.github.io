@@ -940,7 +940,7 @@ async function submitForm() {
   window.location.href = stripeUrl + "?client_reference_id=" + orderId;
 }
 
-const INFO_CONTENT = { lyrics:{title:"Original Lyrics Sheet",desc:"A beautifully designed PDF.",img:"img/plyrics.png"}, qr:{title:"Personalised QR Code",desc:"A custom QR code.",img:"img/qr.jpg"} };
+const INFO_CONTENT = { lyrics:{title:"Original Lyrics Sheet",desc:"A beautifully designed PDF.",img:"img/lyrics.png"}, qr:{title:"Personalised QR Code",desc:"A custom QR code.",img:"img/qr.jpg"} };
 function openInfoModal(t) { const d=INFO_CONTENT[t]; if(!d) return; document.getElementById("info-modal-title").textContent=d.title; document.getElementById("info-modal-desc").textContent=d.desc; document.getElementById("info-modal-imgs").innerHTML=`<img src="${d.img}" alt="Example" style="grid-column:1/-1; width:100%; aspect-ratio:inherit; object-fit:cover; display:block;">`; document.getElementById("info-modal-overlay").classList.add("open"); document.body.style.overflow = "hidden"; }
 function closeInfoModal(e) { if(e && e.target!==document.getElementById("info-modal-overlay") && !e.target.closest(".info-modal-close")) return; document.getElementById("info-modal-overlay").classList.remove("open"); document.body.style.overflow = ""; }
 
