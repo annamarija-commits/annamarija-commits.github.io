@@ -983,12 +983,52 @@ function nextStepOwnLyrics() {
 }
 
 function goToStep(n) {
+  saveState(); 
   document.querySelectorAll('.step').forEach(el=>el.classList.remove('active'));
   STATE.step = n;
   if(n==="thankyou") { document.getElementById("step-thankyou").classList.add("active"); document.querySelector(".progress-wrap").style.display="none"; return; }
   if(n===0) renderLanguages(); if(n===1) renderPersons(); if(n===2) renderOccasions(); if(n===3) renderGenres(); if(n===4) renderStoryStep(); if(n===5) renderSummary();
   const elId = n==="own-lyrics"?"step-own-lyrics":`step-${n}`; document.getElementById(elId)?.classList.add("active"); window.scrollTo({top:0,behavior:'smooth'});
   showDoneBtn(n); if (typeof n === "number") updateProgressBar(n);
+}
+
+  function saveState() {
+  sessionStorage.setItem('orphsody_state', JSON.stringify({
+    language: STATE.language,
+    person: STATE.person,
+    genre: STATE.genre,
+    occasion: STATE.occasion,
+    occasionOtherText: STATE.occasionOtherText,
+    mainName: STATE.mainName,
+    nameMention: STATE.nameMention,
+    story: STATE.story,
+    hasLyrics: STATE.hasLyrics,
+    ownLyricsText: STATE.ownLyricsText,
+    customerEmail: STATE.customerEmail,
+    lastStep: STATE.step
+  }));
+  sessionStorage.setItem('orphsody_prompts', JSON.stringify({
+    activePrompts,
+    promptAnswers,
+    storyMode
+  }));
+}
+
+  function restoreState() {
+  try {
+    const saved = sessionStorage.getItem('orphsody_state');
+    const savedPrompts = sessionStorage.getItem('orphsody_prompts');
+    if (saved) {
+      const s = JSON.parse(saved);
+      Object.assign(STATE, s);
+    }
+    if (savedPrompts) {
+      const p = JSON.parse(savedPrompts);
+      activePrompts = p.activePrompts || [];
+      promptAnswers = p.promptAnswers || {};
+      storyMode = p.storyMode || "prompted";
+    }
+  } catch(e) { console.error("State restore error:", e); }
 }
 
 function toggleAddon(el, price) {
@@ -1000,7 +1040,7 @@ function toggleAddon(el, price) {
   if(hl) total+=11; if(hqr) total+=5; document.getElementById("total-price").textContent = "€" + total.toFixed(2);
 }
 
-const STRIPE_LINKS = { "00":"https://buy.stripe.com/test_9B614obm33Sb40V49T5gc00", "01":"https://buy.stripe.com/5kQ9AU61J1K3eFzeOx5gc01", "10":"https://buy.stripe.com/3cI14obm30FZ1SNdKt5gc02", "11":"https://buy.stripe.com/14A7sM2PxdsLdBvayh5gc03" };
+const STRIPE_LINKS = { "00":"https://buy.stripe.com/test_9B614obm33Sb40V49T5gc00", "01":"https://buy.stripe.com/test_5kQ9AU61J1K3eFzeOx5gc01", "10":"https://buy.stripe.com/test_3cI14obm30FZ1SNdKt5gc02", "11":"https://buy.stripe.com/test_14A7sM2PxdsLdBvayh5gc03" };
 async function submitForm() {
    const emailVal = document.getElementById("customer-email")?.value.trim() || "";
   const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal);
@@ -1024,8 +1064,19 @@ function closeInfoModal(e) { if(e && e.target!==document.getElementById("info-mo
 
 function init() {
   const params = new URLSearchParams(window.location.search);
-  if(params.get("success")==="true") { const orderId = params.get("order_id")||""; const el = document.getElementById("thankyou-order-id"); if(el && orderId) el.textContent="Order ID: "+orderId; goToStep("thankyou"); }
-  else { renderLanguages(); }
+  if (params.get("success") === "true") {
+    const orderId = sessionStorage.getItem("orphsody_order_id") || "";
+    sessionStorage.removeItem("orphsody_order_id");
+    sessionStorage.removeItem("orphsody_state");
+    sessionStorage.removeItem("orphsody_prompts");
+    const el = document.getElementById("thankyou-order-id");
+    if (el && orderId) el.textContent = "Order ID: " + orderId;
+    goToStep("thankyou");
+  } else {
+    restoreState();
+    const resumeStep = STATE.step || 0;
+    goToStep(resumeStep);
+  }
 }
 init();
 </script>
