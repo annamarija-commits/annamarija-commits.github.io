@@ -989,7 +989,7 @@ function toggleAddon(el, price) {
   if(hl) total+=11; if(hqr) total+=5; document.getElementById("total-price").textContent = "€" + total.toFixed(2);
 }
 
-const STRIPE_LINKS = { "00":"https://buy.stripe.com/LINK_60", "01":"https://buy.stripe.com/LINK_65", "10":"https://buy.stripe.com/LINK_70", "11":"https://buy.stripe.com/LINK_75" };
+const STRIPE_LINKS = { "00":"https://buy.stripe.com/9B614obm33Sb40V49T5gc00", "01":"https://buy.stripe.com/5kQ9AU61J1K3eFzeOx5gc01", "10":"https://buy.stripe.com/3cI14obm30FZ1SNdKt5gc020", "11":"https://buy.stripe.com/14A7sM2PxdsLdBvayh5gc03" };
 async function submitForm() {
   const btn = document.getElementById("btn-pay"); btn.textContent = "Processing..."; btn.disabled = true;
   let hl=false, hqr=false; document.querySelectorAll(".addon-card.selected").forEach(a => { if(a.querySelector(".addon-name").textContent.includes("Lyrics")) hl=true; if(a.querySelector(".addon-name").textContent.includes("QR")) hqr=true; });
