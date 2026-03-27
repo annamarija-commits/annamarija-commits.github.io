@@ -1055,7 +1055,7 @@ async function submitForm() {
   const key = (hl?"1":"0")+(hqr?"1":"0"); const stripeUrl = STRIPE_LINKS[key]; const orderId = "ORD-" + Math.random().toString(36).substring(2,8).toUpperCase();
   const orderData = { order_id: orderId, customer_email: STATE.customerEmail, language: STATE.language, person: STATE.person, recipient_name: STATE.mainName, name_mention: STATE.nameMention, occasion: STATE.occasion, occasion_other: STATE.occasionOtherText, genre: STATE.genre, story: STATE.story, own_lyrics: STATE.hasLyrics, own_lyrics_text: STATE.ownLyricsText, addons: { lyrics_sheet: hl, qr_code: hqr }, total: hl&&hqr?"€30":hl?"€25":hqr?"€19":"€14", submitted_at: new Date().toISOString() };
   try { await fetch("https://formspree.io/f/xdalrokn", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(orderData) }); } catch(e) { console.error("Formspree error:", e); }
-  window.location.href = stripeUrl + "?client_reference_id=" + orderId + "&prefilled_email=" + encodeURIComponent(STATE.customerEmail);
+  (window.top || window).location.href = stripeUrl + "?client_reference_id=" + orderId + "&prefilled_email=" + encodeURIComponent(STATE.customerEmail);
 }
 
 const INFO_CONTENT = { lyrics:{title:"Original Lyrics Sheet",desc:"A beautifully designed PDF.",img:"img/lyrics.png"}, qr:{title:"Personalised QR Code",desc:"A custom QR code.",img:"img/qr.jpg"} };
