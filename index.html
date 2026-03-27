@@ -862,7 +862,6 @@ function showDoneBtn(stepId) {
 
 function renderLanguages() {
   const isOwn = STATE.hasLyrics; const t = isOwn ? 4 : 6;
-  document.querySelectorAll('.step-eyebrow').forEach((el, i) => { if(el) el.textContent = `Step ${i + (isOwn && i>0 ? 0 : 1)} of ${t}`; });
   const lg = document.getElementById("lang-grid");
   if (isOwn) { if(lg) lg.style.display = "none"; } else {
     if(lg) { lg.style.display = "grid"; lg.innerHTML = DATA.languages.map(l => `<div class="tile-card ${STATE.language === l.id ? 'selected' : ''}" onclick="selectLanguage('${l.id}')">${svgCheck('check-icon')}<div class="tile-header"><span class="tile-icon">${l.flag}</span><span class="tile-label">${l.name}</span></div><span class="tile-sub">${l.sub}</span></div>`).join(""); }
@@ -984,12 +983,41 @@ function nextStepOwnLyrics() {
 
 function goToStep(n) {
   saveState(); 
-  document.querySelectorAll('.step').forEach(el=>el.classList.remove('active'));
+  d document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
   STATE.step = n;
-  if(n==="thankyou") { document.getElementById("step-thankyou").classList.add("active"); document.querySelector(".progress-wrap").style.display="none"; return; }
-  if(n===0) renderLanguages(); if(n===1) renderPersons(); if(n===2) renderOccasions(); if(n===3) renderGenres(); if(n===4) renderStoryStep(); if(n===5) renderSummary();
-  const elId = n==="own-lyrics"?"step-own-lyrics":`step-${n}`; document.getElementById(elId)?.classList.add("active"); window.scrollTo({top:0,behavior:'smooth'});
-  showDoneBtn(n); if (typeof n === "number") updateProgressBar(n);
+
+  if (n === "thankyou") {
+    document.getElementById("step-thankyou").classList.add("active");
+    document.querySelector(".progress-wrap").style.display = "none";
+    return;
+  }
+
+  if (n === 0) renderLanguages();
+  if (n === 1) renderPersons();
+  if (n === 2) renderOccasions();
+  if (n === 3) renderGenres();
+  if (n === 4) renderStoryStep();
+  if (n === 5) renderSummary();
+
+  const elId = n === "own-lyrics" ? "step-own-lyrics" : `step-${n}`;
+  const el = document.getElementById(elId);
+  if (el) {
+    // Update eyebrow text dynamically
+    const total = STATE.hasLyrics ? 4 : 7;
+    const eyebrow = el.querySelector('.step-eyebrow');
+    if (eyebrow) {
+      const stepLabels = {
+        0: 1, 1: 2, 2: 3, 3: 4, 4: 5, 5: 6, 6: 7,
+        "own-lyrics": 2
+      };
+      eyebrow.textContent = `Step ${stepLabels[n] || ""} of ${total}`;
+    }
+    el.classList.add("active");
+  }
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  showDoneBtn(n);
+  if (typeof n === "number") updateProgressBar(n);
 }
 
   function saveState() {
