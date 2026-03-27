@@ -983,7 +983,7 @@ function nextStepOwnLyrics() {
 
 function goToStep(n) {
   saveState(); 
-  d document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
   STATE.step = n;
 
   if (n === "thankyou") {
