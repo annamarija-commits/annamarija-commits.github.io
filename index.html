@@ -1123,6 +1123,14 @@ function init() {
     sessionStorage.removeItem("orphsody_prompts");
     const el = document.getElementById("thankyou-order-id");
     if (el && orderId) el.textContent = "Order ID: " + orderId;
+     if (typeof fbq !== "undefined") {
+    fbq('track', 'Purchase', {
+      value: 14.00,        // you can make this dynamic
+      currency: 'EUR'
+    });
+  }
+
+  goToStep("thankyou");
     goToStep("thankyou");
   } else {
     restoreState();
